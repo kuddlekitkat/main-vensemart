@@ -7,7 +7,6 @@ import 'package:vensemart/services/widgets/AppBars/ServicesHomeAppBar.dart';
 import 'package:vensemart/services/widgets/AppBars/ServicesOffersAppBar.dart';
 import 'package:vensemart/services/widgets/AppBars/ServicesProfileAppBar.dart';
 import 'package:vensemart/services/widgets/Drawers/ServicesDrawer.dart';
-import 'package:vensemart/services/widgets/Drawers/ServicesHomeDrawer.dart';
 import 'package:vensemart/services/widgets/full_pages/ServiceHome.dart';
 
 
