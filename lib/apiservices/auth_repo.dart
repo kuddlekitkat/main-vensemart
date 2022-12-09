@@ -12,4 +12,14 @@ class AuthRepo with ApiServices {
 
     return null;
   }
+
+  Future<Response?> register(Map<String, String> credentials) async {
+    Response? response = await apiPostRequests("register", credentials);
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
 }
