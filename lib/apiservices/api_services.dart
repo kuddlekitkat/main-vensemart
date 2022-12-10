@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'dart:convert' as convert;
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+
+import '../core/session_manager.dart';
 
 mixin ApiServices {
   static final Map<String, String> _requestHeaders = {
@@ -56,7 +59,8 @@ mixin ApiServices {
       Response response = await dio.post(endPoint,
           data: credentials,
           options: Options(headers: {
-            // "Authorization": "Bearer " + await getAuthToken(),
+            // ignore: prefer_interpolation_to_compose_strings
+            "Authorization": "Bearer " + await getAuthToken(),
             ...header
           }));
       return response;
@@ -66,5 +70,23 @@ mixin ApiServices {
       // return "";
       return e.response;
     }
+  }
+
+  Future<Response?> apiGetRequests(String endPoint) async {
+    try {
+      Dio dio = await getDio();
+      Response response = await dio.get(endPoint,
+          options: Options(
+              headers: {"Authorization": "Bearer " + await getAuthToken()}));
+      //  debugPrint(response.data.toString());
+      return response;
+    } on DioError catch (e) {
+      return e.response;
+    }
+  }
+
+  getAuthToken() async {
+      String? accessToken = SessionManager.instance.authToken;
+      return accessToken;
   }
 }

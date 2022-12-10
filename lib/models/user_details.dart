@@ -1,11 +1,11 @@
-class RegisterModel {
+class UserDetailsModel {
   int? status;
   String? message;
   Data? data;
 
-  RegisterModel({this.status, this.message, this.data});
+  UserDetailsModel({this.status, this.message, this.data});
 
-  RegisterModel.fromJson(Map<String, dynamic> json) {
+  UserDetailsModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
@@ -38,7 +38,7 @@ class Data {
   String? deviceName;
   String? deviceToken;
   String? apiToken;
-  dynamic profile;
+  String? profile;
   String? status;
   dynamic serviceType;
   dynamic yearExpreance;
@@ -48,9 +48,9 @@ class Data {
   dynamic idProf;
   String? documentsApproved;
   dynamic isOnline;
-  dynamic whatApp;
-  dynamic sms;
-  dynamic notification;
+  String? whatApp;
+  String? sms;
+  String? notification;
   String? serviceTypePrice;
   dynamic guarantorName;
   dynamic guarantorEmail;
@@ -59,7 +59,7 @@ class Data {
   dynamic serviceDiscription;
   String? state;
   String? town;
-  dynamic gpsLocationStatus;
+  String? gpsLocationStatus;
   String? createdAt;
   String? updatedAt;
 

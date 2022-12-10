@@ -31,7 +31,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void signUp(context) async {
     if (_globalFormKey.currentState!.validate() && isChecked == true) {
-      providerServices?.signIn(map: {
+      providerServices?.register(map: {
         "type": "1",
         "device_id": "12312313213",
         "device_type": "ios",

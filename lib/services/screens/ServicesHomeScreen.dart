@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vensemart/services/provider/provider_services.dart';
 import 'package:vensemart/services/screens/ServicesAppoinmentScreen.dart';
 import 'package:vensemart/services/screens/ServicesOffersScreen.dart';
 import 'package:vensemart/services/screens/ServicesProfileScreen.dart';
@@ -8,8 +10,6 @@ import 'package:vensemart/services/widgets/AppBars/ServicesOffersAppBar.dart';
 import 'package:vensemart/services/widgets/AppBars/ServicesProfileAppBar.dart';
 import 'package:vensemart/services/widgets/Drawers/ServicesDrawer.dart';
 import 'package:vensemart/services/widgets/full_pages/ServiceHome.dart';
-
-
 
 class ServicesHomeScreen extends StatelessWidget {
   const ServicesHomeScreen({super.key});
@@ -37,6 +37,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
+  
   static const List<Widget> _widgetOptions = <Widget>[
     ServiceHome(),
     ServicesAppointmentScreen(),

@@ -14,27 +14,6 @@ class ChoiceIntroScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
 
-
-          // Container(
-          //   height: 150,
-          //   width: 150,
-          //   decoration: BoxDecoration(
-          //     color: Colors.white,
-          //     borderRadius: BorderRadius.circular(12.0),
-          //     border: Border.all(color: Colors.blueAccent),
-          //   ),
-          //   child: GestureDetector(
-          //       onTap: (){
-          //         Navigator.push(
-          //           context,
-          //           new MaterialPageRoute(
-          //             builder: (context) => ProductsHomeScreen(),
-          //           ),
-          //         );
-          //       },
-          //       child: Image.asset('assets/images/choicesproduct2.png')
-          //   ),
-          // ),
           Text('Choose your shopping style',style: TextStyle(color: Colors.black,fontSize: 16,decoration: TextDecoration.none),),
           SizedBox(height: 10.0,),
 

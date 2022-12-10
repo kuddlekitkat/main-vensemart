@@ -22,4 +22,24 @@ class AuthRepo with ApiServices {
 
     return null;
   }
+
+  Future<Response?> userDetail() async {
+    Response? response = await apiGetRequests("user_details");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+  Future<Response?> services() async {
+    Response? response = await apiGetRequests("services");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
 }
