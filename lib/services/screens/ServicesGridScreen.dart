@@ -111,7 +111,11 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
             child: CachedNetworkImage(
               imageUrl:
                   "https://api.vensemart.com/uploads/serviceprovider_services_images/$image",
-              placeholder: (context, url,) =>
+              fit: BoxFit.cover,
+              placeholder: (
+                context,
+                url,
+              ) =>
                   Container(
                       margin: const EdgeInsets.all(10),
                       child: const SpinKitCircle(
