@@ -34,9 +34,9 @@ class _LoginScreenState extends State<LoginScreen> {
   void signIn(context) async {
     if (_globalFormKey.currentState!.validate()) {
       providerServices?.signIn(map: {
-        "userdata": emailController.text,
+        "username": emailController.text,
         "password": passwordController.text,
-        "type": "3",
+        "type": "1",
         "device_id": "12312313213",
         "device_type": "ios",
         "device_name": "iphone 12",

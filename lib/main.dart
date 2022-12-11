@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/LoginScreen.dart';
@@ -23,25 +22,26 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
+    print(SessionManager.instance.authToken);
     return MultiProvider(
       providers: Providers.getProviders,
-      builder:(_,__)=> MaterialApp(
+      builder: (_, __) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Vensemart',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: SessionManager.instance.isLoggedIn ? const ChoiceIntroScreen():const OnboardingScreen(),
+        // ignore: unnecessary_null_comparison
+        home: SessionManager.instance.authToken.isNotEmpty
+            ? const ChoiceIntroScreen()
+            : const OnboardingScreen(),
         routes: {
           ServicesHomeScreen.routeName: (ctx) => const ServicesHomeScreen(),
           LoginScreen.routeName: (ctx) => const ServicesHomeScreen(),
-          AvailableServicesListScreen.routeName: (ctx) => const AvailableServicesListScreen(),
-    
+          AvailableServicesListScreen.routeName: (ctx) =>
+              const AvailableServicesListScreen(),
         },
       ),
     );
   }
 }
-
-
