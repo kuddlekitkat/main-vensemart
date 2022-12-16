@@ -4,11 +4,13 @@ import 'package:vensemart/core/session_manager.dart';
 import 'package:vensemart/models/about_us_model.dart';
 import 'package:vensemart/models/contact_us_model.dart';
 import 'package:vensemart/models/customer_home_model.dart';
+import 'package:vensemart/models/general_model.dart';
 import 'package:vensemart/models/login_model.dart';
 import 'package:vensemart/models/register.dart';
 import 'package:vensemart/models/services_model.dart';
 import 'package:vensemart/models/terms_and_condition_model.dart';
 import '../../ChoiceIntroScreen.dart';
+import '../../OtpVerification.dart';
 import '../../apiservices/auth_repo.dart';
 import '../../models/faqs_model.dart';
 import '../../models/product_category_model.dart';
@@ -86,6 +88,55 @@ class ProviderServices extends ChangeNotifier {
         print(_registerModel!.data!.email!);
         SessionManager.instance.authToken = _registerModel!.data!.apiToken!;
         _isLoading = false;
+        sendOTP(context);
+        // Navigator.push(
+        //   context!,
+        //   MaterialPageRoute(
+        //     builder: (context) => OtpVerification(),
+        //   ),
+        // );
+        notifyListeners();
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+  void sendOTP(context) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response =
+          await authRepo.sendOtp({'phone_number': phoneNumber!});
+      if (response != null && response.statusCode == 200) {
+        _isLoading = false;
+
+        Navigator.push(
+          context!,
+          MaterialPageRoute(
+            builder: (context) => OtpVerification(),
+          ),
+        );
+        notifyListeners();
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+  void verifyOTP({context,otpNumber}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo
+          .verifyOtp({"phone_number": phoneNumber!, "otp": otpNumber});
+      if (response != null && response.statusCode == 200) {
+        _isLoading = false;
+
         Navigator.push(
           context!,
           MaterialPageRoute(

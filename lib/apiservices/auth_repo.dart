@@ -23,6 +23,26 @@ class AuthRepo with ApiServices {
     return null;
   }
 
+  Future<Response?> sendOtp(Map<String, String> credentials) async {
+    Response? response = await apiPostRequests("send-otp", credentials);
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+  Future<Response?> verifyOtp(Map<String, String> credentials) async {
+    Response? response = await apiPostRequests("verify-otp", credentials);
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
   Future<Response?> updateProfile(Map<String, String> credentials) async {
     Response? response = await apiPostRequests("update_profile", credentials);
 

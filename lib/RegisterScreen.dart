@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/apiservices/validator.dart';
+import 'package:vensemart/models/general_model.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
 
 import 'LoginScreen.dart';
@@ -31,6 +32,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void signUp(context) async {
     if (_globalFormKey.currentState!.validate() && isChecked == true) {
+      phoneNumber = phnoeNumberController.text.trim();
+      setState(() {});
       providerServices?.register(map: {
         "type": "1",
         "device_id": "12312313213",
@@ -38,10 +41,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "device_name": "iphone 12",
         "device_token":
             "fWmhg-bbSfGEqOoHZkKCmj:APA91bGpk7jbGRVP75GFgf0g65_mDjYpWI259vsgAlcm_3EXqVI-h4n069lhPC1euSKSuUfDolkUZnW6OXIN7oQc3YpMeUPYUeXi9AgHAGEg_SE9xmtlrRhdnf2PSVpEM73flWRxivxV",
-        "name": usernameController.text,
-        "email": emailController.text,
-        "mobile": phnoeNumberController.text,
-        "password": passwordController.text,
+        "name": usernameController.text.trim(),
+        "email": emailController.text.trim(),
+        "mobile": phnoeNumberController.text.trim(),
+        "password": passwordController.text.trim(),
         "state": "FCT",
         "town": "Abuja"
       }, context: context);
@@ -245,14 +248,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             color: const Color(0xff1456f1),
                             borderRadius: BorderRadius.circular(40.0),
                           ),
-                          child: provider.isLoading==true
-                                  ? const SpinKitCircle(color: Colors.white,)
-                                  :  const Center(
-                              child: Text(
-                                      'Register',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 20.0),
-                                    )),
+                          child: provider.isLoading == true
+                              ? const SpinKitCircle(
+                                  color: Colors.white,
+                                )
+                              : const Center(
+                                  child: Text(
+                                  'Register',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 20.0),
+                                )),
                         ),
                       ),
                     ),
