@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
+import 'package:vensemart/services/screens/AboutUsScreen.dart';
 
 import '../../screens/AvailableServicesListScreen.dart';
 
@@ -104,9 +105,19 @@ class ServicesDrawer extends StatelessWidget {
                         leading: Icon(Icons.phone),
                         title: Text('contact'),
                       ),
-                      const ListTile(
-                        leading: Icon(Icons.info),
-                        title: Text('About'),
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const AboutUsScreen(),
+                            ),
+                          );
+                        },
+                        child: ListTile(
+                          leading: Icon(Icons.info),
+                          title: Text('About'),
+                        ),
                       ),
 
                       const ListTile(

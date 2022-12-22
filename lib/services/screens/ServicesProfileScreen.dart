@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
 import 'package:vensemart/services/screens/AvailableServicesListScreen.dart';
+import 'package:vensemart/services/screens/ProfileEditScreen.dart';
 
 class ServicesProfileScreen extends StatefulWidget {
   const ServicesProfileScreen({Key? key}) : super(key: key);
@@ -68,11 +69,22 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                               fontWeight: FontWeight.normal,
                               color: Color.fromARGB(255, 33, 33, 243)),
                         ),
-                        const Text(
-                          'Your Profile',
-                          style: TextStyle(
-                              fontSize: 15.0, fontWeight: FontWeight.normal),
+                         GestureDetector(
+                           onTap: (){
+
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                 builder: (context) => const ProfileEditScreen(),
+                               ),
+                             );
+                           },
+                           child: Text(
+                            'Your Profile',
+                            style: TextStyle(
+                                fontSize: 15.0, fontWeight: FontWeight.normal),
                         ),
+                         ),
                       ],
                     )),
                 const SizedBox(

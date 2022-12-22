@@ -31,6 +31,8 @@ environment:
 dependencies:
   cached_network_image: ^3.2.3
   cupertino_icons: ^1.0.2
+  image_cropper: ^3.0.1
+  image_picker: ^0.8.6
   dio: ^4.0.6
   flutter:
     sdk: flutter
