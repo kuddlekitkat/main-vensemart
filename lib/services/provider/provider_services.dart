@@ -5,6 +5,7 @@ import 'package:vensemart/models/about_us_model.dart';
 import 'package:vensemart/models/contact_us_model.dart';
 import 'package:vensemart/models/customer_home_model.dart';
 import 'package:vensemart/models/general_model.dart';
+import 'package:vensemart/models/get_all_services_model.dart';
 import 'package:vensemart/models/login_model.dart';
 import 'package:vensemart/models/register.dart';
 import 'package:vensemart/models/services_model.dart';
@@ -46,6 +47,8 @@ class ProviderServices extends ChangeNotifier {
   FaqsModel? _faqsModel;
   LoginModel? get loginModel => _loginModel;
   LoginModel? _loginModel;
+  ServiceCategoryModel? get serviceCategoryModel => _servicesCategoryModel;
+  ServiceCategoryModel? _servicesCategoryModel;
 
   bool get isAvailable =>
       _servicesModel != null &&
@@ -128,7 +131,7 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-  void verifyOTP({context,otpNumber}) async {
+  void verifyOTP({context, otpNumber}) async {
     try {
       _isLoading = true;
       notifyListeners();
@@ -294,6 +297,21 @@ class ProviderServices extends ChangeNotifier {
       Response? response = await authRepo.faqs();
       if (response != null && response.statusCode == 200) {
         _faqsModel = FaqsModel.fromJson(response.data);
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+  void getAllServiceList() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.serviceCategory();
+      if (response != null && response.statusCode == 200) {
+        _servicesCategoryModel = ServiceCategoryModel.fromJson(response.data);
         _isLoading = false;
       }
       notifyListeners();

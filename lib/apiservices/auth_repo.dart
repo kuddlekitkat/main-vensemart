@@ -139,4 +139,14 @@ class AuthRepo with ApiServices {
 
     return null;
   }
+
+  Future<Response?> serviceCategory() async {
+    Response? response = await apiGetRequests("get-all-service-categories");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
 }

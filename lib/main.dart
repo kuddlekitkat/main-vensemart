@@ -22,7 +22,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    print(SessionManager.instance.authToken);
     return MultiProvider(
       providers: Providers.getProviders,
       builder: (_, __) => MaterialApp(
