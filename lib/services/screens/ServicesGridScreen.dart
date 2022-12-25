@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:vensemart/models/services_model.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
 import 'package:vensemart/services/screens/AvailableServicesListScreen.dart';
 
@@ -14,12 +15,24 @@ class ServicesGridScreen extends StatefulWidget {
 
 class _ServicesGridScreenState extends State<ServicesGridScreen> {
   ProviderServices? providerServices;
+  TextEditingController controller = TextEditingController();
+  String _query = '';
+  List searchItem = [];
+
+  int intval = 0;
 
   @override
   void initState() {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
     providerServices?.services();
+    searchItem.clear();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    searchItem.clear();
+    super.dispose();
   }
 
   @override
@@ -42,6 +55,12 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
                 Container(
                   margin: const EdgeInsets.all(12.0),
                   child: TextFormField(
+                    controller: controller,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    onChanged: (v) {
+                      // searchItem.clear();
+                      setState(() => _query = v);
+                    },
                     decoration: InputDecoration(
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(
@@ -73,10 +92,29 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
                     crossAxisCount: 3,
                     children: <Widget>[
                       if (provider.isAvailable)
-                        ...provider.servicesModel!.data!
-                            .map((e) => contentContainer(
-                                text: e.categoryName, image: e.categoryIcon))
-                            .toList()
+                        ...provider.servicesModel!.data!.map((e) {
+                          // if (e.categoryName!
+                          //     .toString()
+                          //     .toLowerCase()
+                          //     .contains(_query.toLowerCase())) {
+                          //   searchItem.add(e);
+                          //   intval = searchItem.length-1;
+                          //   print('int val $intval');
+
+                          //   print(
+                          //       'object an image ${searchItem[intval].toJson().toString()}');
+                          // }
+                          return
+                              _query.isEmpty ||
+                                      e.categoryName!
+                                          .toString()
+                                          .toLowerCase()
+                                          .contains(_query.toLowerCase())
+                                  ?
+                              contentContainer(
+                                  text: e.categoryName, image: e.categoryIcon)
+                          : Container();
+                        }).toList()
                     ],
                   ),
                 ),
@@ -109,8 +147,7 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
               );
             },
             child: CachedNetworkImage(
-              imageUrl:
-                  image.toString(),
+              imageUrl: image.toString(),
               fit: BoxFit.cover,
               placeholder: (
                 context,
