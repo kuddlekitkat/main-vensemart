@@ -1,10 +1,31 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 
+import '../../services/provider/provider_services.dart';
+import '../../services/screens/AvailableServicesListScreen.dart';
 import '../widgets/components/TopSellingImage.dart';
 
 
-class CategoryScreen extends StatelessWidget {
+class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key}) : super(key: key);
+
+  @override
+  State<CategoryScreen> createState() => _CategoryScreenState();
+}
+
+class _CategoryScreenState extends State<CategoryScreen> {
+
+
+  ProviderServices? providerServices;
+
+  @override
+  void initState() {
+    providerServices = Provider.of<ProviderServices>(context, listen: false);
+    providerServices?.productCate(1.toString());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,68 +79,80 @@ class CategoryScreen extends StatelessWidget {
 
 
 
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    child: Text('Top Selling', style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.0),),
-                  )
-                ],
-              ) ,
 
+              Consumer<ProviderServices>(
+                builder: (_, provider, __) {
+                  return SingleChildScrollView(
+                    child: Column(
+                      children: [
 
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  TopSellingImage(image: 'assets/images/electronics1.png', name: 'Smart tv', price: 'N12,000'),
-                  TopSellingImage(image: 'assets/images/electronics2.png', name: 'furniture', price: '50,000'),
-                  TopSellingImage(image: 'assets/images/electronics3.png', name: 'Nike shoes', price: '15,000'),
-
-                ],
-
+                        Container(
+                          height: MediaQuery.of(context).size.height / 1.2,
+                          child: GridView.count(
+                            primary: false,
+                            padding: const EdgeInsets.all(10),
+                            crossAxisSpacing: 8,
+                            mainAxisSpacing: 8,
+                            crossAxisCount: 3,
+                            children: <Widget>[
+                              if (provider.isPresent)
+                                ...provider.productCategory!.data!
+                                    .map((e) => contentContainer(
+                                    text: e.categoryName, image: e.productImage))
+                                    .toList()
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-
-              SizedBox(height: 20.0,),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  TopSellingImage(image: 'assets/images/topselling4.png', name: 'Washing machine', price: 'N160,000'),
-                  TopSellingImage(image: 'assets/images/topselling5.png', name: 'Wristwatch', price: 'N12,000'),
-                  TopSellingImage(image: 'assets/images/topselling6.png', name: 'Ear buds', price: 'N10,000'),
-
-                ],
-
-              ),
-
-              SizedBox(height: 20.0,),
-
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: const [
-                  TopSellingImage(image: 'assets/images/topselling9.png', name: 'Macbook pro', price: 'N800,000'),
-                  TopSellingImage(image: 'assets/images/topselling10.png', name: 'Itel phone', price: 'N120,000'),
-                  TopSellingImage(image: 'assets/images/topselling11.png', name: 'iPhone 13', price: 'N800,000'),
-
-                ],
-
-              ),
-
-
-
-
-
-
-
-
-              SizedBox(height: 20.0,),
-
 
 
             ],
           ),
-        ),),
+        ),
+      ),
     );
   }
+
+  contentContainer({String? text, String? image}) => ClipRRect(
+    borderRadius: BorderRadius.circular(10),
+    child: GridTile(
+      footer: GridTileBar(
+        title: Center(
+            child: Text(
+              text ?? '',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            )),
+        backgroundColor: Colors.black54,
+      ),
+      child: GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AvailableServicesListScreen(),
+            ),
+          );
+        },
+        child: CachedNetworkImage(
+          imageUrl:
+          image.toString(),
+          fit: BoxFit.cover,
+          placeholder: (
+              context,
+              url,
+              ) =>
+              Container(
+                  margin: const EdgeInsets.all(10),
+                  child: const SpinKitCircle(
+                    color: Colors.grey,
+                  )),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        ),
+      ),
+    ),
+  );
 }

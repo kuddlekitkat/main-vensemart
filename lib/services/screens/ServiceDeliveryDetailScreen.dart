@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:vensemart/services/screens/ServicesSuccessScreen.dart';
 
 class ServiceDeliveryDetailScreen extends StatelessWidget {
-  const ServiceDeliveryDetailScreen({Key? key}) : super(key: key);
+  String service_name;
+  ServiceDeliveryDetailScreen({required this.service_name});
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +111,7 @@ class ServiceDeliveryDetailScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text('SERVICE 1 of 1' ,style: TextStyle(fontSize: 16),),
-                          Text('Haircut'),
+                          Text(service_name.toString()),
                           Text('Service to be rendered by: Amarachi'),
                           Text('Delivery Date : 20th September 2022'),
                         ],

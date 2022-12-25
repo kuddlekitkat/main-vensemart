@@ -110,7 +110,7 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
             },
             child: CachedNetworkImage(
               imageUrl:
-                  "https://api.vensemart.com/uploads/serviceprovider_services_images/$image",
+                  image.toString(),
               fit: BoxFit.cover,
               placeholder: (
                 context,

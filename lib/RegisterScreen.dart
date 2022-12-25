@@ -37,8 +37,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       providerServices?.register(map: {
         "type": "1",
         "device_id": "12312313213",
-        "device_type": "ios",
-        "device_name": "iphone 12",
+        "device_type": "android",
+        "device_name": "android",
         "device_token":
             "fWmhg-bbSfGEqOoHZkKCmj:APA91bGpk7jbGRVP75GFgf0g65_mDjYpWI259vsgAlcm_3EXqVI-h4n069lhPC1euSKSuUfDolkUZnW6OXIN7oQc3YpMeUPYUeXi9AgHAGEg_SE9xmtlrRhdnf2PSVpEM73flWRxivxV",
         "name": usernameController.text.trim(),

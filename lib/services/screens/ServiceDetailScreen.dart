@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:vensemart/services/screens/ServiceDeliveryDetailScreen.dart';
+
+import '../provider/provider_services.dart';
 
 
 class ServiceDetailScreen extends StatefulWidget {
@@ -17,6 +21,8 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
   DateTime date = DateTime(2016, 10, 26);
   DateTime time = DateTime(2016, 5, 10, 22, 35);
   DateTime dateTime = DateTime(2016, 8, 3, 17, 45);
+
+
 
 
 
@@ -44,12 +50,44 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
   }
 
 
+  ProviderServices? providerServices;
+  late String servicename;
+  TextEditingController timeController = TextEditingController();
+
+  late DateTime _selectedDate;
+  TextEditingController _textEditingController = TextEditingController();
+  @override
+  void initState() {
+    providerServices = Provider.of<ProviderServices>(context, listen: false);
+    providerServices?.serviceId(368.toString());
+    servicename = providerServices?.serviceIdModel?.data?.name ?? '';
+    super.initState();
+  }
+
+  void addBooking(context) async {
+    if (true) {
+      setState(() {});
+      providerServices?.addNewBooking(map: {
+        "service_provider_id" : 368.toString(),
+        "booking_date" : "23-12-2022",
+        "booking_time" : "12:30 PM"
+      }, context: context);
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
+        child: Consumer<ProviderServices>(
+        builder: (_, provider, __) {
+      print('object ${provider.serviceIdModel?.data}');
+      if (provider.serviceIdModel?.data == null) {
+        return Center(child: const SpinKitCircle(color: Colors.blue,));
+      } else {
+
+        return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Stack(
@@ -59,8 +97,8 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   width: double.infinity,
                   decoration:  BoxDecoration(
 
-                    image: const DecorationImage(
-                        image: AssetImage('assets/images/servicedetail.png'),
+                    image: DecorationImage(
+                        image: NetworkImage('https://api.vensemart.com/storage/app/category_icons/facial.jpeg'),
                         fit: BoxFit.cover
                     ),
                   ),
@@ -158,6 +196,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                       Container(
                                         margin: EdgeInsets.all(12.0),
                                         child: TextFormField(
+                                          controller: timeController,
                                           decoration: InputDecoration(
                                               border: const OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
@@ -192,6 +231,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                                 // Display a CupertinoDatePicker in time picker mode.
                                                 onPressed: () => _showDialog(
                                                   CupertinoDatePicker(
+
                                                     initialDateTime: time,
                                                     mode: CupertinoDatePickerMode.time,
                                                     use24hFormat: true,
@@ -238,23 +278,29 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
 
 
                                       GestureDetector(
+
                                         onTap: (){
+                                          Navigator.pop(context);
                                           Navigator.push(
                                             context,
-                                            new MaterialPageRoute(
-                                              builder: (context) => ServiceDeliveryDetailScreen(),
+                                            MaterialPageRoute(
+                                              builder: (context) => Consumer<ProviderServices>(
+                                                  builder: (_, provider, __) => ServiceDeliveryDetailScreen(service_name: timeController.text.trim()),
+                                            ),
                                             ),
                                           );
-                                        },
-                                        child: Container(
-                                            height: MediaQuery.of(context).size.height/17,width: MediaQuery.of(context).size.width/2,
-                                            decoration: BoxDecoration(
-                                              color: Colors.blueAccent,
-                                              borderRadius: BorderRadius.circular(20.0),
-                                            ),
-                                            child: Center(child: const Text('BOOK',style: TextStyle(color: Colors.white),))),
-                                      ),
 
+                                        },
+                                        child:  Container(
+                                          height: 30,
+                                          width: 100,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(30.0),
+                                            color: Colors.blue,
+                                          ),
+                                          child: Center(child: Text('Book now',style: TextStyle(color: Colors.white,fontSize: 12),)),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 );
@@ -294,7 +340,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   Text('Amarachi beauty hair saloon',style: TextStyle(fontSize: 27,fontWeight: FontWeight.bold),),
                   SizedBox(height: 16.0,),
                   Container(
-                    width: 300,
+                      width: 300,
                       child: Text('Spa Hairsstyling nailfixing haircut Facials Spa Hairsstyling',style: TextStyle( fontSize: 20, fontWeight: FontWeight.normal),)),
                   SizedBox(height: 16.0,),
                   Row(
@@ -376,13 +422,13 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                               height:MediaQuery.of(context).size.height/8.5,
                               width: 120,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20.0),
+                                  borderRadius: BorderRadius.circular(20.0),
                                   image: DecorationImage(
                                       image: AssetImage('assets/images/servicedetail1.png')
                                   )
                               ),
                             ),
-                             SizedBox(height: 8.5,),
+                            SizedBox(height: 8.5,),
 
                             Container(
                               height:MediaQuery.of(context).size.height/8.5,
@@ -403,22 +449,22 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                     ),
                   )
 
-
-
-
-
-
-
                 ],
               ),
             )
 
           ],
-        ),
+        );
+
+      }
+    }
+      ),
       ),
     );
   }
 }
+
+
 
 // This class simply decorates a row of widgets.
 class _DatePickerItem extends StatelessWidget {

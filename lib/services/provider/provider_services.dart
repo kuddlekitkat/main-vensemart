@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:vensemart/core/session_manager.dart';
 import 'package:vensemart/models/about_us_model.dart';
+import 'package:vensemart/models/add_booking_model.dart';
 import 'package:vensemart/models/contact_us_model.dart';
 import 'package:vensemart/models/customer_home_model.dart';
 import 'package:vensemart/models/general_model.dart';
@@ -13,8 +14,10 @@ import '../../ChoiceIntroScreen.dart';
 import '../../OtpVerification.dart';
 import '../../apiservices/auth_repo.dart';
 import '../../models/faqs_model.dart';
+import '../../models/get_all_services_model.dart';
 import '../../models/product_category_model.dart';
 import '../../models/product_id_model.dart';
+import '../../models/service_id_model.dart';
 import '../../models/update_profile_model.dart';
 import '../../models/user_details.dart';
 
@@ -30,12 +33,26 @@ class ProviderServices extends ChangeNotifier {
   ServicesModel? _servicesModel;
   UpdateProfileModel? get updateProfileModel => _updateProfileModel;
   UpdateProfileModel? _updateProfileModel;
+
+
+  AddBookingModel? get addBooking => _addBookingModel;
+  AddBookingModel? _addBookingModel;
+
+
   CustomerHomeModel? get customerHomeModel => _customerHomeModel;
   CustomerHomeModel? _customerHomeModel;
   ProductCategoryModel? get productCategory => _productCategoryModel;
   ProductCategoryModel? _productCategoryModel;
   ProductIdModel? get productIdModel => _productIdModel;
   ProductIdModel? _productIdModel;
+
+  ServiceIdModel? get serviceIdModel => _serviceIdModel;
+  ServiceIdModel? _serviceIdModel;
+
+  ServiceCategoryModel? get serviceCategoryModel => _servicesCategoryModel;
+  ServiceCategoryModel? _servicesCategoryModel;
+
+
   TermsAndConditionModel? get termsAndCondition => _termsSndCondition;
   TermsAndConditionModel? _termsSndCondition;
   AboutUsModel? get aboutUsModel => _aboutUsModel;
@@ -51,6 +68,11 @@ class ProviderServices extends ChangeNotifier {
       _servicesModel != null &&
       _servicesModel?.data != null &&
       _servicesModel!.data!.isNotEmpty;
+
+  bool get isPresent =>
+      _productCategoryModel != null &&
+          _productCategoryModel?.data != null &&
+          _productCategoryModel!.data!.isNotEmpty;
 
   void signIn({Map<String, String>? map, BuildContext? context}) async {
     try {
@@ -168,6 +190,25 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+
+  void addNewBooking(
+      {Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.addBooking(map!);
+      if (response != null && response.statusCode == 200) {
+        _addBookingModel = AddBookingModel.fromJson(response.data);
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+
+
   void customerHome({Map<String, String>? map, BuildContext? context}) async {
     try {
       _isLoading = true;
@@ -243,6 +284,22 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+
+  void serviceId(String num) async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.serviceId(num);
+      if (response != null && response.statusCode == 200) {
+        _serviceIdModel = ServiceIdModel.fromJson(response.data);
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
   void termsAndCon() async {
     try {
       _isLoading = true;
@@ -294,6 +351,21 @@ class ProviderServices extends ChangeNotifier {
       Response? response = await authRepo.faqs();
       if (response != null && response.statusCode == 200) {
         _faqsModel = FaqsModel.fromJson(response.data);
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+  void getAllServiceList() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.serviceCategory();
+      if (response != null && response.statusCode == 200) {
+        _servicesCategoryModel = ServiceCategoryModel.fromJson(response.data);
         _isLoading = false;
       }
       notifyListeners();

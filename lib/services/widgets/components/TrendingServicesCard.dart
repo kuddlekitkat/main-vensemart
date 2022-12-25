@@ -233,8 +233,8 @@ class _TrendingServicesCardState extends State<TrendingServicesCard> {
 
                                          Navigator.push(
                                            context,
-                                           new MaterialPageRoute(
-                                             builder: (context) => ServiceDeliveryDetailScreen(),
+                                            MaterialPageRoute(
+                                             builder: (context) => ServiceDeliveryDetailScreen(service_name: 'barbing'),
                                            ),
                                          );
                                        },
