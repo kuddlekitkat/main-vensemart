@@ -92,7 +92,11 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
                     crossAxisCount: 3,
                     children: <Widget>[
                       if (provider.isAvailable)
-                        ...provider.servicesModel!.data!.map((e) {
+                        ...provider.servicesModel!.data!
+                            .where((element) => element.categoryName!
+                                .toLowerCase()
+                                .contains(_query.toLowerCase()))
+                            .map((e) {
                           // if (e.categoryName!
                           //     .toString()
                           //     .toLowerCase()
@@ -104,16 +108,8 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
                           //   print(
                           //       'object an image ${searchItem[intval].toJson().toString()}');
                           // }
-                          return
-                              _query.isEmpty ||
-                                      e.categoryName!
-                                          .toString()
-                                          .toLowerCase()
-                                          .contains(_query.toLowerCase())
-                                  ?
-                              contentContainer(
-                                  text: e.categoryName, image: e.categoryIcon)
-                          : Container();
+                          return contentContainer(
+                              text: e.categoryName, image: e.categoryIcon);
                         }).toList()
                     ],
                   ),

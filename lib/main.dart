@@ -9,6 +9,7 @@ import 'ChoiceIntroScreen.dart';
 import 'apiservices/provider/provider.dart';
 import 'core/injector.dart';
 import 'core/session_manager.dart';
+import 'services/screens/ServicesGridScreen.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
