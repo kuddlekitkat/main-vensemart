@@ -38,7 +38,7 @@ class AppointmentCard extends StatelessWidget {
                     height:50,
                     width: 60,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(10.0),
                           topRight: Radius.circular(10.0),
                           bottomRight: Radius.circular(10.0),
@@ -51,7 +51,7 @@ class AppointmentCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 10,
                 ),
                 Column(

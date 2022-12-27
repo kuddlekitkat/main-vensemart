@@ -76,6 +76,10 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
   }
 
 
+  //please help me make the date and time dynamic by using the cupertino time picker and date picker
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -231,7 +235,6 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                                 // Display a CupertinoDatePicker in time picker mode.
                                                 onPressed: () => _showDialog(
                                                   CupertinoDatePicker(
-
                                                     initialDateTime: time,
                                                     mode: CupertinoDatePickerMode.time,
                                                     use24hFormat: true,
