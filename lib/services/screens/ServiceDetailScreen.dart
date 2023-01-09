@@ -4,12 +4,18 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/services/screens/ServiceDeliveryDetailScreen.dart';
+import 'package:bottom_picker/bottom_picker.dart';
+import 'package:bottom_picker/resources/arrays.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../provider/provider_services.dart';
 
 
 class ServiceDetailScreen extends StatefulWidget {
-  const ServiceDetailScreen({Key? key}) : super(key: key);
+  String classId;
+   ServiceDetailScreen({required this.classId});
 
   @override
   State<ServiceDetailScreen> createState() => _ServiceDetailScreenState();
@@ -22,20 +28,23 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
   DateTime time = DateTime(2016, 5, 10, 22, 35);
   DateTime dateTime = DateTime(2016, 8, 3, 17, 45);
 
+  var mytime;
+  var plain;
 
 
 
 
 
 
-  // This shows a CupertinoModalPopup with a reasonable fixed height which hosts CupertinoDatePicker.
+
   void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
         context: context,
         builder: (BuildContext context) => Container(
           height: 216,
           padding: const EdgeInsets.only(top: 6.0),
-          // The Bottom margin is provided to align the popup above the system navigation bar.
+          // The Bottom margin is provided to align the popup above the system
+          // navigation bar.
           margin: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
@@ -55,11 +64,15 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
   TextEditingController timeController = TextEditingController();
 
   late DateTime _selectedDate;
+
+
   TextEditingController _textEditingController = TextEditingController();
   @override
   void initState() {
+
     providerServices = Provider.of<ProviderServices>(context, listen: false);
-    providerServices?.serviceId(368.toString());
+    providerServices?.serviceId(widget.classId.toString());
+    providerServices?.trendingServices();
     servicename = providerServices?.serviceIdModel?.data?.name ?? '';
     super.initState();
   }
@@ -68,7 +81,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
     if (true) {
       setState(() {});
       providerServices?.addNewBooking(map: {
-        "service_provider_id" : 368.toString(),
+        "service_provider_id" : widget.toString(),
         "booking_date" : "23-12-2022",
         "booking_time" : "12:30 PM"
       }, context: context);
@@ -99,7 +112,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                 Container(
                   height: MediaQuery.of(context).size.height /2.4,
                   width: double.infinity,
-                  decoration:  BoxDecoration(
+                  decoration:  const BoxDecoration(
 
                     image: DecorationImage(
                         image: NetworkImage('https://api.vensemart.com/storage/app/category_icons/facial.jpeg'),
@@ -112,17 +125,22 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      CircleAvatar(
-                        radius: 20,
-                        backgroundColor: Colors.white,
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () {
+                      GestureDetector(
+                        onTap: (){
+                          Navigator.pop(context);
+                        },
+                        child: CircleAvatar(
+                          radius: 20,
+                          backgroundColor: Colors.white,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.grey,
+                            ),
+                            onPressed: () {
 
-                          },
+                            },
+                          ),
                         ),
                       ),
 
@@ -147,7 +165,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                             radius: 20,
                             backgroundColor: Colors.white,
                             child: IconButton(
-                              icon: FaIcon(
+                              icon: const FaIcon(
                                 FontAwesomeIcons.upload,
                                 color: Colors.grey,
                               ),
@@ -176,6 +194,13 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
 
                   Row(
                     children: [
+
+
+
+
+
+
+
                       GestureDetector(
                         onTap: (){
                           showModalBottomSheet(
@@ -186,127 +211,248 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                 ),
                               ),
                               backgroundColor: Colors.white,
-                              builder: (context) {
-                                return SizedBox(
-                                  height: MediaQuery.of(context).size.height/2.5,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-
-                                      Text('Select your convenient time and date',style: TextStyle(fontWeight: FontWeight.normal,fontSize: 20.0),),
-                                      SizedBox(height: 16.0,),
-                                      Container(
-                                        margin: EdgeInsets.all(12.0),
-                                        child: TextFormField(
-                                          controller: timeController,
-                                          decoration: InputDecoration(
-                                              border: const OutlineInputBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(10.0),
-                                                ),
-                                                borderSide: BorderSide(
-                                                  width: 0,
-                                                  style: BorderStyle.none,
-                                                ),
-                                              ),
-                                              filled: true,
-                                              prefixIcon: Text(' '),
-                                              hintText: ' DD-MM-YY',
-                                              suffixIcon: Icon(Icons.calendar_month),
-                                              hintStyle: new TextStyle(color: Colors.grey[600]),
-                                              fillColor: Color.fromRGBO(250,250,254,1)),
-                                        ),
-                                      ),
-
-                                      SizedBox(height: 4.0,),
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                        children: [
+                              builder: (BuildContext context) {
+                                TextEditingController timeinput = TextEditingController();
+                                timeinput.text = '';
+                                return StatefulBuilder(
+                                  builder: (BuildContext context, StateSetter mystate) {
+                                    return SizedBox(
+                                      height: MediaQuery
+                                          .of(context)
+                                          .size
+                                          .height / 2.5,
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment
+                                            .center,
+                                        mainAxisAlignment: MainAxisAlignment
+                                            .center,
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          Text(
+                                            timeinput.text,
+                                            style: const TextStyle(
+                                              fontSize: 22.0,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Select your convenient time and date',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 20.0),),
+                                          SizedBox(height: 16.0,),
 
 
+                                          Container(
+                                            margin: EdgeInsets.all(12.0),
+                                            child: TextFormField(
+                                              readOnly: true,
+                                              onTap: () async {
+                                                DateTime? pickedDate = await showDatePicker(
+                                                    context: context,
+                                                    initialDate: DateTime.now(),
+                                                    //get today's date
+                                                    firstDate: DateTime(2000),
+                                                    //DateTime.now() - not to allow to choose before today.
+                                                    lastDate: DateTime(2101)
+                                                );
 
-                                          _DatePickerItem(
-                                            children: <Widget>[
-                                              const Text('Time',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20.00),),
-                                              CupertinoButton(
-                                                // Display a CupertinoDatePicker in time picker mode.
-                                                onPressed: () => _showDialog(
-                                                  CupertinoDatePicker(
-                                                    initialDateTime: time,
-                                                    mode: CupertinoDatePickerMode.time,
-                                                    use24hFormat: true,
-                                                    // This is called when the user changes the time.
-                                                    onDateTimeChanged: (DateTime newTime) {
-                                                      setState(() => time = newTime);
-                                                    },
+                                                if (pickedDate != null) {
+                                                  print(
+                                                      pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
+                                                  String formattedDate = DateFormat(
+                                                      'yyyy-MM-dd').format(
+                                                      pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
+                                                  print(
+                                                      formattedDate); //formatted date output using intl package =>  2022-07-04
+                                                  //You can format date as per your need
+                                                  mystate(() {
+                                                    timeController.text =
+                                                        formattedDate;
+                                                  });
+                                                  setState(() {
+                                                    timeController.text =
+                                                        formattedDate; //set foratted date to TextField value.
+                                                  });
+                                                } else {
+                                                  print("Date is not selected");
+                                                }
+
+
+                                                //when click we have to show the datepicker
+                                              },
+                                              controller: timeController,
+                                              decoration: InputDecoration(
+                                                  border: const OutlineInputBorder(
+                                                    borderRadius: BorderRadius
+                                                        .all(
+                                                      Radius.circular(10.0),
+                                                    ),
+                                                    borderSide: BorderSide(
+                                                      width: 0,
+                                                      style: BorderStyle.none,
+                                                    ),
                                                   ),
-                                                ),
-                                                // In this example, the time value is formatted manually. You can use intl package to
-                                                // format the value based on the user's locale settings.
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      '${time.hour}:${time.minute}',
+                                                  filled: true,
+                                                  prefixIcon: Text(' '),
+                                                  hintText: ' DD-MM-YY',
+                                                  suffixIcon: GestureDetector(
+                                                      onTap: () =>
+                                                          _openDatePicker(
+                                                              context),
+                                                      child: Icon(Icons
+                                                          .calendar_month)),
+                                                  hintStyle: new TextStyle(
+                                                      color: Colors.grey[600]),
+                                                  fillColor: Color.fromRGBO(
+                                                      250, 250, 254, 1)),
+                                            ),
+                                          ),
+
+                                          SizedBox(height: 4.0,),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment
+                                                .center,
+                                            mainAxisAlignment: MainAxisAlignment
+                                                .spaceEvenly,
+                                            children: [
+
+
+                                              _DatePickerItem(
+                                                children: <Widget>[
+                                                  const Text('Time Entry'),
+                                                  CupertinoButton(
+                                                    // Display a CupertinoDatePicker in time picker mode.
+                                                    onPressed: () =>
+                                                        _showDialog(
+                                                            Scaffold(
+                                                              body: Container(
+                                                                  padding: EdgeInsets
+                                                                      .all(15),
+                                                                  height: 150,
+                                                                  child: Center(
+                                                                      child: TextField(
+                                                                        controller: timeinput,
+                                                                        //editing controller of this TextField
+                                                                        decoration: const InputDecoration(
+                                                                            icon: Icon(
+                                                                                Icons
+                                                                                    .timer),
+                                                                            //icon of text field
+                                                                            labelText: "Enter Time" //label text of field
+                                                                        ),
+                                                                        readOnly: true,
+                                                                        //set it true, so that user will not able to edit text
+                                                                        onTap: () async {
+                                                                          TimeOfDay? pickedTime = await showTimePicker(
+                                                                            initialTime: TimeOfDay
+                                                                                .now(),
+                                                                            context: context,
+                                                                          );
+
+                                                                          if (pickedTime !=
+                                                                              null) {
+                                                                            print(
+                                                                                pickedTime
+                                                                                    .format(
+                                                                                    context)); //output 10:51 PM
+                                                                            DateTime parsedTime = DateFormat
+                                                                                .jm()
+                                                                                .parse(
+                                                                                pickedTime
+                                                                                    .format(
+                                                                                    context)
+                                                                                    .toString());
+                                                                            //converting to DateTime so that we can further format on different pattern.
+                                                                            print(
+                                                                                parsedTime); //output 1970-01-01 22:53:00.000
+                                                                            String formattedTime = DateFormat(
+                                                                                'HH:mm:ss')
+                                                                                .format(
+                                                                                parsedTime);
+                                                                            print(
+                                                                                formattedTime); //output 14:59:00
+
+                                                                            mystate(() {
+                                                                              timeinput
+                                                                                  .text =
+                                                                                  formattedTime;
+                                                                            });
+                                                                            //DateFormat() is from intl package, you can format the time on any pattern you need.
+
+                                                                            setState(() {
+                                                                              timeinput
+                                                                                  .text =
+                                                                                  formattedTime;
+
+                                                                              //set the value of text field.
+                                                                            });
+                                                                          } else {
+                                                                            print(
+                                                                                "Time is not selected");
+                                                                          }
+                                                                        },
+                                                                      )
+                                                                  )
+                                                              ),
+                                                            )
+                                                        ),
+                                                    // In this example, the time value is formatted manually.
+                                                    // You can use the intl package to format the value based on
+                                                    // the user's locale settings.
+                                                    child: Text(
+                                                      timeinput.text == ''
+                                                          ? 'select time'
+                                                          : timeinput.text,
                                                       style: const TextStyle(
                                                         fontSize: 22.0,
                                                       ),
                                                     ),
-
-
-                                                  ],
-
-
-                                                ),
+                                                  ),
+                                                ],
                                               ),
-                                              Container(
-                                                  height: 30,width: 40,
-                                                  color: Colors.grey,
-                                                  child: Center(child: const Text('AM',style: TextStyle(fontWeight: FontWeight.bold,),), )),
-                                              Container(
-                                                  height: 40,width: 50,
-                                                  color: Colors.blue,
-                                                  child: Center(child: const Text('PM',style: TextStyle(fontWeight: FontWeight.bold),))),
-
-
                                             ],
+
+                                          ),
+                                          SizedBox(height: 12.0),
+
+
+                                          GestureDetector(
+
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Consumer<
+                                                          ProviderServices>(
+                                                        builder: (_, provider,
+                                                            __) =>
+                                                            ServiceDeliveryDetailScreen(
+                                                                service_name: timeController
+                                                                    .text,service_date: timeinput.text,service_id: widget.classId.toString()),
+                                                      ),
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              height: 30,
+                                              width: 100,
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius
+                                                    .circular(30.0),
+                                                color: Colors.blue,
+                                              ),
+                                              child: Center(child: Text(
+                                                'Book now', style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 12),)),
+                                            ),
                                           ),
                                         ],
-
                                       ),
-                                      SizedBox(height: 12.0),
-
-
-
-                                      GestureDetector(
-
-                                        onTap: (){
-                                          Navigator.pop(context);
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) => Consumer<ProviderServices>(
-                                                  builder: (_, provider, __) => ServiceDeliveryDetailScreen(service_name: timeController.text.trim()),
-                                            ),
-                                            ),
-                                          );
-
-                                        },
-                                        child:  Container(
-                                          height: 30,
-                                          width: 100,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(30.0),
-                                            color: Colors.blue,
-                                          ),
-                                          child: Center(child: Text('Book now',style: TextStyle(color: Colors.white,fontSize: 12),)),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                );
+                                    );
+                                  });
                               });
                         },
                         child: Container(
@@ -465,7 +611,39 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
       ),
     );
   }
+
+  void _openDatePicker(BuildContext context) {
+    BottomPicker.date(
+      title: 'Set your Date',
+      dateOrder: DatePickerDateOrder.dmy,
+      pickerTextStyle: const TextStyle(
+        color: Colors.blue,
+        fontWeight: FontWeight.bold,
+        fontSize: 12,
+      ),
+      titleStyle: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 15,
+        color: Colors.blue,
+      ),
+      onChange: (index) {
+        index = time;
+        print(index);
+        setState(){
+          index =  time;
+        }
+
+      },
+      onSubmit: (index) {
+        print(index);
+
+
+      },
+      bottomPickerTheme: BottomPickerTheme.plumPlate,
+    ).show(context);
+  }
 }
+
 
 
 
@@ -500,3 +678,6 @@ class _DatePickerItem extends StatelessWidget {
     );
   }
 }
+
+
+

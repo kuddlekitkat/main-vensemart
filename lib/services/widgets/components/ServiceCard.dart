@@ -236,7 +236,7 @@ class _ServiceCardState extends State<ServiceCard> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => ServiceDeliveryDetailScreen(service_name: 'barbing'),
+                                          builder: (context) => ServiceDeliveryDetailScreen(service_name: 'barbing',service_date: 'jack', service_id: 1.toString(),),
                                         ),
                                       );
 

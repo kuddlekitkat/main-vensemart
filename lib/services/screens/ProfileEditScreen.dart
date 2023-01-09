@@ -48,8 +48,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
       providerServices?.updateUserProfile(map: {
         "name": nameController.text.trim(),
         "email": emailController.text.trim(),
-        "mobile_number": phoneController.text.trim(),
-        "address": addressController.text.trim(),
+        "mobile": phoneController.text.trim(),
+        // "address": addressController.text.trim(),
         // "gender": genderController.text.trim(),
         // "date_of_birth": dobController.text.trim(),
         // "profile": MultipartFile.fromBytes(
@@ -297,29 +297,29 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       //       hintStyle: new TextStyle(color: Colors.grey[600]),
                       //       fillColor: Colors.white),
                       // ),
-                      // const SizedBox(
-                      //   height: 30.0,
-                      // ),
-                      // Center(
-                      //   child: GestureDetector(
-                      //     onTap: () => updateProfile(context),
-                      //     child: Container(
-                      //       height: MediaQuery.of(context).size.height / 15,
-                      //       width: MediaQuery.of(context).size.width / 1.1,
-                      //       decoration: BoxDecoration(
-                      //         color: const Color(0xff1456f1),
-                      //         borderRadius: BorderRadius.circular(60.0),
-                      //       ),
-                      //       child: const Center(
-                      //         child: Text(
-                      //           'Update Profile',
-                      //           style: TextStyle(
-                      //               color: Colors.white, fontSize: 22),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // )
+                      const SizedBox(
+                        height: 30.0,
+                      ),
+                      Center(
+                        child: GestureDetector(
+                          onTap: () => updateProfile(context),
+                          child: Container(
+                            height: MediaQuery.of(context).size.height / 15,
+                            width: MediaQuery.of(context).size.width / 1.1,
+                            decoration: BoxDecoration(
+                              color: const Color(0xff1456f1),
+                              borderRadius: BorderRadius.circular(60.0),
+                            ),
+                            child: const Center(
+                              child: Text(
+                                'Update Profile',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 22),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
                     ],
                   ),
                 ),

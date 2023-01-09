@@ -65,7 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
     }
 
     return Scaffold(
-        resizeToAvoidBottomInset: false,
         backgroundColor: const Color(0xff1456f1),
         body: Form(
           key: _globalFormKey,
@@ -95,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height / 1.8,
+                height: MediaQuery.of(context).size.height / 2.0,
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -168,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: const [
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 25.0, vertical: 13.0),
+                              horizontal: 25.0, vertical: 5.0),
                           child: Text(
                             'Forgot password?',
                             style: TextStyle(

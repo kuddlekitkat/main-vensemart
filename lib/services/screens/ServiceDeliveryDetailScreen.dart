@@ -1,9 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 import 'package:vensemart/services/screens/ServicesSuccessScreen.dart';
 
-class ServiceDeliveryDetailScreen extends StatelessWidget {
+import '../provider/provider_services.dart';
+
+class ServiceDeliveryDetailScreen extends StatefulWidget {
   String service_name;
-  ServiceDeliveryDetailScreen({required this.service_name});
+   String service_id;
+  String service_date;
+  ServiceDeliveryDetailScreen({required this.service_name, required this.service_date, required this.service_id});
+
+  @override
+  State<ServiceDeliveryDetailScreen> createState() => _ServiceDeliveryDetailScreenState();
+}
+
+class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScreen> {
+
+  ProviderServices? providerServices;
+  late String servicename;
+  TextEditingController timeController = TextEditingController();
+
+  late DateTime _selectedDate;
+
+
+  TextEditingController _textEditingController = TextEditingController();
+  @override
+  void initState() {
+
+    providerServices = Provider.of<ProviderServices>(context, listen: false);
+    providerServices?.serviceId(widget.service_id.toString());
+    servicename = providerServices?.serviceIdModel?.data?.name ?? '';
+    super.initState();
+  }
+
+  void addBooking(context) async {
+    if (true) {
+      setState(() {});
+      providerServices?.addNewBooking(map: {
+        "service_provider_id" : widget.service_id.toString(),
+        "booking_date" : widget.service_name,
+        "booking_time" : widget.service_date,
+      }, context: context);
+
+      Navigator.push(
+        context!,
+        MaterialPageRoute(
+          builder: (context) => const ServicesSuccessScreen(),
+        ),
+      );
+
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,119 +89,145 @@ class ServiceDeliveryDetailScreen extends StatelessWidget {
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SafeArea(
-            child: Column(
-              children: [
-                Padding(
+        child: Consumer<ProviderServices>(
+            builder: (_, provider, __) {
+              print('object ${provider.serviceIdModel?.data}');
+              if (provider.serviceIdModel?.data == 'null') {
+                return const Text('No completed Requests');
+              } else {
+
+                return  Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Address Details'),
-                      TextButton(
-                        onPressed: (){
+                  child: SafeArea(
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Address Details'),
+                              TextButton(
+                                onPressed: (){
 
-                        },
-                          child: Text('CHANGE',style: TextStyle(color: Colors.blueAccent)),),
-                    ],
-                  ),
-                ),
-
-                Container(
-                    height: screenHeight / 4.5,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(23.0),
-                        color: Colors.white
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Aaron Dikko'),
-                          Text('Gambiya Street Area 11'),
-                          Text('Federal Capital Territory'),
-                          Text('ABUJA GARKI'),
-                          Text('+2348101013370'),
-                        ],
-                      ),
-                    )
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('Services Ordered'),
-                    ],
-                  ),
-                ),
-
-
-
-
-
-                Container(
-                    height: screenHeight / 4.5,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(23.0),
-                        color: Colors.white
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('SERVICE 1 of 1' ,style: TextStyle(fontSize: 16),),
-                          Text(service_name.toString()),
-                          Text('Service to be rendered by: Amarachi'),
-                          Text('Delivery Date : 20th September 2022'),
-                        ],
-                      ),
-                    )
-                ),
-                Padding(
-                  padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height/5),
-                  child: Column(
-                    children: [
-
-
-                      Container(
-                        height: screenHeight/13,
-                        width: screenWidth/1.10,
-                        decoration: BoxDecoration(
-                          color: Color(0xff1456f1),
-                          borderRadius: BorderRadius.circular(40.0),
-
-                        ),
-                        child: GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              new MaterialPageRoute(
-                                builder: (context) => ServicesSuccessScreen(),
-                              ),
-                            );
-                          },
-                          child: Center(child: Text('Order Now',style: TextStyle(fontSize: 20.0,fontWeight:FontWeight.bold,color: Colors.white),),
+                                },
+                                child: Text('CHANGE',style: TextStyle(color: Colors.blueAccent)),),
+                            ],
                           ),
                         ),
-                      ),
-                    ],
+
+                        Container(
+                            height: screenHeight / 4.5,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(23.0),
+                                color: Colors.white
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('Aaron Dikko'),
+                                  Text('Gambiya Street Area 11'),
+                                  Text('Federal Capital Territory'),
+                                  Text('ABUJA GARKI'),
+                                  Text('+2348101013370'),
+                                ],
+                              ),
+                            )
+                        ),
+
+                        Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text('Services Ordered'),
+                            ],
+                          ),
+                        ),
+
+
+
+
+
+                        Container(
+                            height: screenHeight / 4.5,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(23.0),
+                                color: Colors.white
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text('SERVICE 1 of 1' ,style: TextStyle(fontSize: 16),),
+                                  Text(widget.service_name.toString()),
+
+                                  Text('Service to be rendered by: ${providerServices?.serviceIdModel?.data?.name}'),
+                                  Text(widget.service_date.toString()),
+                                ],
+                              ),
+                            )
+                        ),
+                        Padding(
+                          padding:  EdgeInsets.only(top: MediaQuery.of(context).size.height/5),
+                          child: Column(
+                            children: [
+
+
+                              Container(
+                                height: screenHeight/13,
+                                width: screenWidth/1.10,
+                                decoration: BoxDecoration(
+                                  color: Color(0xff1456f1),
+                                  borderRadius: BorderRadius.circular(40.0),
+
+                                ),
+                                child:  GestureDetector(
+                                  onTap: () => addBooking(context),
+                                  child: Consumer<ProviderServices>(
+                                    builder: (_, provider, __) => Container(
+                                      height: screenHeight / 13,
+                                      width: screenWidth / 1.07,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xff1456f1),
+                                        borderRadius: BorderRadius.circular(40.0),
+                                      ),
+                                      child: provider.isLoading == true
+                                          ? const SpinKitCircle(
+                                        color: Colors.white,
+                                      )
+                                          : const Center(
+                                          child: Text(
+                                            'Book Now',
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 20.0),
+                                          )),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+
+                      ],
+                    ),
+
                   ),
-                )
+                );
 
-              ],
-            ),
 
-          ),
+              }
+
+            }
+
         ),
       ),
     );

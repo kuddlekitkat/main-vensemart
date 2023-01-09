@@ -97,6 +97,18 @@ class AuthRepo with ApiServices {
     return null;
   }
 
+
+  Future<Response?> trendingServices() async {
+    Response? response = await apiGetRequests("get-trending-services");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+
   Future<Response?> productCategory(String? num) async {
     Response? response = await apiGetRequests("products/$num");
 
@@ -106,6 +118,23 @@ class AuthRepo with ApiServices {
 
     return null;
   }
+
+
+
+
+
+
+
+  Future<Response?> availableServ(String? num,String? lat, String? long) async {
+    Response? response = await apiGetRequests("serviceprovider_list/$num?lat=$lat&lng=$long");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
   Future<Response?> productId(String? num) async {
     Response? response = await apiGetRequests("product_details/$num");
 
@@ -168,9 +197,28 @@ class AuthRepo with ApiServices {
     return null;
   }
 
+  Future<Response?> sendLocation(Map<String, String> credentials) async {
+    Response? response = await apiPostRequests("set-location", credentials);
+
+    if (response != null) {
+      return response;
+    }
+    return null;
+  }
+
 
   Future<Response?> serviceCategory() async {
     Response? response = await apiGetRequests("get-all-service-categories");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+  Future<Response?> serviceCateg(String? num) async {
+    Response? response = await apiGetRequests("serviceprovider_list/$num");
 
     if (response != null) {
       return response;

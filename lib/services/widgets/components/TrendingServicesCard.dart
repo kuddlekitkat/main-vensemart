@@ -13,7 +13,9 @@ class TrendingServicesCard extends StatefulWidget {
   final int blackStars;
 
 
-  const TrendingServicesCard({required this.image, required this.jobs,required this.name,required this.services,required this.redStars,required this.blackStars});
+
+
+  TrendingServicesCard({required this.image, required this.jobs,required this.name,required this.services,required this.redStars,required this.blackStars});
 
   @override
   State<TrendingServicesCard> createState() => _TrendingServicesCardState();
@@ -188,6 +190,7 @@ class _TrendingServicesCardState extends State<TrendingServicesCard> {
                                                    use24hFormat: true,
                                                    // This is called when the user changes the time.
                                                    onDateTimeChanged: (DateTime newTime) {
+                                                     print(time);
                                                      setState(() => time = newTime);
                                                    },
                                                  ),
@@ -234,7 +237,7 @@ class _TrendingServicesCardState extends State<TrendingServicesCard> {
                                          Navigator.push(
                                            context,
                                             MaterialPageRoute(
-                                             builder: (context) => ServiceDeliveryDetailScreen(service_name: 'barbing'),
+                                             builder: (context) => ServiceDeliveryDetailScreen(service_name: 'barbing',service_date: 'jack', service_id: 1.toString(),),
                                            ),
                                          );
                                        },
@@ -251,14 +254,6 @@ class _TrendingServicesCardState extends State<TrendingServicesCard> {
                                  ),
                                );
                              });
-
-
-
-
-
-
-
-
                        },
                        child: Container(
                          height: 30,

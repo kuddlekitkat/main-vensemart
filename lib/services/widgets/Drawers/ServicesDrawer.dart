@@ -1,12 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:vensemart/LoginScreen.dart';
 import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
 import 'package:vensemart/services/screens/AboutUsScreen.dart';
 
+import '../../provider/provider_services.dart';
 import '../../screens/AvailableServicesListScreen.dart';
 
-class ServicesDrawer extends StatelessWidget {
+class ServicesDrawer extends StatefulWidget {
   const ServicesDrawer({Key? key}) : super(key: key);
+
+  @override
+  State<ServicesDrawer> createState() => _ServicesDrawerState();
+}
+
+class _ServicesDrawerState extends State<ServicesDrawer> {
+  ProviderServices? providerServices;
+
+  final _globalFormKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    providerServices = Provider.of<ProviderServices>(context, listen: false);
+    super.initState();
+  }
+
+void Logout() async {
+
+  // providerServices?.signOut();
+  setState(() {
+    providerServices?.signOut();
+  });
+
+  // Navigator.push(
+  //   context,
+  //   MaterialPageRoute(
+  //     builder: (context) => LoginScreen(),
+  //   ),
+  // );
+
+
+}
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +102,7 @@ class ServicesDrawer extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => AvailableServicesListScreen(),
+                              builder: (context) => AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: 385.toString(),),
                             ),
                           );
                         },
@@ -128,9 +165,14 @@ class ServicesDrawer extends StatelessWidget {
                         leading: Icon(Icons.rate_review_rounded),
                         title: Text('Rate our app'),
                       ),
-                      const ListTile(
-                        leading:Icon(Icons.logout_outlined,color: Colors.redAccent,),
-                        title: Text('Logout'),
+                      GestureDetector(
+                        onTap: (){
+                         Logout();
+                        },
+                        child: const ListTile(
+                          leading:Icon(Icons.logout_outlined,color: Colors.redAccent,),
+                          title: Text('Logout'),
+                        ),
                       ),
 
                     ],

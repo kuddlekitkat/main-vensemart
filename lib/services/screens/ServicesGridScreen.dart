@@ -109,6 +109,7 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
                           //       'object an image ${searchItem[intval].toJson().toString()}');
                           // }
                           return contentContainer(
+                              homeId: e.id,
                               text: e.categoryName, image: e.categoryIcon);
                         }).toList()
                     ],
@@ -122,7 +123,7 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
     );
   }
 
-  contentContainer({String? text, String? image}) => ClipRRect(
+  contentContainer({String? homeId,String? text, String? image}) => ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: GridTile(
           footer: GridTileBar(
@@ -138,7 +139,7 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => const AvailableServicesListScreen(),
+                  builder: (context) =>  AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: homeId.toString()),
                 ),
               );
             },

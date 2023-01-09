@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:vensemart/services/screens/ServiceDetailScreen.dart';
 
 import '../../services/provider/provider_services.dart';
 import '../../services/screens/AvailableServicesListScreen.dart';
@@ -98,6 +99,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               if (provider.isPresent)
                                 ...provider.productCategory!.data!
                                     .map((e) => contentContainer(
+                                    id:385.toString(),
                                     text: e.categoryName, image: e.productImage))
                                     .toList()
                             ],
@@ -117,7 +119,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     );
   }
 
-  contentContainer({String? text, String? image}) => ClipRRect(
+  contentContainer({String? id,String? text, String? image}) => ClipRRect(
     borderRadius: BorderRadius.circular(10),
     child: GridTile(
       footer: GridTileBar(
@@ -133,7 +135,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const AvailableServicesListScreen(),
+              builder: (context) => ServiceDetailScreen(classId: id.toString()),
             ),
           );
         },

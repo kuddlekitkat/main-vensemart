@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           ServicesHomeScreen.routeName: (ctx) => const ServicesHomeScreen(),
           LoginScreen.routeName: (ctx) => const ServicesHomeScreen(),
           AvailableServicesListScreen.routeName: (ctx) =>
-              const AvailableServicesListScreen(),
+      AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: 385.toString()),
         },
       ),
     );

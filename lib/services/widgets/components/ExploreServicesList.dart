@@ -41,6 +41,7 @@ class _ExploreServicesListState extends State<ExploreServicesList> {
                 return Row(
                   children: [
                     listWidget(
+                      id: provider.serviceCategoryModel?.data?[index].id,
                         imageUrl: provider
                             .serviceCategoryModel?.data?[index].categoryIcon,
                         text: provider
@@ -164,7 +165,7 @@ class _ExploreServicesListState extends State<ExploreServicesList> {
     );
   }
 
-  listWidget({imageUrl, text}) {
+  listWidget({imageUrl, text,id}) {
     return Card(
       child: Container(
         padding: EdgeInsets.all(6.0),
@@ -179,7 +180,7 @@ class _ExploreServicesListState extends State<ExploreServicesList> {
                 Navigator.push(
                   context,
                   new MaterialPageRoute(
-                    builder: (context) => AvailableServicesListScreen(),
+                    builder: (context) => AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: id.toString(),),
                   ),
                 );
               },

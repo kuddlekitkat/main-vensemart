@@ -15,9 +15,11 @@ import '../../OtpVerification.dart';
 import '../../apiservices/auth_repo.dart';
 import '../../models/faqs_model.dart';
 import '../../models/get_all_services_model.dart';
+import '../../models/get_all_trending_services_model.dart';
 import '../../models/product_category_model.dart';
 import '../../models/product_id_model.dart';
 import '../../models/service_id_model.dart';
+import '../../models/service_provider_id_model.dart';
 import '../../models/update_profile_model.dart';
 import '../../models/user_details.dart';
 
@@ -31,6 +33,11 @@ class ProviderServices extends ChangeNotifier {
   UserDetailsModel? _userDetailsModel;
   ServicesModel? get servicesModel => _servicesModel;
   ServicesModel? _servicesModel;
+
+  TrendingServiceModel? get trendingserviceModel => _trendingserviceModel;
+  TrendingServiceModel? _trendingserviceModel;
+
+
   UpdateProfileModel? get updateProfileModel => _updateProfileModel;
   UpdateProfileModel? _updateProfileModel;
 
@@ -48,6 +55,10 @@ class ProviderServices extends ChangeNotifier {
 
   ServiceIdModel? get serviceIdModel => _serviceIdModel;
   ServiceIdModel? _serviceIdModel;
+
+
+  ServiceProviderIdModel? get serviceProviderIdModel => _serviceProviderIdModel;
+  ServiceProviderIdModel? _serviceProviderIdModel;
 
   ServiceCategoryModel? get serviceCategoryModel => _servicesCategoryModel;
   ServiceCategoryModel? _servicesCategoryModel;
@@ -85,6 +96,14 @@ class ProviderServices extends ChangeNotifier {
 
         _loginModel = LoginModel.fromJson(response.data);
         print(_loginModel?.data?.apiToken);
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content:  Text('${_loginModel?.message}'),
+          duration: const Duration(seconds: 20),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () { },
+          ),
+        ));
         SessionManager.instance.authToken = _loginModel!.data!.apiToken!;
         Navigator.pushReplacement(
           context!,
@@ -100,6 +119,24 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+
+
+  void signOut() async {
+    try {
+
+      SessionManager.instance.logOut();
+
+      SessionManager.instance.isLoggedIn = false;
+
+      notifyListeners();
+    }
+     catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+
+  }
+
   void register({Map<String, String>? map, BuildContext? context}) async {
     try {
       _isLoading = true;
@@ -108,6 +145,15 @@ class ProviderServices extends ChangeNotifier {
       if (response != null && response.statusCode == 200) {
         _registerModel = RegisterModel.fromJson(response.data);
         print(_registerModel!.data!.email!);
+
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content:  Text('${_registerModel?.message}'),
+          duration: const Duration(seconds: 20),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () { },
+          ),
+        ));
         SessionManager.instance.authToken = _registerModel!.data!.apiToken!;
         _isLoading = false;
         sendOTP(context);
@@ -190,6 +236,24 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+  void sendLocation({Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.sendLocation(map!);
+      if (response != null && response.statusCode == 200) {
+        _isLoading = false;
+        SessionManager.instance.isLoggedIn = true;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      _isLoading = false;
+      notifyListeners();
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
 
   void addNewBooking(
       {Map<String, String>? map, BuildContext? context}) async {
@@ -254,12 +318,44 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+
+  void trendingServices() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.trendingServices();
+      if (response != null && response.statusCode == 200) {
+        _trendingserviceModel = TrendingServiceModel.fromJson(response.data);
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
   void productCate(String num) async {
     try {
       _isLoading = true;
       Response? response = await authRepo.productCategory(num);
       if (response != null && response.statusCode == 200) {
         _productCategoryModel = ProductCategoryModel.fromJson(response.data);
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+
+  void servicesCate(String num) async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.serviceCateg(num);
+      if (response != null && response.statusCode == 200) {
+        _serviceProviderIdModel = ServiceProviderIdModel.fromJson(response.data);
         _isLoading = false;
       }
       notifyListeners();
@@ -289,6 +385,22 @@ class ProviderServices extends ChangeNotifier {
     try {
       _isLoading = true;
       Response? response = await authRepo.serviceId(num);
+      if (response != null && response.statusCode == 200) {
+        _serviceIdModel = ServiceIdModel.fromJson(response.data);
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+
+  void availableServ(String num,String lat, String long) async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.availableServ(num,lat,long);
       if (response != null && response.statusCode == 200) {
         _serviceIdModel = ServiceIdModel.fromJson(response.data);
         _isLoading = false;

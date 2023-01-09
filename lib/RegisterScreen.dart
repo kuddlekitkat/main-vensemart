@@ -48,6 +48,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "state": "FCT",
         "town": "Abuja"
       }, context: context);
+       sendLocation(context);
+
+    }
+  }
+
+  void sendLocation(context) async {
+    if (true) {
+
+
+      providerServices?.sendLocation(map: {
+        "location": 'Wuse 2 Abuja',
+        "location_lat": "7.4701862",
+        "location_long": "9.078749"
+      }, context: context);
     }
   }
 
@@ -69,7 +83,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
 
     return Scaffold(
-        resizeToAvoidBottomInset: false,
+
         backgroundColor: const Color(0xff1456f1),
         body: Form(
           key: _globalFormKey,
@@ -88,7 +102,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height / 1.4,
+                height: MediaQuery.of(context).size.height / 2.2,
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -99,9 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 25.0,
-                    ),
+
                     Container(
                       margin: const EdgeInsets.all(12.0),
                       child: TextFormField(

@@ -22,7 +22,7 @@ class ServicesHomeAppBar extends StatelessWidget {
            Navigator.push(
              context,
              new MaterialPageRoute(
-               builder: (context) => AvailableServicesListScreen(),
+               builder: (context) => AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: 385.toString(),)
              ),
            );
          }, icon: Icon(Icons.search,color: Colors.black,),),

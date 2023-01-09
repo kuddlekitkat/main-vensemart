@@ -102,7 +102,7 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                               context,
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    const AvailableServicesListScreen(),
+                                     AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: 1.toString(),),
                               ),
                             );
                           },
