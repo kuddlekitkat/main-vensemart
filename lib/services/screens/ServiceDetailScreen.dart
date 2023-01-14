@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -112,12 +113,26 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                 Container(
                   height: MediaQuery.of(context).size.height /2.4,
                   width: double.infinity,
-                  decoration:  const BoxDecoration(
-
-                    image: DecorationImage(
-                        image: NetworkImage('https://api.vensemart.com/storage/app/category_icons/facial.jpeg'),
-                        fit: BoxFit.cover
-                    ),
+                  // decoration:   BoxDecoration(
+                  //
+                  //   image: DecorationImage(
+                  //       image: NetworkImage('${provider.serviceIdModel?.data?.serviceProviderImage}'),
+                  //       fit: BoxFit.cover
+                  //   ),
+                  // ),
+                  child: CachedNetworkImage(
+                    imageUrl: '${provider.serviceIdModel?.data?.serviceProviderImage}',
+                    fit: BoxFit.cover,
+                    placeholder: (
+                        context,
+                        url,
+                        ) =>
+                        Container(
+                            margin: const EdgeInsets.all(10),
+                            child: const SpinKitCircle(
+                              color: Colors.grey,
+                            )),
+                    errorWidget: (context, url, error) => const Icon(Icons.error),
                   ),
                 ),
                 Padding(
@@ -125,22 +140,17 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.pop(context);
-                        },
-                        child: CircleAvatar(
-                          radius: 20,
-                          backgroundColor: Colors.white,
-                          child: IconButton(
-                            icon: Icon(
-                              Icons.arrow_back_ios,
-                              color: Colors.grey,
-                            ),
-                            onPressed: () {
-
-                            },
+                      CircleAvatar(
+                        radius: 20,
+                        backgroundColor: Colors.white,
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.grey,
                           ),
+                          onPressed: () {
+                                Navigator.pop(context);
+                          },
                         ),
                       ),
 
@@ -486,17 +496,17 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   ),
                   SizedBox(height: 16.0,),
 
-                  Text('Amarachi beauty hair saloon',style: TextStyle(fontSize: 27,fontWeight: FontWeight.bold),),
+                  Text('${provider.serviceIdModel?.data?.name}',style: TextStyle(fontSize: 27,fontWeight: FontWeight.bold),),
                   SizedBox(height: 16.0,),
                   Container(
                       width: 300,
-                      child: Text('Spa Hairsstyling nailfixing haircut Facials Spa Hairsstyling',style: TextStyle( fontSize: 20, fontWeight: FontWeight.normal),)),
+                      child: Text('${provider.serviceIdModel?.data?.categoryName}',style: TextStyle( fontSize: 20, fontWeight: FontWeight.normal),)),
                   SizedBox(height: 16.0,),
                   Row(
                     children: [
                       Icon(Icons.location_on),
                       SizedBox(width: 12.0,),
-                      Text('Abuja Garki, Area ||', style: TextStyle(fontWeight: FontWeight.bold),),
+                      Text('${provider.serviceIdModel?.data?.location}', style: TextStyle(fontWeight: FontWeight.bold),),
                     ],
                   ),
                   SizedBox(height: 16.0,),
@@ -545,58 +555,57 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   Text('Photos',style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
 
 
-                  Padding(
-                    padding: const EdgeInsets.only(right: 4.0,top: 4.0),
-                    child: Row(
-
-
-                      children: [
-
-
-                        Container(
-                          height:MediaQuery.of(context).size.height/3.8,
-                          width: 200,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.0),
-                              image: DecorationImage(
-                                  image: AssetImage('assets/images/servicedetail.png')
-                              )
-                          ),
-                        ),
-
-                        Column(
-                          children: [
-
-                            Container(
-                              height:MediaQuery.of(context).size.height/8.5,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  image: DecorationImage(
-                                      image: AssetImage('assets/images/servicedetail1.png')
-                                  )
-                              ),
-                            ),
-                            SizedBox(height: 8.5,),
-
-                            Container(
-                              height:MediaQuery.of(context).size.height/8.5,
-                              width: 120,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                  image: DecorationImage(
-                                      image: AssetImage('assets/images/servicedetail2.png')
-                                  )
-                              ),
-                            ),
-
-
-                          ],
-                        )
-
-                      ],
-                    ),
-                  )
+                  // Padding(
+                  //   padding: const EdgeInsets.only(right: 4.0,top: 4.0),
+                  //   child: Row(
+                  //
+                  //
+                  //     children: [
+                  //
+                  //
+                  //       Container(
+                  //         height:MediaQuery.of(context).size.height/3.8,
+                  //         width: 200,
+                  //         decoration: BoxDecoration(
+                  //             borderRadius: BorderRadius.circular(12.0),
+                  //             image: DecorationImage(
+                  //                 image: AssetImage('assets/images/servicedetail.png')
+                  //             )
+                  //         ),
+                  //       ),
+                  //
+                  //       Column(
+                  //         children: [
+                  //
+                  //           Container(
+                  //             height:MediaQuery.of(context).size.height/8.5,
+                  //             width: 120,
+                  //             decoration: BoxDecoration(
+                  //                 borderRadius: BorderRadius.circular(20.0),
+                  //                 image: DecorationImage(
+                  //                     image: AssetImage('assets/images/servicedetail1.png')
+                  //                 )
+                  //             ),
+                  //           ),
+                  //           SizedBox(height: 8.5,),
+                  //
+                  //           Container(
+                  //             height:MediaQuery.of(context).size.height/8.5,
+                  //             width: 120,
+                  //             decoration: BoxDecoration(
+                  //                 borderRadius: BorderRadius.circular(20.0),
+                  //                 image: DecorationImage(
+                  //                     image: AssetImage('assets/images/servicedetail2.png')
+                  //                 )
+                  //             ),
+                  //           ),
+                  //
+                  //         ],
+                  //       )
+                  //
+                  //     ],
+                  //   ),
+                  // )
 
                 ],
               ),

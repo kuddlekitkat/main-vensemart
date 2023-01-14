@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:vensemart/models/completed_bookings.dart';
 class CompletedAppointmentCard extends StatelessWidget {
   final String image;
   final String name;
   final String occupation;
-  const CompletedAppointmentCard({required this.image,required this.name, required this.occupation});
+  final Data? completedBooking;
+  const CompletedAppointmentCard({required this.image,required this.name, required this.occupation, this.completedBooking});
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +61,7 @@ class CompletedAppointmentCard extends StatelessWidget {
                   children: [
 
                     Container(
-                      child: Text(name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.0),),
+                      child: Text(completedBooking?.name ?? '',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.0),),
                       margin: EdgeInsets.symmetric(vertical: 12.0),
                     ),
                     Text(occupation),

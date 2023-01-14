@@ -148,13 +148,11 @@ class _AvailableServicesListScreenState extends State<AvailableServicesListScree
 
                 children: <Widget>[
                   if (provider != null)
-                    ...provider.serviceProviderIdModel!.data!
-
-                        .map((e) {
-
-                      return contentContainer(
-                          homeId: e.id,
-                          name: e.name, image: e.profile, location: e.location, categoryname: e.categoryName,price: e.serviceTypePrice);
+                    ...provider.serviceProviderIdModel!.data!.map((e) {
+                      print('print e for me $e');
+                      return ServiceCard(
+                        servicesProviderIdModel: e,
+                      );
                     }).toList()
                 ],
               ),

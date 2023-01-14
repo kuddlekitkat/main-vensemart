@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/services/screens/ServicesSuccessScreen.dart';
+import 'package:vensemart/services/screens/SetAddressScreen.dart';
 
+import '../../ChoiceIntroScreen.dart';
 import '../provider/provider_services.dart';
 
 class ServiceDeliveryDetailScreen extends StatefulWidget {
@@ -19,6 +21,7 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
 
   ProviderServices? providerServices;
   late String servicename;
+  late String name;
   TextEditingController timeController = TextEditingController();
 
   late DateTime _selectedDate;
@@ -30,7 +33,8 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
 
     providerServices = Provider.of<ProviderServices>(context, listen: false);
     providerServices?.serviceId(widget.service_id.toString());
-    servicename = providerServices?.serviceIdModel?.data?.name ?? '';
+    providerServices?.userLocation();
+    providerServices?.userDetails();
     super.initState();
   }
 
@@ -109,7 +113,7 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
                               Text('Address Details'),
                               TextButton(
                                 onPressed: (){
-
+                                   addAddress(context);
                                 },
                                 child: Text('CHANGE',style: TextStyle(color: Colors.blueAccent)),),
                             ],
@@ -125,18 +129,21 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(20.0),
-                              child: Column(
+                              child: provider?.userLocationModel?.data?.location.toString() != null ?
+                               Column(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Aaron Dikko'),
-                                  Text('Gambiya Street Area 11'),
-                                  Text('Federal Capital Territory'),
-                                  Text('ABUJA GARKI'),
-                                  Text('+2348101013370'),
+
+
+                                  Text('${provider?.userDetailsModel?.data?.name}',style: TextStyle(fontWeight: FontWeight.bold),),
+                                  Text('${provider?.userLocationModel?.data?.location}'),
+                                  Text('${provider?.userDetailsModel?.data?.mobile}'),
+
+
                                 ],
-                              ),
-                            )
+                              ) : Text('no address found')
+                            ),
                         ),
 
                         Padding(
@@ -167,10 +174,11 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text('SERVICE 1 of 1' ,style: TextStyle(fontSize: 16),),
-                                  Text(widget.service_name.toString()),
-
-                                  Text('Service to be rendered by: ${providerServices?.serviceIdModel?.data?.name}'),
                                   Text(widget.service_date.toString()),
+                                  Text(widget.service_name.toString()),
+                                  Text('Service to be rendered by: ${providerServices?.serviceIdModel?.data?.name}'),
+
+
                                 ],
                               ),
                             )
@@ -189,7 +197,10 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
                                   borderRadius: BorderRadius.circular(40.0),
 
                                 ),
-                                child:  GestureDetector(
+
+
+                                child:   provider?.userLocationModel?.data?.location.toString() != null ?
+                                GestureDetector(
                                   onTap: () => addBooking(context),
                                   child: Consumer<ProviderServices>(
                                     builder: (_, provider, __) => Container(
@@ -206,6 +217,28 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
                                           : const Center(
                                           child: Text(
                                             'Book Now',
+                                            style: TextStyle(
+                                                color: Colors.white, fontSize: 20.0),
+                                          )),
+                                    ),
+                                  ),
+                                ) : GestureDetector(
+                                  onTap: () => addAddress(context),
+                                  child: Consumer<ProviderServices>(
+                                    builder: (_, provider, __) => Container(
+                                      height: screenHeight / 13,
+                                      width: screenWidth / 1.07,
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xff1456f1),
+                                        borderRadius: BorderRadius.circular(40.0),
+                                      ),
+                                      child: provider.isLoading == true
+                                          ? const SpinKitCircle(
+                                        color: Colors.white,
+                                      )
+                                          : const Center(
+                                          child: Text(
+                                            'Add Address',
                                             style: TextStyle(
                                                 color: Colors.white, fontSize: 20.0),
                                           )),
@@ -231,5 +264,15 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
         ),
       ),
     );
+  }
+
+  addAddress(BuildContext context) {
+    Navigator.pushReplacement(
+      context!,
+      MaterialPageRoute(
+        builder: (context) => const AddAddressScreen(),
+      ),
+    );
+
   }
 }

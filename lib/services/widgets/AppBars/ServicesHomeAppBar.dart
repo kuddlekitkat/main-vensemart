@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vensemart/LoginScreen.dart';
 import 'package:vensemart/services/screens/AvailableServicesListScreen.dart';
+import 'package:vensemart/services/screens/ServicesGridScreen.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
 
 class ServicesHomeAppBar extends StatelessWidget {
@@ -22,7 +23,7 @@ class ServicesHomeAppBar extends StatelessWidget {
            Navigator.push(
              context,
              new MaterialPageRoute(
-               builder: (context) => AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: 385.toString(),)
+               builder: (context) => ServicesGridScreen(),
              ),
            );
          }, icon: Icon(Icons.search,color: Colors.black,),),

@@ -57,6 +57,8 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
                   child: Column(
                     children: [
 
+                      SizedBox(height: 5.0,),
+
                       Padding(
                         padding: const EdgeInsets.only(bottom: 13.0),
                         child: Center(
@@ -65,6 +67,7 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
                             segments: const {
                               'all': 'Upcoming',
                               'missed': 'Completed',
+                              'cancelled':'Cancelled'
                             },
                             backgroundColor: Colors.white10,
                             activeStyle: const TextStyle(
@@ -86,6 +89,8 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
                             case 'all':
                               return const AppointmentList();
                             case 'missed':
+                              return const CompletedAppointmentList();
+                            case 'cancelled':
                               return const CompletedAppointmentList();
                             default:
                               return const SizedBox();

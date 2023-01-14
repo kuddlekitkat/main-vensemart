@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:vensemart/services/widgets/components/AvailableServicesBottomListView.dart';
 import 'package:vensemart/services/widgets/components/ServiceCard.dart';
 import 'package:intl/intl.dart';
+import 'package:vensemart/services/widgets/components/TrendingServicesCard.dart';
 import '../provider/provider_services.dart';
 import 'ServiceDeliveryDetailScreen.dart';
 
@@ -150,9 +151,9 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
 
                                   .map((e) {
 
-                                return contentContainer(
-                                    homeId: e.id,
-                                    name: e.name, image: e.profile);
+                                return  TrendingServicesCard(
+                                  trendingserviceModel: e,
+                                );
                               }).toList()
                           ],
                         ),
@@ -398,7 +399,7 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                                                       _showDialog(
                                                           Scaffold(
                                                             body: Container(
-                                                                padding: EdgeInsets
+                                                                padding: const EdgeInsets
                                                                     .all(15),
                                                                 height: 150,
                                                                 child: Center(
@@ -549,6 +550,25 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
 
 }
 
+
+void _openTimePicker(BuildContext context) {
+  BottomPicker.time(
+    title: 'Set your next meeting time',
+    titleStyle: TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 15,
+      color: Colors.orange,
+    ),
+    onSubmit: (index) {
+      print(index);
+    },
+    onClose: () {
+      print('Picker closed');
+    },
+    bottomPickerTheme: BottomPickerTheme.orange,
+    use24hFormat: true,
+  ).show(context);
+}
 
 class _DatePickerItem extends StatelessWidget {
   const _DatePickerItem({required this.children});

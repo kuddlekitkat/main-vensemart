@@ -13,13 +13,17 @@ import 'package:vensemart/models/terms_and_condition_model.dart';
 import '../../ChoiceIntroScreen.dart';
 import '../../OtpVerification.dart';
 import '../../apiservices/auth_repo.dart';
+import '../../models/canceled_bookings.dart';
+import '../../models/completed_bookings.dart';
 import '../../models/faqs_model.dart';
 import '../../models/get_all_services_model.dart';
 import '../../models/get_all_trending_services_model.dart';
+import '../../models/location_model.dart';
 import '../../models/product_category_model.dart';
 import '../../models/product_id_model.dart';
 import '../../models/service_id_model.dart';
 import '../../models/service_provider_id_model.dart';
+import '../../models/upcoming_bookings.dart';
 import '../../models/update_profile_model.dart';
 import '../../models/user_details.dart';
 
@@ -31,6 +35,9 @@ class ProviderServices extends ChangeNotifier {
   RegisterModel? _registerModel;
   UserDetailsModel? get userDetailsModel => _userDetailsModel;
   UserDetailsModel? _userDetailsModel;
+
+  UserLocationModel? get userLocationModel => _userLocationModel;
+  UserLocationModel? _userLocationModel;
   ServicesModel? get servicesModel => _servicesModel;
   ServicesModel? _servicesModel;
 
@@ -72,6 +79,16 @@ class ProviderServices extends ChangeNotifier {
   ContactUsModel? _contactUsModel;
   FaqsModel? get faqsModel => _faqsModel;
   FaqsModel? _faqsModel;
+
+
+  UpcomingBooking? get upcomingBooking => _upcomingBooking;
+  UpcomingBooking? _upcomingBooking;
+
+  CompletedBooking? get completedBooking => _completedBooking;
+  CompletedBooking? _completedBooking;
+  CanceledBooking? get canceledBooking => _canceledBooking;
+  CanceledBooking? _canceledBooking;
+
   LoginModel? get loginModel => _loginModel;
   LoginModel? _loginModel;
 
@@ -114,6 +131,14 @@ class ProviderServices extends ChangeNotifier {
       }
       notifyListeners();
     } catch (e, str) {
+      ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+        content:  Text('${_loginModel?.message}'),
+        duration: const Duration(seconds: 20),
+        action: SnackBarAction(
+          label: 'ACTION',
+          onPressed: () { },
+        ),
+      ));
       debugPrint("Error: $e");
       debugPrint("StackTrace: $str");
     }
@@ -167,6 +192,14 @@ class ProviderServices extends ChangeNotifier {
       }
       notifyListeners();
     } catch (e, str) {
+      ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+        content:  Text('${_registerModel?.message}'),
+        duration: const Duration(seconds: 20),
+        action: SnackBarAction(
+          label: 'ACTION',
+          onPressed: () { },
+        ),
+      ));
       debugPrint("Error: $e");
       debugPrint("StackTrace: $str");
     }
@@ -242,6 +275,15 @@ class ProviderServices extends ChangeNotifier {
       notifyListeners();
       Response? response = await authRepo.sendLocation(map!);
       if (response != null && response.statusCode == 200) {
+        _userLocationModel = UserLocationModel.fromJson(response.data);
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content:  Text('${_userLocationModel?.message}'),
+          duration: const Duration(seconds: 20),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () { },
+          ),
+        ));
         _isLoading = false;
         SessionManager.instance.isLoggedIn = true;
       }
@@ -253,6 +295,35 @@ class ProviderServices extends ChangeNotifier {
       debugPrint("StackTrace: $str");
     }
   }
+
+
+  void getLocation({Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.sendLocation(map!);
+      if (response != null && response.statusCode == 200) {
+        _userLocationModel = UserLocationModel.fromJson(response.data);
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content:  Text('${_userLocationModel?.message}'),
+          duration: const Duration(seconds: 20),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () { },
+          ),
+        ));
+        _isLoading = false;
+        SessionManager.instance.isLoggedIn = true;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      _isLoading = false;
+      notifyListeners();
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
 
 
   void addNewBooking(
@@ -294,6 +365,24 @@ class ProviderServices extends ChangeNotifier {
       Response? response = await authRepo.userDetail();
       if (response != null && response.statusCode == 200) {
         _userDetailsModel = UserDetailsModel.fromJson(response.data);
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+
+
+
+  void userLocation() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.userLocation();
+      if (response != null && response.statusCode == 200) {
+        _userLocationModel = UserLocationModel.fromJson(response.data);
         _isLoading = false;
       }
       notifyListeners();
@@ -486,4 +575,64 @@ class ProviderServices extends ChangeNotifier {
       debugPrint("StackTrace: $str");
     }
   }
+
+
+
+
+  void getAllUpcomingBookings() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.upcomingBookings();
+      if (response != null && response.statusCode == 200) {
+        _upcomingBooking = UpcomingBooking.fromJson(response.data);
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+
+
+  void getAllCompletedBookings() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.completedBookings();
+      if (response != null && response.statusCode == 200) {
+        _completedBooking = CompletedBooking.fromJson(response.data);
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+
+  void getAllCanceledBookings() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.canceledBookings();
+      if (response != null && response.statusCode == 200) {
+        _canceledBooking = CanceledBooking.fromJson(response.data);
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+
+
+
 }
+
+
+
+
+

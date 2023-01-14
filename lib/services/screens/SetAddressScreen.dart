@@ -1,0 +1,221 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
+
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+import 'package:vensemart/apiservices/validator.dart';
+import 'package:vensemart/services/provider/provider_services.dart';
+
+import '../widgets/image_picker_widget.dart';
+
+class AddAddressScreen extends StatefulWidget {
+  const AddAddressScreen({Key? key}) : super(key: key);
+
+  @override
+  State<AddAddressScreen> createState() => _AddAddressScreenState();
+}
+
+class _AddAddressScreenState extends State<AddAddressScreen> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController ninController = TextEditingController();
+  TextEditingController dobController = TextEditingController();
+  TextEditingController genderController = TextEditingController();
+  TextEditingController addressController = TextEditingController();
+
+  final _pickImage = ImagePickerHandler();
+  File? fileImage;
+  ProviderServices? providerServices;
+  final _globalFormKey = GlobalKey<FormState>();
+
+  _formartFileImage(File? imageFile) {
+    if (imageFile == null) return;
+    return File(imageFile.path.replaceAll('\'', '').replaceAll('File: ', ''));
+  }
+
+  @override
+  void initState() {
+    providerServices = Provider.of<ProviderServices>(context, listen: false);
+    providerServices?.userLocation();
+    super.initState();
+  }
+
+  // void setAddress(context) async {
+  //
+  //     final query = nameController.text.trim();
+  //     // var addresses = await Geocoder.local.findAddressesFromQuery(query);
+  //     // var first = addresses.first;
+  //     print("${first.featureName} : ${first.coordinates.latitude} , ${first.coordinates.longitude}");
+  //     providerServices?.sendLocation(map: {
+  //       "location": nameController.text.trim(),
+  //       "location_lat": "${first.coordinates.latitude}",
+  //       "location_long": " ${first.coordinates.longitude}"
+  //     }, context: context);
+  // }
+
+  void _getImage(BuildContext context) {
+    try {
+      _pickImage.pickImage(
+          context: context,
+          file: (file) {
+            fileImage = file;
+            setState(() {});
+          });
+    } catch (e) {}
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: const Color.fromRGBO(234, 234, 234, 1),
+        appBar: AppBar(
+          backgroundColor: const Color(0xff1456f1),
+          title: const Text("Add Address"),
+          leading: IconButton(
+            icon: CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.white,
+              child: Center(
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ),
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
+        body: Form(
+          key: _globalFormKey,
+          child: Consumer<ProviderServices>(
+            builder: (_, provider, __) {
+              if (provider.userLocationModel?.message == 'null') {
+                return  Center(
+                  child: SpinKitCircle(
+                    color: Colors.blue[900],
+                  ),
+                );
+              }
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 4.0),
+                      GestureDetector(
+                        onTap: () => _getImage(context),
+                        child:
+                        // provider.userDetailModel!.data!.profile != null
+                        //     ? Center(
+                        //         child: CachedNetworkImage(
+                        //           imageUrl:
+                        //               provider.userDetailModel!.data!.profile!,
+                        //           placeholder: (
+                        //             context,
+                        //             url,
+                        //           ) =>
+                        //               Container(
+                        //                   margin: const EdgeInsets.all(10),
+                        //                   child: const SpinKitCircle(
+                        //                     color: Colors.grey,
+                        //                   )),
+                        //           errorWidget: (context, url, error) =>
+                        //               const Icon(Icons.error),
+                        //         ),
+                        //       ):
+                        fileImage != null
+                            ? Center(
+                          // child: CircleAvatar(
+                          //     radius: 50,
+                          //     backgroundImage: FileImage(fileImage!)),
+                        )
+                            : const Center(
+                          // child: CircleAvatar(
+                          //   radius: 50.0,
+                          //   backgroundImage:
+                          //   AssetImage("assets/images/dp.png"),
+                          // ),
+                        ),
+                      ),
+                      const SizedBox(height: 10.0),
+                      const Text('Enter Address '),
+                      const SizedBox(height: 4.0),
+                      TextFormField(
+                        controller: nameController,
+                        validator: Validators.validateString(),
+                        decoration: InputDecoration(
+                            label: Text(
+                                provider.userLocationModel?.data?.location ?? ''),
+                            border: const OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0),
+                              ),
+                              borderSide: BorderSide(
+                                width: 0,
+                                style: BorderStyle.none,
+                              ),
+                            ),
+                            filled: true,
+                            hintStyle: new TextStyle(color: Colors.grey[600]),
+                            fillColor: Colors.white),
+                      ),
+                      const SizedBox(height: 14.0),
+
+                      const SizedBox(height: 14.0),
+
+                      const SizedBox(
+                        height: 30.0,
+                      ),
+                      Center(
+                        child: GestureDetector(
+                          // onTap: () => setAddress(context),
+                          child: Consumer<ProviderServices>(
+                            builder: (_, value, __) => Center(
+                              child: Container(
+                                height: MediaQuery.of(context).size.height / 14,
+                                width: MediaQuery.of(context).size.width / 1.10,
+                                decoration: BoxDecoration(
+                                  color: const Color(0xff1456f1),
+                                  borderRadius: BorderRadius.circular(90.0),
+                                ),
+                                child: value.isLoading == true
+                                    ? const SpinKitCircle(
+                                  color: Colors.white,
+                                )
+                                    : const Center(
+                                  child: Text(
+                                    'Set Address',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+}

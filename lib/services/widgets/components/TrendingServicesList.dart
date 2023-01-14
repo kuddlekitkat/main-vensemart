@@ -28,7 +28,7 @@ class _TrendingServicesListState extends State<TrendingServicesList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100.0,
+      height: 130.0,
       width: MediaQuery.of(context).size.width,
       child: Consumer<ProviderServices>(builder: (_, provider, __) {
         if (provider.trendingserviceModel == null ||
@@ -170,7 +170,7 @@ class _TrendingServicesListState extends State<TrendingServicesList> {
     return Card(
       child: Container(
         padding: EdgeInsets.all(6.0),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(40)),
         child: Row(
           children: [
             SizedBox(
@@ -190,8 +190,9 @@ class _TrendingServicesListState extends State<TrendingServicesList> {
                   Expanded(
                     child: Container(
                       height: 70,
+                      width: 100,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.0)),
+                          borderRadius: BorderRadius.circular(40.0)),
                       child: CachedNetworkImage(
                         imageUrl: imageUrl,
                         fit: BoxFit.cover,

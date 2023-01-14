@@ -29,6 +29,7 @@ class _ExploreServicesListState extends State<ExploreServicesList> {
     return Container(
       height: 100.0,
       width: MediaQuery.of(context).size.width,
+
       child: Consumer<ProviderServices>(builder: (_, provider, __) {
         if (provider.serviceCategoryModel == null ||
             provider.serviceCategoryModel!.data!.isEmpty) {
@@ -166,60 +167,64 @@ class _ExploreServicesListState extends State<ExploreServicesList> {
   }
 
   listWidget({imageUrl, text,id}) {
-    return Card(
-      child: Container(
-        padding: EdgeInsets.all(6.0),
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-        child: Row(
-          children: [
-            SizedBox(
-              width: 5,
-            ),
-            InkWell(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                    builder: (context) => AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: id.toString(),),
-                  ),
-                );
-              },
-              child: Column(
-                children: [
-                  Expanded(
-                    child: Container(
-                      height: 70,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12.0)),
-                      child: CachedNetworkImage(
-                        imageUrl: imageUrl,
-                        fit: BoxFit.cover,
-                        placeholder: (
-                            context,
-                            url,
-                            ) =>
-                            Container(
-                                margin: const EdgeInsets.all(10),
-                                child: const SpinKitCircle(
-                                  color: Colors.grey,
-                                )),
-                        errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                      ),
+    return Container(
+
+      padding: EdgeInsets.all(6.0),
+      decoration: BoxDecoration(
+
+          borderRadius: BorderRadius.circular(10)
+      ),
+      child: Row(
+        children: [
+          SizedBox(
+            width: 5,
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: id.toString(),),
+                ),
+              );
+            },
+            child: Column(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 100,
+                    width:80,
+
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40.0)),
+                    child: CachedNetworkImage(
+                      imageUrl: imageUrl,
+                      fit: BoxFit.cover,
+                      placeholder: (
+                          context,
+                          url,
+                          ) =>
+                          Container(
+                              margin: const EdgeInsets.all(10),
+                              child: const SpinKitCircle(
+                                color: Colors.grey,
+                              )),
+                      errorWidget: (context, url, error) =>
+                      const Icon(Icons.error),
                     ),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(text)
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(text)
+              ],
             ),
-            SizedBox(
-              width: 12.0,
-            ),
-          ],
-        ),
+          ),
+          SizedBox(
+            width: 12.0,
+          ),
+        ],
       ),
     );
   }

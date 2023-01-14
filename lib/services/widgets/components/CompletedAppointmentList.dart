@@ -1,20 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
 import 'package:vensemart/services/widgets/components/CompletedAppointmentCard.dart';
 
-class CompletedAppointmentList extends StatelessWidget {
+import '../../provider/provider_services.dart';
+
+class CompletedAppointmentList extends StatefulWidget {
   const CompletedAppointmentList({Key? key}) : super(key: key);
 
   @override
+  State<CompletedAppointmentList> createState() => _CompletedAppointmentListState();
+}
+
+class _CompletedAppointmentListState extends State<CompletedAppointmentList> {
+
+
+  ProviderServices? providerServices;
+
+  @override
+  void initState() {
+    providerServices = Provider.of<ProviderServices>(context, listen: false);
+    providerServices?.getAllCompletedBookings();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CompletedAppointmentCard(image: 'assets/images/upcoming1.png',name: 'Amarachi', occupation: 'barber',),
-        CompletedAppointmentCard(image: 'assets/images/upcoming3.png',name: 'Maduabuchi', occupation: 'Laundry',),
-        CompletedAppointmentCard(image: 'assets/images/upcoming2.png',name: 'Prosper', occupation: 'Janitor',),
-        CompletedAppointmentCard(image: 'assets/images/upcoming4.png',name: 'Amarachi', occupation: 'Solar Installer',),
+    return Consumer<ProviderServices>(
+        builder: (_, provider, __) {
+      print('object ${provider.completedBooking?.data}');
+      if (provider.completedBooking?.message == null) {
+        return Center(child: SpinKitCircle(color: Colors.blue,));
+      } else {
 
 
-      ],
+
+
+
+
+          return Column(
+          children: [
+
+            ...provider.completedBooking!.data!.map((e) {
+              print('print e for me $e');
+
+              return CompletedAppointmentCard(
+                completedBooking: e,image: 'assets/images/upcoming1.png',name: 'Amarachi', occupation: 'barber');
+
+
+            }).toList()
+
+
+
+
+          ],
+        );
+
+
+
+
+
+
+      }
+        }
     );
   }
 }

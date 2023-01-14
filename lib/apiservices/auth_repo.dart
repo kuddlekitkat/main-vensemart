@@ -87,6 +87,17 @@ class AuthRepo with ApiServices {
     return null;
   }
 
+
+  Future<Response?> userLocation() async {
+    Response? response = await apiGetRequests("get-location");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
   Future<Response?> services() async {
     Response? response = await apiGetRequests("get-all-service-categories");
 
@@ -96,6 +107,44 @@ class AuthRepo with ApiServices {
 
     return null;
   }
+
+
+  Future<Response?> upcomingBookings() async {
+    Response? response = await apiGetRequests("bookingsservicelist/1");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+
+  Future<Response?> completedBookings() async {
+    Response? response = await apiGetRequests("bookingsservicelist/2");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+
+
+  Future<Response?> canceledBookings() async {
+    Response? response = await apiGetRequests("bookingsservicelist/3");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+
+
+
 
 
   Future<Response?> trendingServices() async {

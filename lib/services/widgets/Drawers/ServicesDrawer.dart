@@ -4,6 +4,13 @@ import 'package:provider/provider.dart';
 import 'package:vensemart/LoginScreen.dart';
 import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
 import 'package:vensemart/services/screens/AboutUsScreen.dart';
+import 'package:vensemart/services/screens/ContactScreen.dart';
+import 'package:vensemart/services/screens/FeedbackScreen.dart';
+import 'package:vensemart/services/screens/NotificationScreen.dart';
+import 'package:vensemart/services/screens/ProfileEditScreen.dart';
+import 'package:vensemart/services/screens/RateUsScreen.dart';
+import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
+import 'package:vensemart/services/widgets/full_pages/ServiceHome.dart';
 
 import '../../provider/provider_services.dart';
 import '../../screens/AvailableServicesListScreen.dart';
@@ -23,6 +30,7 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
   @override
   void initState() {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
+    providerServices?.userDetails();
     super.initState();
   }
 
@@ -55,133 +63,209 @@ void Logout() async {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         color: Colors.white,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+        child: Consumer<ProviderServices>(
+         builder: (_, provider, __) {
+           return SingleChildScrollView(
+             child: Column(
+               crossAxisAlignment: CrossAxisAlignment.start,
+               children: [
 
-              Stack(
-                children:  [
-                  Container(
-                    height: 80,
-                    width: double.infinity,
-                    color: Colors.blueAccent,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.0,vertical: 40.0),
-                    child: CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage: AssetImage("assets/images/profileimg.png"),
-                    ),
-                  ),
-
-
-                  const Positioned(
-                    top: 140,
-                    left: 20,
-                    child: Text('James Thew',style: TextStyle(fontSize: 22.0,fontWeight: FontWeight.bold),),
-                  ),
+                 Stack(
+                   children: [
+                     Container(
+                       height: 80,
+                       width: double.infinity,
+                       color: Colors.blueAccent,
+                     ),
+                     const Padding(
+                       padding: EdgeInsets.symmetric(
+                           horizontal: 20.0, vertical: 40.0),
+                       child: CircleAvatar(
+                         radius: 50.0,
+                         backgroundImage: AssetImage(
+                             "assets/images/profileimg.png"),
+                       ),
+                     ),
 
 
+                      Positioned(
+                       top: 140,
+                       left: 20,
+                       child: Text('${provider.userDetailsModel?.data?.name}', style: TextStyle(
+                           fontSize: 22.0, fontWeight: FontWeight.bold),),
+                     ),
 
-                ],
-              ),
 
-              Container(
-                padding: EdgeInsets.only(left: 20.0),
-                  child: Text('Your Profile',style: TextStyle(fontSize: 15.0,fontWeight: FontWeight.normal),)),
-             SizedBox(height: 20.0,),
-              Container(
-                color: Color.fromRGBO(237, 234, 234, 22),
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 40.0),
-                  child: Column(
-                    children: [
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: 385.toString(),),
-                            ),
-                          );
-                        },
-                        child: const ListTile(
-                          leading: Icon(Icons.menu),
-                          title: Text('Home'),
-                        ),
-                      ),
-                      const ListTile(
-                        leading: Icon(Icons.person),
-                        title: Text('Profile'),
-                      ),
+                   ],
+                 ),
 
-                      const ListTile(
-                        leading: Icon(Icons.notifications),
-                        title: Text('Booking History'),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ProductsHomeScreen(),
-                            ),
-                          );
-                        },
-                        child: const ListTile(
-                          leading: Icon(Icons.compare_arrows),
-                          title: Text('Switch to product'),
-                        ),
-                      ),
-                      const ListTile(
-                        leading: Icon(Icons.notifications),
-                        title: Text('Notifications'),
-                      ),
-                      const ListTile(
-                        leading: Icon(Icons.phone),
-                        title: Text('contact'),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const AboutUsScreen(),
-                            ),
-                          );
-                        },
-                        child: ListTile(
-                          leading: Icon(Icons.info),
-                          title: Text('About'),
-                        ),
-                      ),
+                 Container(
+                     padding: EdgeInsets.only(left: 20.0),
+                     child: Text('Your Profile', style: TextStyle(
+                         fontSize: 15.0, fontWeight: FontWeight.normal),)),
+                 SizedBox(height: 20.0,),
+                 Container(
+                   color: Color.fromRGBO(237, 234, 234, 22),
+                   child: Padding(
+                     padding: const EdgeInsets.only(bottom: 40.0),
+                     child: Column(
+                       children: [
+                         GestureDetector(
+                           onTap: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                   builder: (context) => ServicesHomeScreen()
+                               ),
+                             );
+                           },
+                           child: const ListTile(
+                             leading: Icon(Icons.menu),
+                             title: Text('Home'),
+                           ),
+                         ),
+                         GestureDetector(
+                           onTap: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                   builder: (context) => ProfileEditScreen()
+                               ),
+                             );
+                           },
+                           child: const ListTile(
+                             leading: Icon(Icons.person),
+                             title: Text('Profile'),
+                           ),
+                         ),
 
-                      const ListTile(
-                        leading: Icon(Icons.chat),
-                        title: Text('Feedback'),
-                      ),
-                      const ListTile(
-                        leading: Icon(Icons.rate_review_rounded),
-                        title: Text('Rate our app'),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                         Logout();
-                        },
-                        child: const ListTile(
-                          leading:Icon(Icons.logout_outlined,color: Colors.redAccent,),
-                          title: Text('Logout'),
-                        ),
-                      ),
+                         GestureDetector(
+                           onTap: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                   builder: (context) =>
+                                       AvailableServicesListScreen(
+                                           lat: '1', long: '1', id: '1')
+                               ),
+                             );
+                           },
+                           child: const ListTile(
+                             leading: Icon(Icons.notifications),
+                             title: Text('Booking History'),
+                           ),
+                         ),
+                         GestureDetector(
+                           onTap: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                 builder: (context) => ProductsHomeScreen(),
+                               ),
+                             );
+                           },
+                           child: const ListTile(
+                             leading: Icon(Icons.compare_arrows),
+                             title: Text('Switch to product'),
+                           ),
+                         ),
+                         GestureDetector(
+                           onTap: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                 builder: (context) => NotificationScreen(),
+                               ),
+                             );
+                           },
+                           child: const ListTile(
+                             leading: Icon(Icons.notifications),
+                             title: Text('Notifications'),
+                           ),
+                         ),
+                         GestureDetector(
+                           onTap: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                 builder: (context) => ContactScreen(),
+                               ),
+                             );
+                           },
 
-                    ],
-                  ),
-                ),
-              )
+                           child: const ListTile(
+                             leading: Icon(Icons.phone),
+                             title: Text('contact'),
+                           ),
+                         ),
+                         GestureDetector(
+                           onTap: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                 builder: (context) => const AboutUsScreen(),
+                               ),
+                             );
+                           },
+                           child: ListTile(
+                             leading: Icon(Icons.info),
+                             title: Text('About'),
+                           ),
+                         ),
 
-            ],
-          ),
+                         GestureDetector(
+                           onTap: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                 builder: (context) => const FeedbackScreen(),
+                               ),
+                             );
+                           },
+                           child: const ListTile(
+                             leading: Icon(Icons.chat),
+                             title: Text('Feedback'),
+                           ),
+                         ),
+                         GestureDetector(
+                           onTap: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                 builder: (context) => const RateUsScreen(),
+                               ),
+                             );
+                           },
+                           child: const ListTile(
+                             leading: Icon(Icons.rate_review_rounded),
+                             title: Text('Rate our app'),
+                           ),
+                         ),
+                         GestureDetector(
+                           onTap: () {
+                             Navigator.pushReplacement(
+                               context!,
+                               MaterialPageRoute(
+                                 builder: (context) => const LoginScreen(),
+                               ),
+                             );
+                           },
+                           child: const ListTile(
+                             leading: Icon(
+                               Icons.logout_outlined, color: Colors.redAccent,),
+                             title: Text('Logout'),
+                           ),
+                         ),
+
+                       ],
+                     ),
+                   ),
+                 )
+
+               ],
+             ),
+           );
+         }
         ),
       ),
     );

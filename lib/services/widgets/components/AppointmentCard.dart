@@ -1,10 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:vensemart/models/upcoming_bookings.dart';
 
 class AppointmentCard extends StatelessWidget {
   final String image;
   final String name;
   final String occupation;
-  const AppointmentCard( {required this.image,required this.name,required this.occupation});
+  final Data? upcomingBooking;
+  const AppointmentCard( {required this.image,required this.name,required this.occupation,  this.upcomingBooking});
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +48,22 @@ class AppointmentCard extends StatelessWidget {
                           bottomRight: Radius.circular(10.0),
                           bottomLeft: Radius.circular(10.0),
                         ),
-                        image: DecorationImage(
-                            image: AssetImage(image),
-                            fit: BoxFit.cover
-                        )
+
+                    ),
+
+                   child:  CachedNetworkImage(
+                      imageUrl: upcomingBooking?.profile,
+                      fit: BoxFit.cover,
+                      placeholder: (
+                          context,
+                          url,
+                          ) =>
+                          Container(
+                              margin: const EdgeInsets.all(10),
+                              child: const SpinKitCircle(
+                                color: Colors.grey,
+                              )),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -60,10 +76,10 @@ class AppointmentCard extends StatelessWidget {
                   children: [
 
                     Container(
-                      child: Text(name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.0),),
+                      child: Text(upcomingBooking?.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.0),),
                       margin: EdgeInsets.symmetric(vertical: 12.0),
                     ),
-                    Text(occupation),
+                    Text(upcomingBooking?.categoryName),
                   ],
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width/3.6,
@@ -108,7 +124,7 @@ class AppointmentCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6.0)
                         ),
                         child: TextButton(
-                          onPressed: (){}, child: Text('15 Oct 2022',style: TextStyle(color: Colors.redAccent),),),
+                          onPressed: (){}, child: Text(upcomingBooking?.bookingDate,style: TextStyle(color: Colors.redAccent),),),
                       ),
                     ),
 
@@ -122,7 +138,7 @@ class AppointmentCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6.0)
                         ),
                         child: TextButton(
-                          onPressed: (){}, child: Text('8:30 - 9:30',style: TextStyle(backgroundColor: Colors.blue,color: Colors.white),),),
+                          onPressed: (){}, child: Text(upcomingBooking?.bookingTime,style: TextStyle(backgroundColor: Colors.blue,color: Colors.white),),),
                       ),
                     ),
                   ],

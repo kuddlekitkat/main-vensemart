@@ -4,6 +4,15 @@ import 'package:vensemart/services/provider/provider_services.dart';
 import 'package:vensemart/services/screens/AvailableServicesListScreen.dart';
 import 'package:vensemart/services/screens/ProfileEditScreen.dart';
 
+import '../../LoginScreen.dart';
+import '../../products/screens/ProductsHomeScreen.dart';
+import 'AboutUsScreen.dart';
+import 'ContactScreen.dart';
+import 'FeedbackScreen.dart';
+import 'NotificationScreen.dart';
+import 'RateUsScreen.dart';
+import 'ServicesHomeScreen.dart';
+
 class ServicesProfileScreen extends StatefulWidget {
   const ServicesProfileScreen({Key? key}) : super(key: key);
 
@@ -97,12 +106,11 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                     child: Column(
                       children: [
                         GestureDetector(
-                          onTap: () {
+                          onTap: (){
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                     AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: 1.toString(),),
+                                  builder: (context) => ServicesHomeScreen()
                               ),
                             );
                           },
@@ -111,44 +119,143 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                             title: Text('Home'),
                           ),
                         ),
-                        const ListTile(
-                          leading: Icon(Icons.person),
-                          title: Text('Profile'),
-                        ),
-                        const ListTile(
-                          leading: Icon(Icons.notifications),
-                          title: Text('Booking History'),
-                        ),
-                        const ListTile(
-                          leading: Icon(Icons.compare_arrows),
-                          title: Text('Switch to product'),
-                        ),
-                        const ListTile(
-                          leading: Icon(Icons.notifications),
-                          title: Text('Notifications'),
-                        ),
-                        const ListTile(
-                          leading: Icon(Icons.phone),
-                          title: Text('contact'),
-                        ),
-                        const ListTile(
-                          leading: Icon(Icons.info),
-                          title: Text('About'),
-                        ),
-                        const ListTile(
-                          leading: Icon(Icons.chat),
-                          title: Text('Feedback'),
-                        ),
-                        const ListTile(
-                          leading: Icon(Icons.rate_review_rounded),
-                          title: Text('Rate our app'),
-                        ),
-                        const ListTile(
-                          leading: Icon(
-                            Icons.logout_outlined,
-                            color: Colors.redAccent,
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfileEditScreen()
+                              ),
+                            );
+
+                          },
+                          child: const ListTile(
+                            leading: Icon(Icons.person),
+                            title: Text('Profile'),
                           ),
-                          title: Text('Logout'),
+                        ),
+
+                        GestureDetector(
+                          onTap: (){
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AvailableServicesListScreen(lat: '1', long: '1', id: '1')
+                              ),
+                            );
+
+                          },
+                          child: const ListTile(
+                            leading: Icon(Icons.notifications),
+                            title: Text('Booking History'),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProductsHomeScreen(),
+                              ),
+                            );
+                          },
+                          child: const ListTile(
+                            leading: Icon(Icons.compare_arrows),
+                            title: Text('Switch to product'),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => NotificationScreen(),
+                              ),
+                            );
+                          },
+                          child: const ListTile(
+                            leading: Icon(Icons.notifications),
+                            title: Text('Notifications'),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: (){
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ContactScreen(),
+                              ),
+                            );
+                          },
+
+                          child: const ListTile(
+                            leading: Icon(Icons.phone),
+                            title: Text('contact'),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AboutUsScreen(),
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Icon(Icons.info),
+                            title: Text('About'),
+                          ),
+                        ),
+
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const FeedbackScreen(),
+                              ),
+                            );
+
+                          },
+                          child: const ListTile(
+                            leading: Icon(Icons.chat),
+                            title: Text('Feedback'),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: (){
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RateUsScreen(),
+                              ),
+                            );
+
+
+
+                          },
+                          child: const ListTile(
+                            leading: Icon(Icons.rate_review_rounded),
+                            title: Text('Rate our app'),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            Navigator.pushReplacement(
+                              context!,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                          },
+                          child: const ListTile(
+                            leading:Icon(Icons.logout_outlined,color: Colors.redAccent,),
+                            title: Text('Logout'),
+                          ),
                         ),
                       ],
                     ),

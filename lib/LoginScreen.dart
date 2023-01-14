@@ -78,7 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   'Welcome',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 40,
+                      fontSize: 25,
                       color: Colors.white),
                 ),
               ),
@@ -89,12 +89,12 @@ class _LoginScreenState extends State<LoginScreen> {
                   'Back',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 40,
+                      fontSize: 25,
                       color: Colors.white),
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height / 2.0,
+                height: MediaQuery.of(context).size.height / 1.8,
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -107,7 +107,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height: 25.0,
+                      height:15.0,
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 22.0),
@@ -167,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: const [
                         Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: 25.0, vertical: 5.0),
+                              horizontal: 25.0, vertical: 2.0),
                           child: Text(
                             'Forgot password?',
                             style: TextStyle(
@@ -183,7 +183,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Consumer<ProviderServices>(
                         builder: (_, value, __) => Center(
                           child: Container(
-                            height: screenHeight / 11,
+                            height: screenHeight / 14,
                             width: screenWidth / 1.10,
                             decoration: BoxDecoration(
                               color: const Color(0xff1456f1),
@@ -206,9 +206,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 10.0,
-                    ),
+                    // const SizedBox(
+                    //   height: 10.0,
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

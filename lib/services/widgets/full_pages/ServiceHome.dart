@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
+import 'package:location/location.dart';
+
+
 import 'package:provider/provider.dart';
 import 'package:vensemart/services/screens/ServicesGridScreen.dart';
 import 'package:vensemart/services/screens/TrendingServicesScreen.dart';
@@ -23,8 +28,56 @@ class _ServiceHomeState extends State<ServiceHome> {
   void initState() {
     _providerServices = Provider.of<ProviderServices>(context, listen: false);
     _providerServices?.userDetails();
+
     super.initState();
+
+    if (SchedulerBinding.instance.schedulerPhase == SchedulerPhase.persistentCallbacks) {
+      SchedulerBinding.instance.addPostFrameCallback((_) => fetchCurrentLocation(context));
+    }
   }
+
+
+  fetchCurrentLocation(context) async {
+    print("STARTING LOCATION SERVICE");
+    Location? location = Location();
+    location.changeSettings(
+        accuracy: LocationAccuracy.low, interval: 1000, distanceFilter: 500);
+    if (await location.hasPermission() == true) {
+      await location.requestPermission();
+    }
+
+    try {
+      await location.onLocationChanged.listen((LocationData currentLocation) {
+        print(currentLocation.latitude);
+        print(currentLocation.longitude);
+        var latitude = currentLocation.latitude;
+        var longitude = currentLocation.longitude;
+      });
+    } on PlatformException {
+      location = null;
+    }
+  }
+
+
+  // fetchCurrentLocation() async {
+  //
+  //   print("STARTING LOCATION SERVICE");
+  //   var location = Location();
+  //   location.changeSettings(accuracy: LocationAccuracy.POWERSAVE,interval: 1000,distanceFilter: 500);
+  //   if (await location.hasPermission() == true) {
+  //     await location.requestPermission();
+  //   }
+  //
+  //   try {
+  //     await location.onLocationChanged.listen((LocationData currentLocation) {
+  //       print(currentLocation.latitude);
+  //       print(currentLocation.longitude);
+  //       latitude = currentLocation.latitude;
+  //       longitude = currentLocation.longitude;
+  //     });
+  //   } on PlatformException {
+  //     location = null;
+  //   }
 
   @override
   Widget build(BuildContext context) {
