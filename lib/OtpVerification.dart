@@ -88,7 +88,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                 height: MediaQuery.of(context).size.height / 3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
-                  child: Image.network('https://pub.dev/static/hash-t76haelo/img/pub-dev-logo-2x.png'),
+                  child: Image.network('https://vensemart.com/assets/images/logo.png'),
                 ),
               ),
               const SizedBox(height: 8),
@@ -103,22 +103,22 @@ class _OtpVerificationState extends State<OtpVerification> {
               Padding(
                 padding:
                 const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
-                child: RichText(
-                  text: TextSpan(
-                      text: "Enter the code sent to ",
-                      children: [
-                        TextSpan(
-                            text: "${otpNumber}",
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15)),
-
-                      ],
-                      style:
-                      const TextStyle(color: Colors.black54, fontSize: 15)),
-                  textAlign: TextAlign.center,
-                ),
+                // child: RichText(
+                //   text: TextSpan(
+                //       text: "Enter the code sent to ",
+                //       children: [
+                //         TextSpan(
+                //             text: "${otpNumber}",
+                //             style: const TextStyle(
+                //                 color: Colors.black,
+                //                 fontWeight: FontWeight.bold,
+                //                 fontSize: 15)),
+                //
+                //       ],
+                //       style:
+                //       const TextStyle(color: Colors.black54, fontSize: 15)),
+                //   textAlign: TextAlign.center,
+                // ),
               ),
               const SizedBox(
                 height: 20,

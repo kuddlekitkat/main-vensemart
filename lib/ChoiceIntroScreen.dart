@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
 
+import 'ProductsComingSoon.dart';
+
 class ChoiceIntroScreen extends StatelessWidget {
   const ChoiceIntroScreen({Key? key}) : super(key: key);
 
@@ -33,7 +35,7 @@ class ChoiceIntroScreen extends StatelessWidget {
                     Navigator.push(
                       context,
                       new MaterialPageRoute(
-                        builder: (context) => ProductsHomeScreen(),
+                        builder: (context) => ProductComingSoonScreen(),
                       ),
                     );
                   },

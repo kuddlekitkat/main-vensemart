@@ -28,6 +28,8 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
 
 
   TextEditingController _textEditingController = TextEditingController();
+
+
   @override
   void initState() {
 
@@ -160,6 +162,8 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
 
 
 
+
+
                         Container(
                             height: screenHeight / 4.5,
                             width: double.infinity,
@@ -267,10 +271,10 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
   }
 
   addAddress(BuildContext context) {
-    Navigator.pushReplacement(
+    Navigator.push(
       context!,
       MaterialPageRoute(
-        builder: (context) => const AddAddressScreen(),
+        builder: (context) =>  AddAddressScreen(service_name: widget.service_name,service_id: widget.service_id, service_date: widget.service_date,),
       ),
     );
 

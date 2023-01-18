@@ -6,6 +6,7 @@ import 'package:vensemart/models/general_model.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
 
 import 'LoginScreen.dart';
+import 'TermsScreen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -48,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "state": "FCT",
         "town": "Abuja"
       }, context: context);
-       sendLocation(context);
+
 
     }
   }
@@ -136,7 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                 ),
                                 filled: true,
-                                hintText: 'username',
+                                hintText: 'Full Name',
                                 prefixIcon: const Icon(Icons.person_rounded),
                                 hintStyle: TextStyle(color: Colors.grey[600]),
                                 fillColor: const Color.fromRGBO(250, 250, 254, 1)),
@@ -264,12 +265,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               style: TextStyle(fontSize: 10),
                             ),
 
-                            const Text(
-                              'terms and conditions',
-                              style: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 13),
+                            GestureDetector(
+                              onTap: (){
+                                Navigator.push(
+                                  context!,
+                                  MaterialPageRoute(
+                                    builder: (context) => TermsScreen(),
+                                  ),
+                                );
+
+                              },
+                              child: const Text(
+                                'terms and conditions',
+                                style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 13),
+                              ),
                             ),
                           ],
                         ),
@@ -318,7 +330,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const RegisterScreen(),
+                                  builder: (context) => const LoginScreen(),
                                 ),
                               );
                             },

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:vensemart/ProductsComingSoon.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
 import 'package:vensemart/services/screens/AvailableServicesListScreen.dart';
 import 'package:vensemart/services/screens/ProfileEditScreen.dart';
+import 'package:vensemart/services/screens/ServicesAppoinmentScreen.dart';
 
 import '../../LoginScreen.dart';
 import '../../products/screens/ProductsHomeScreen.dart';
@@ -56,13 +58,13 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                       width: double.infinity,
                       color: Colors.blueAccent,
                     ),
-                    const Padding(
+                    Padding(
                       padding: EdgeInsets.symmetric(
                           horizontal: 25.0, vertical: 10.0),
                       child: CircleAvatar(
                         radius: 50.0,
                         backgroundImage:
-                            AssetImage("assets/images/profileimg.png"),
+                            NetworkImage("${provider.userDetailsModel?.data?.profile} ?? '' "),
                       ),
                     ),
                   ],
@@ -141,7 +143,7 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => AvailableServicesListScreen(lat: '1', long: '1', id: '1')
+                                  builder: (context) => ServicesAppointmentScreen()
                               ),
                             );
 
@@ -156,7 +158,7 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ProductsHomeScreen(),
+                                builder: (context) => ProductComingSoonScreen(),
                               ),
                             );
                           },
@@ -165,20 +167,20 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                             title: Text('Switch to product'),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => NotificationScreen(),
-                              ),
-                            );
-                          },
-                          child: const ListTile(
-                            leading: Icon(Icons.notifications),
-                            title: Text('Notifications'),
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: (){
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => NotificationScreen(),
+                        //       ),
+                        //     );
+                        //   },
+                        //   child: const ListTile(
+                        //     leading: Icon(Icons.notifications),
+                        //     title: Text('Notifications'),
+                        //   ),
+                        // ),
                         GestureDetector(
                           onTap: (){
 
@@ -210,39 +212,39 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                           ),
                         ),
 
-                        GestureDetector(
-                          onTap: (){
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const FeedbackScreen(),
-                              ),
-                            );
-
-                          },
-                          child: const ListTile(
-                            leading: Icon(Icons.chat),
-                            title: Text('Feedback'),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: (){
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RateUsScreen(),
-                              ),
-                            );
-
-
-
-                          },
-                          child: const ListTile(
-                            leading: Icon(Icons.rate_review_rounded),
-                            title: Text('Rate our app'),
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: (){
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => const FeedbackScreen(),
+                        //       ),
+                        //     );
+                        //
+                        //   },
+                        //   child: const ListTile(
+                        //     leading: Icon(Icons.chat),
+                        //     title: Text('Feedback'),
+                        //   ),
+                        // ),
+                        // GestureDetector(
+                        //   onTap: (){
+                        //
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => const RateUsScreen(),
+                        //       ),
+                        //     );
+                        //
+                        //
+                        //
+                        //   },
+                        //   child: const ListTile(
+                        //     leading: Icon(Icons.rate_review_rounded),
+                        //     title: Text('Rate our app'),
+                        //   ),
+                        // ),
                         GestureDetector(
                           onTap: (){
                             Navigator.pushReplacement(

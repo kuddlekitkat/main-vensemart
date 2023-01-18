@@ -1,11 +1,11 @@
-class CanceledBooking {
+class CancelledBooking {
   int? status;
   String? message;
   List<Data>? data;
 
-  CanceledBooking({this.status, this.message, this.data});
+  CancelledBooking({this.status, this.message, this.data});
 
-  CanceledBooking.fromJson(Map<String, dynamic> json) {
+  CancelledBooking.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
@@ -39,8 +39,8 @@ class Data {
   dynamic userAddress;
   dynamic userLat;
   dynamic userLong;
-  String? bookingDate;
-  String? bookingTime;
+  dynamic bookingDate;
+  dynamic bookingTime;
   String? price;
   dynamic status;
   dynamic cancelReason;
@@ -50,10 +50,11 @@ class Data {
   dynamic mobileNumber;
   String? createdAt;
   String? updatedAt;
-  String? name;
+  dynamic name;
   String? email;
   String? mobile;
-  String? categoryName;
+  dynamic profile;
+  dynamic categoryName;
 
 
 
@@ -83,6 +84,7 @@ class Data {
     this.name,
     this.email,
     this.mobile,
+    this.profile,
     this.categoryName,
   });
 
@@ -110,6 +112,7 @@ class Data {
     name = json["name"];
     email = json["email"];
     mobile = json["mobile"];
+    profile = json["profile"];
     categoryName = json["category_name"];
   }
 
@@ -138,6 +141,7 @@ class Data {
     data['name'] = name;
     data['email'] = email;
     data['mobile'] = mobile;
+    data['profile'] = profile;
     data['category_name'] = categoryName;
     return data;
   }

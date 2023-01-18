@@ -31,9 +31,7 @@ class _ServiceHomeState extends State<ServiceHome> {
 
     super.initState();
 
-    if (SchedulerBinding.instance.schedulerPhase == SchedulerPhase.persistentCallbacks) {
-      SchedulerBinding.instance.addPostFrameCallback((_) => fetchCurrentLocation(context));
-    }
+
   }
 
 
@@ -96,11 +94,21 @@ class _ServiceHomeState extends State<ServiceHome> {
                         Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12.0, vertical: 12.0),
-                            child: Text(
-                              'Hi ${provider.userDetailsModel?.data?.name ?? ''}',
-                              style: const TextStyle(
-                                  fontSize: 25.0, fontWeight: FontWeight.w600),
+                            child: Flexible(
+                              child: RichText(
+                                overflow: TextOverflow.ellipsis,
+                                strutStyle: StrutStyle(fontSize: 40.0),
+                                text: TextSpan(
+                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),
+                                    text: 'Hi ${provider.userDetailsModel?.data?.name} '),
+                              ),
                             )),
+                            //
+                            // Text(
+                            //   'Hi ${provider.userDetailsModel?.data?.name ?? ''}',
+                            //   style: const TextStyle(
+                            //       fontSize: 25.0, fontWeight: FontWeight.w600),
+                            // )),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 12.0),
                           child: Text('what service do',

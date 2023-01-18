@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:vensemart/models/upcoming_bookings.dart';
+import 'package:vensemart/models/canceled_bookings.dart';
 
-class AppointmentCard extends StatelessWidget {
+
+class CancelledAppointmentCard extends StatelessWidget {
   final String image;
   final String name;
   final String occupation;
-  final Data? upcomingBooking;
-  const AppointmentCard( {required this.image,required this.name,required this.occupation,  this.upcomingBooking});
+  final Data? cancelledBooking;
+  const CancelledAppointmentCard( {required this.image,required this.name,required this.occupation, this.cancelledBooking, required CancelledBooking});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class AppointmentCard extends StatelessWidget {
                     ),
 
                    child:  CachedNetworkImage(
-                      imageUrl: upcomingBooking?.profile,
+                      imageUrl: cancelledBooking?.profile,
                       fit: BoxFit.cover,
                       placeholder: (
                           context,
@@ -76,17 +77,17 @@ class AppointmentCard extends StatelessWidget {
                   children: [
 
                     Container(
-                      child: Text(upcomingBooking?.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.0),),
+                      child: Text(cancelledBooking?.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.0),),
                       margin: EdgeInsets.symmetric(vertical: 12.0),
                     ),
-                    Text(upcomingBooking?.categoryName),
+                    Text(cancelledBooking?.categoryName),
                   ],
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width/3.6,
                 ),
-                // TextButton(onPressed: (){
-                //
-                // },child: Icon(Icons.outbond_outlined,color:Colors.black),),
+                TextButton(onPressed: (){
+
+                },child: Icon(Icons.outbond_outlined,color:Colors.black),),
               ],
             ),
 
@@ -124,7 +125,7 @@ class AppointmentCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6.0)
                         ),
                         child: TextButton(
-                          onPressed: (){}, child: Text(upcomingBooking?.bookingDate,style: TextStyle(color: Colors.redAccent),),),
+                          onPressed: (){}, child: Text(cancelledBooking?.bookingDate,style: TextStyle(color: Colors.redAccent),),),
                       ),
                     ),
 
@@ -138,7 +139,7 @@ class AppointmentCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6.0)
                         ),
                         child: TextButton(
-                          onPressed: (){}, child: Text(upcomingBooking?.bookingTime,style: TextStyle(backgroundColor: Colors.blue,color: Colors.white),),),
+                          onPressed: (){}, child: Text(cancelledBooking?.bookingTime,style: TextStyle(backgroundColor: Colors.blue,color: Colors.white),),),
                       ),
                     ),
                   ],

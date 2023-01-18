@@ -3,16 +3,21 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_geocoder/geocoder.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/apiservices/validator.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
+import 'package:vensemart/services/screens/ServiceDeliveryDetailScreen.dart';
 
 import '../widgets/image_picker_widget.dart';
 
 class AddAddressScreen extends StatefulWidget {
-  const AddAddressScreen({Key? key}) : super(key: key);
+  String service_name;
+  String service_id;
+  String service_date;
+   AddAddressScreen({required this.service_name,required this.service_id, required this.service_date});
 
   @override
   State<AddAddressScreen> createState() => _AddAddressScreenState();
@@ -26,6 +31,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   TextEditingController dobController = TextEditingController();
   TextEditingController genderController = TextEditingController();
   TextEditingController addressController = TextEditingController();
+
+
+
 
   final _pickImage = ImagePickerHandler();
   File? fileImage;
@@ -44,18 +52,26 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
     super.initState();
   }
 
-  // void setAddress(context) async {
-  //
-  //     final query = nameController.text.trim();
-  //     // var addresses = await Geocoder.local.findAddressesFromQuery(query);
-  //     // var first = addresses.first;
-  //     print("${first.featureName} : ${first.coordinates.latitude} , ${first.coordinates.longitude}");
-  //     providerServices?.sendLocation(map: {
-  //       "location": nameController.text.trim(),
-  //       "location_lat": "${first.coordinates.latitude}",
-  //       "location_long": " ${first.coordinates.longitude}"
-  //     }, context: context);
-  // }
+  void setAddress(context) async {
+
+      final query = nameController.text.trim();
+      var addresses = await Geocoder.local.findAddressesFromQuery(query);
+      var first = addresses.first;
+      print("${first.featureName} : ${first.coordinates.latitude} , ${first.coordinates.longitude}");
+      providerServices?.sendLocation(map: {
+        "location": nameController.text.trim(),
+        "location_lat": "${first.coordinates.latitude}",
+        "location_long": " ${first.coordinates.longitude}"
+      }, context: context);
+
+      Navigator.push(
+        context!,
+        MaterialPageRoute(
+          builder: (context) => ServiceDeliveryDetailScreen(service_name: widget.service_name,service_id: widget.service_id, service_date: widget.service_date,),
+        ),
+      );
+
+  }
 
   void _getImage(BuildContext context) {
     try {
@@ -180,7 +196,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       ),
                       Center(
                         child: GestureDetector(
-                          // onTap: () => setAddress(context),
+                          onTap: () => setAddress(context),
                           child: Consumer<ProviderServices>(
                             builder: (_, value, __) => Center(
                               child: Container(

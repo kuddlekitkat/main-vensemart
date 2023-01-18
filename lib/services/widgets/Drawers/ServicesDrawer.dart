@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/LoginScreen.dart';
+import 'package:vensemart/ProductsComingSoon.dart';
 import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
 import 'package:vensemart/services/screens/AboutUsScreen.dart';
 import 'package:vensemart/services/screens/ContactScreen.dart';
@@ -9,6 +10,7 @@ import 'package:vensemart/services/screens/FeedbackScreen.dart';
 import 'package:vensemart/services/screens/NotificationScreen.dart';
 import 'package:vensemart/services/screens/ProfileEditScreen.dart';
 import 'package:vensemart/services/screens/RateUsScreen.dart';
+import 'package:vensemart/services/screens/ServicesAppoinmentScreen.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
 import 'package:vensemart/services/widgets/full_pages/ServiceHome.dart';
 
@@ -77,13 +79,13 @@ void Logout() async {
                        width: double.infinity,
                        color: Colors.blueAccent,
                      ),
-                     const Padding(
+                      Padding(
                        padding: EdgeInsets.symmetric(
                            horizontal: 20.0, vertical: 40.0),
                        child: CircleAvatar(
                          radius: 50.0,
-                         backgroundImage: AssetImage(
-                             "assets/images/profileimg.png"),
+                         backgroundImage: NetworkImage(
+                             "${provider.userDetailsModel?.data?.profile}"),
                        ),
                      ),
 
@@ -145,8 +147,7 @@ void Logout() async {
                                context,
                                MaterialPageRoute(
                                    builder: (context) =>
-                                       AvailableServicesListScreen(
-                                           lat: '1', long: '1', id: '1')
+                                       ServicesAppointmentScreen()
                                ),
                              );
                            },
@@ -160,7 +161,7 @@ void Logout() async {
                              Navigator.push(
                                context,
                                MaterialPageRoute(
-                                 builder: (context) => ProductsHomeScreen(),
+                                 builder: (context) => ProductComingSoonScreen(),
                                ),
                              );
                            },
@@ -169,20 +170,20 @@ void Logout() async {
                              title: Text('Switch to product'),
                            ),
                          ),
-                         GestureDetector(
-                           onTap: () {
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                 builder: (context) => NotificationScreen(),
-                               ),
-                             );
-                           },
-                           child: const ListTile(
-                             leading: Icon(Icons.notifications),
-                             title: Text('Notifications'),
-                           ),
-                         ),
+                         // GestureDetector(
+                         //   onTap: () {
+                         //     Navigator.push(
+                         //       context,
+                         //       MaterialPageRoute(
+                         //         builder: (context) => NotificationScreen(),
+                         //       ),
+                         //     );
+                         //   },
+                         //   child: const ListTile(
+                         //     leading: Icon(Icons.notifications),
+                         //     title: Text('Notifications'),
+                         //   ),
+                         // ),
                          GestureDetector(
                            onTap: () {
                              Navigator.push(
@@ -213,34 +214,34 @@ void Logout() async {
                            ),
                          ),
 
-                         GestureDetector(
-                           onTap: () {
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                 builder: (context) => const FeedbackScreen(),
-                               ),
-                             );
-                           },
-                           child: const ListTile(
-                             leading: Icon(Icons.chat),
-                             title: Text('Feedback'),
-                           ),
-                         ),
-                         GestureDetector(
-                           onTap: () {
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                 builder: (context) => const RateUsScreen(),
-                               ),
-                             );
-                           },
-                           child: const ListTile(
-                             leading: Icon(Icons.rate_review_rounded),
-                             title: Text('Rate our app'),
-                           ),
-                         ),
+                         // GestureDetector(
+                         //   onTap: () {
+                         //     Navigator.push(
+                         //       context,
+                         //       MaterialPageRoute(
+                         //         builder: (context) => const FeedbackScreen(),
+                         //       ),
+                         //     );
+                         //   },
+                         //   child: const ListTile(
+                         //     leading: Icon(Icons.chat),
+                         //     title: Text('Feedback'),
+                         //   ),
+                         // ),
+                         // GestureDetector(
+                         //   onTap: () {
+                         //     Navigator.push(
+                         //       context,
+                         //       MaterialPageRoute(
+                         //         builder: (context) => const RateUsScreen(),
+                         //       ),
+                         //     );
+                         //   },
+                         //   child: const ListTile(
+                         //     leading: Icon(Icons.rate_review_rounded),
+                         //     title: Text('Rate our app'),
+                         //   ),
+                         // ),
                          GestureDetector(
                            onTap: () {
                              Navigator.pushReplacement(

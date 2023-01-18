@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_segment/flutter_advanced_segment.dart';
 import 'package:vensemart/services/widgets/components/AppointmentCard.dart';
 import 'package:vensemart/services/widgets/components/AppointmentList.dart';
+import 'package:vensemart/services/widgets/components/CancelledAppointmentList.dart';
 import 'package:vensemart/services/widgets/components/CompletedAppointmentCard.dart';
 import 'package:vensemart/services/widgets/components/CompletedAppointmentList.dart';
 
@@ -91,7 +92,7 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
                             case 'missed':
                               return const CompletedAppointmentList();
                             case 'cancelled':
-                              return const CompletedAppointmentList();
+                              return CancelledAppointmentList();
                             default:
                               return const SizedBox();
                           }

@@ -86,8 +86,8 @@ class ProviderServices extends ChangeNotifier {
 
   CompletedBooking? get completedBooking => _completedBooking;
   CompletedBooking? _completedBooking;
-  CanceledBooking? get canceledBooking => _canceledBooking;
-  CanceledBooking? _canceledBooking;
+  CancelledBooking? get cancelledBooking => _cancelledBooking;
+  CancelledBooking? _cancelledBooking;
 
   LoginModel? get loginModel => _loginModel;
   LoginModel? _loginModel;
@@ -115,7 +115,7 @@ class ProviderServices extends ChangeNotifier {
         print(_loginModel?.data?.apiToken);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
           content:  Text('${_loginModel?.message}'),
-          duration: const Duration(seconds: 20),
+          duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
             onPressed: () { },
@@ -133,7 +133,7 @@ class ProviderServices extends ChangeNotifier {
     } catch (e, str) {
       ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
         content:  Text('${_loginModel?.message}'),
-        duration: const Duration(seconds: 20),
+        duration: const Duration(seconds: 10),
         action: SnackBarAction(
           label: 'ACTION',
           onPressed: () { },
@@ -170,10 +170,9 @@ class ProviderServices extends ChangeNotifier {
       if (response != null && response.statusCode == 200) {
         _registerModel = RegisterModel.fromJson(response.data);
         print(_registerModel!.data!.email!);
-
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
           content:  Text('${_registerModel?.message}'),
-          duration: const Duration(seconds: 20),
+          duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
             onPressed: () { },
@@ -194,7 +193,7 @@ class ProviderServices extends ChangeNotifier {
     } catch (e, str) {
       ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
         content:  Text('${_registerModel?.message}'),
-        duration: const Duration(seconds: 20),
+        duration: const Duration(seconds: 10),
         action: SnackBarAction(
           label: 'ACTION',
           onPressed: () { },
@@ -278,11 +277,11 @@ class ProviderServices extends ChangeNotifier {
         _userLocationModel = UserLocationModel.fromJson(response.data);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
           content:  Text('${_userLocationModel?.message}'),
-          duration: const Duration(seconds: 20),
-          action: SnackBarAction(
-            label: 'ACTION',
-            onPressed: () { },
-          ),
+          duration: const Duration(seconds: 7),
+          // action: SnackBarAction(
+          //   label: 'ACTION',
+          //   onPressed: () { },
+          // ),
         ));
         _isLoading = false;
         SessionManager.instance.isLoggedIn = true;
@@ -306,7 +305,7 @@ class ProviderServices extends ChangeNotifier {
         _userLocationModel = UserLocationModel.fromJson(response.data);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
           content:  Text('${_userLocationModel?.message}'),
-          duration: const Duration(seconds: 20),
+          duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
             onPressed: () { },
@@ -617,7 +616,7 @@ class ProviderServices extends ChangeNotifier {
       _isLoading = true;
       Response? response = await authRepo.canceledBookings();
       if (response != null && response.statusCode == 200) {
-        _canceledBooking = CanceledBooking.fromJson(response.data);
+        _cancelledBooking = CancelledBooking.fromJson(response.data);
         _isLoading = false;
       }
       notifyListeners();
