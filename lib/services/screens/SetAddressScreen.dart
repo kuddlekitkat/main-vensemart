@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_geocoder/geocoder.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:geocode/geocode.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/apiservices/validator.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
@@ -53,15 +53,16 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   }
 
   void setAddress(context) async {
-
+GeoCode geoCode = GeoCode();
       final query = nameController.text.trim();
-      var addresses = await Geocoder.local.findAddressesFromQuery(query);
-      var first = addresses.first;
-      print("${first.featureName} : ${first.coordinates.latitude} , ${first.coordinates.longitude}");
+      var addresses = await geoCode.forwardGeocoding(
+        address:query);
+      // var first = addresses.first;
+      print("${addresses.latitude} : ${addresses.longitude}");
       providerServices?.sendLocation(map: {
         "location": nameController.text.trim(),
-        "location_lat": "${first.coordinates.latitude}",
-        "location_long": " ${first.coordinates.longitude}"
+        "location_lat": "${addresses.latitude}",
+        "location_long": " ${addresses.longitude}"
       }, context: context);
 
       Navigator.push(

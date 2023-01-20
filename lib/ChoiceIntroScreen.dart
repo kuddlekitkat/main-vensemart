@@ -3,9 +3,22 @@ import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
 
 import 'ProductsComingSoon.dart';
+import 'firebase_service.dart/firebase_service.dart';
 
-class ChoiceIntroScreen extends StatelessWidget {
+class ChoiceIntroScreen extends StatefulWidget {
   const ChoiceIntroScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ChoiceIntroScreen> createState() => _ChoiceIntroScreenState();
+}
+
+class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
+
+  @override
+  void initState() {
+    firebaseService.firebasePushNotification(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

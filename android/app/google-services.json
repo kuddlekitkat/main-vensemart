@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "975078537678",
+    "project_id": "vensemart-5f9e8",
+    "storage_bucket": "vensemart-5f9e8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:975078537678:android:4b6ed1abeb0852568b539f",
+        "android_client_info": {
+          "package_name": "com.vensemart.vensemart"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "975078537678-dbo7as14t3uul5n77a1cennkbk8dqtke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjZuomVXckH9OH8te8phTsaU96EwQVpXI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "975078537678-dbo7as14t3uul5n77a1cennkbk8dqtke.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
