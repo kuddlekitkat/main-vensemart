@@ -22,10 +22,9 @@ AndroidNotificationChannel channel = const AndroidNotificationChannel(
 );
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin();
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
-
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true, // Required to display a heads up notification
     badge: true,
@@ -36,10 +35,11 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeCore();
-   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
+      AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
   runApp(const MyApp());
 }
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
           ServicesHomeScreen.routeName: (ctx) => const ServicesHomeScreen(),
           LoginScreen.routeName: (ctx) => const ServicesHomeScreen(),
           AvailableServicesListScreen.routeName: (ctx) =>
-      AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: 385.toString()),
+              AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: 385.toString()),
         },
       ),
     );

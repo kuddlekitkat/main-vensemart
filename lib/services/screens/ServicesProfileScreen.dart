@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/ProductsComingSoon.dart';
@@ -63,8 +64,21 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                           horizontal: 25.0, vertical: 10.0),
                       child: CircleAvatar(
                         radius: 50.0,
-                        backgroundImage:
-                            NetworkImage("${provider.userDetailsModel?.data?.profile} ?? '' "),
+                        // backgroundImage:
+                        //     NetworkImage("${provider.userDetailsModel?.data?.profile} ?? '' "),
+                        child: CachedNetworkImage(
+                          imageUrl: provider.userDetailsModel?.data?.profile.toString() ?? '',
+                          imageBuilder: (context, imageProvider) => Container(
+                            width: 100.0,
+                            height: 100.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                        ),
                       ),
                     ),
                   ],
@@ -137,22 +151,22 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                           ),
                         ),
 
-                        GestureDetector(
-                          onTap: (){
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ServicesAppointmentScreen()
-                              ),
-                            );
-
-                          },
-                          child: const ListTile(
-                            leading: Icon(Icons.notifications),
-                            title: Text('Booking History'),
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: (){
+                        //
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //           builder: (context) => ServicesAppointmentScreen()
+                        //       ),
+                        //     );
+                        //
+                        //   },
+                        //   child: const ListTile(
+                        //     leading: Icon(Icons.notifications),
+                        //     title: Text('Booking History'),
+                        //   ),
+                        // ),
                         GestureDetector(
                           onTap: (){
                             Navigator.push(

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -84,9 +85,23 @@ void Logout() async {
                            horizontal: 20.0, vertical: 40.0),
                        child: CircleAvatar(
                          radius: 50.0,
-                         backgroundImage: NetworkImage(
-                             "${provider.userDetailsModel?.data?.profile}"),
+                         // backgroundImage: NetworkImage(
+                         //     "${provider.userDetailsModel?.data?.profile}"),
+                         child: CachedNetworkImage(
+                           imageUrl: provider.userDetailsModel?.data?.profile.toString() ?? '',
+                           imageBuilder: (context, imageProvider) => Container(
+                             width: 100.0,
+                             height: 100.0,
+                             decoration: BoxDecoration(
+                               shape: BoxShape.circle,
+                               image: DecorationImage(
+                                   image: imageProvider, fit: BoxFit.cover),
+                             ),
+                           ),
+                           errorWidget: (context, url, error) => const Icon(Icons.error),
+                         ),
                        ),
+
                      ),
 
 

@@ -1,12 +1,15 @@
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/apiservices/validator.dart';
 import 'package:vensemart/models/general_model.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'LoginScreen.dart';
 import 'TermsScreen.dart';
+import 'dart:io';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -25,10 +28,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController phnoeNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  String? deviceToken;
+  var deviceInfo;
+  String? device = '';
+
   @override
   void initState() {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
+
+    deviceInfo = DeviceInfoPlugin();
+    // try and print deviceInfo to see all required stuffs then get the device name and pass it to the registration function
+    _getId();
+    Firebase.initializeApp();
+    _firebaseMessaging.getToken().then((token) {
+      deviceToken = token;
+      print("token is $token");
+    });
     super.initState();
+  }
+
+
+  Future<String?> _getId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      var iosDeviceInfo = await deviceInfo.iosInfo;
+      device = iosDeviceInfo.identifierForVendor;
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else if (Platform.isAndroid) {
+      var androidDeviceInfo = await deviceInfo.androidInfo;
+      device = androidDeviceInfo.id;
+      return androidDeviceInfo.id; // unique ID on Android
+    }
+    return device;
   }
 
   void signUp(context) async {
@@ -37,11 +70,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
       setState(() {});
       providerServices?.register(map: {
         "type": "1",
-        "device_id": "12312313213",
-        "device_type": "android",
-        "device_name": "android",
-        "device_token":
-            "fWmhg-bbSfGEqOoHZkKCmj:APA91bGpk7jbGRVP75GFgf0g65_mDjYpWI259vsgAlcm_3EXqVI-h4n069lhPC1euSKSuUfDolkUZnW6OXIN7oQc3YpMeUPYUeXi9AgHAGEg_SE9xmtlrRhdnf2PSVpEM73flWRxivxV",
+        "device_id": device!,
+        "device_type": Platform.isIOS ? "iPhone" : "android",
+        "device_name": deviceInfo.toString(),
+        "device_token": "$deviceToken",
         "name": usernameController.text.trim(),
         "email": emailController.text.trim(),
         "mobile": phnoeNumberController.text.trim(),
@@ -56,7 +88,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   void sendLocation(context) async {
     if (true) {
-
 
       providerServices?.sendLocation(map: {
         "location": 'Wuse 2 Abuja',

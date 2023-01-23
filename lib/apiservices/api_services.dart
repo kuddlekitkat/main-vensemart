@@ -3,6 +3,7 @@ import 'dart:io';
 import 'dart:convert' as convert;
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
+import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../core/session_manager.dart';
@@ -85,8 +86,100 @@ mixin ApiServices {
     }
   }
 
+
+
+
+
   getAuthToken() async {
       String? accessToken = SessionManager.instance.authToken;
       return accessToken;
+  }
+
+
+  // Future<Response?> apiGetRequests(String endPoint) async {
+  //   try {
+  //     Dio dio = await getDio();
+  //     Response response = await dio.get(endPoint,
+  //         options: Options(
+  //             headers: {"Authorization": "Bearer " + await getAuthToken()}));
+  //     //  debugPrint(response.data.toString());
+  //     return response;
+  //   } on DioError catch (e) {
+  //     return e.response;
+  //   }
+  // }
+
+  Future<Map<String, dynamic>?> apiUploadPostRequests(
+      String endPoint, Map<String, dynamic> credentials) async {
+    try {
+      Dio dio = await getDio();
+      final response = await dio.post(endPoint,
+          data: FormData.fromMap(credentials),
+          options: Options(headers: {
+            "Authorization": "Bearer " + await getAuthToken(),
+            "Content-Type": "multipart/form-data"
+          }));
+      return convert.json.decode(response.toString());
+    } on DioError catch (e) {
+      return catchError(e);
+    }
+  }
+
+  catchError(DioError e) {
+    if (e.message.toString().contains("SocketException")) {
+      throw ({
+        "status": "error",
+        "message": "Network Error! Check your internet connection."
+      });
+    }
+
+    if (e.message.toString().contains("timed out")) {
+      throw ({"status": "error", "message": "Connection timeout."});
+    }
+
+    if (e.message.toString().contains("CONNECT_TIMEOUT")) {
+      return {"status": "error", "message": "Connection timeout."};
+    }
+
+    if (e.message.runtimeType.toString() == "String") {
+      return {"status": "error", "message": e.message};
+    }
+
+    if (e.response?.statusCode == 422) {
+      return {
+        "status": "error",
+        "message": e.response?.data?["data"],
+        "email": e.response?.data?["data"]["errors"]["email"]
+      };
+    }
+
+    if (e.response != null) {
+      checkForExpiredToken(e);
+
+      return {
+        "status": "error",
+        "message": e.response?.data,
+      };
+    } else {
+      return {
+        "status": "error",
+        "message": "Error connecting to network!",
+      };
+    }
+  }
+
+  checkForExpiredToken(DioError e) {
+    if (e.response != null &&
+        e.response!.data.runtimeType.toString().toLowerCase().contains("map")) {
+      if (e.response!.data["message"]
+          .toString()
+          .toLowerCase()
+          .contains("unauthenticated")) {
+        GetIt locator = GetIt.instance;
+        // final NavigationService _navigationService =
+        //     locator<NavigationService>();
+        // _navigationService.logOut();
+      }
+    }
   }
 }

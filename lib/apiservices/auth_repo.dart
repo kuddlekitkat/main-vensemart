@@ -57,8 +57,20 @@ class AuthRepo with ApiServices {
   }
 
 
-  Future<Response?> updateProfile(Map<String, String> credentials) async {
-    Response? response = await apiPostRequests("update_profile", credentials);
+  // Future<Response?> updateProfile(Map<String, String> credentials) async {
+  //   Response? response = await apiPostRequests("update_profile", credentials);
+  //
+  //   if (response != null) {
+  //     return response;
+  //   }
+  //
+  //   return null;
+  // }
+
+
+
+  Future<Map<String, dynamic> ?> updateProfile(Map<String, dynamic> credentials) async {
+    Map<String, dynamic> ? response = await apiUploadPostRequests("update_profile", credentials);
 
     if (response != null) {
       return response;
@@ -275,4 +287,6 @@ class AuthRepo with ApiServices {
 
     return null;
   }
+
+
 }

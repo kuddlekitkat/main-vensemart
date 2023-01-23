@@ -252,17 +252,34 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-  void updateUserProfile(
-      {Map<String, String>? map, BuildContext? context}) async {
+  void updateProfile({context, Map<String, dynamic>? credentials}) async {
     try {
       _isLoading = true;
       notifyListeners();
-      Response? response = await authRepo.updateProfile(map!);
-      if (response != null && response.statusCode == 200) {
-        _updateProfileModel = UpdateProfileModel.fromJson(response.data);
+      var response = await authRepo.updateProfile(credentials!);
+      if (response != null) {
+        _isLoading = false;
+
+        ScaffoldMessenger.of(context!).showSnackBar(const SnackBar(
+          content:  Text('profile updated Successfully'),
+          duration: Duration(seconds: 10),
+          // action: SnackBarAction(
+          //   label: 'ACTION',
+          //   onPressed: () { },
+          // ),
+        ));
+        // Navigator.push(
+        //   context!,
+        //   MaterialPageRoute(
+        //     builder: (context) => const ServiceProviderHomeScreen(),
+        //   ),
+        // );
+
       }
       notifyListeners();
     } catch (e, str) {
+      _isLoading = false;
+      notifyListeners();
       debugPrint("Error: $e");
       debugPrint("StackTrace: $str");
     }

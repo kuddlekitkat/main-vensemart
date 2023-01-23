@@ -1,11 +1,15 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/ChoiceIntroScreen.dart';
+import 'package:vensemart/ForgotPasswordScreen.dart';
 import 'package:vensemart/apiservices/validator.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
-
+import 'dart:io';
 import 'RegisterScreen.dart';
 import 'apiservices/auth_repo.dart';
 
@@ -25,11 +29,39 @@ class _LoginScreenState extends State<LoginScreen> {
   ProviderServices? providerServices;
   final _globalFormKey = GlobalKey<FormState>();
 
+  // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+  String? deviceToken;
+  var deviceInfo;
+  String? device = '';
+
+
+  Future<String?> _getId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      var iosDeviceInfo = await deviceInfo.iosInfo;
+      device = iosDeviceInfo.identifierForVendor;
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else if (Platform.isAndroid) {
+      var androidDeviceInfo = await deviceInfo.androidInfo;
+      device = androidDeviceInfo.id;
+      return androidDeviceInfo.id; // unique ID on Android
+    }
+    return device;
+  }
+
   @override
   void initState() {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
+    _getId();
+    // _firebaseMessaging.getToken().then((token) {
+    //   deviceToken = token;
+    //   print("token is $token");
+    // });
     super.initState();
   }
+
+
+
 
   void signIn(context) async {
     if (_globalFormKey.currentState!.validate()) {
@@ -37,11 +69,10 @@ class _LoginScreenState extends State<LoginScreen> {
         "username": emailController.text,
         "password": passwordController.text,
         "type": "1",
-        "device_id": "12312313213",
-        "device_type": "android",
-        "device_name": "android",
-        "device_token":
-            "fWmhg-bbSfGEqOoHZkKCmj:APA91bGpk7jbGRVP75GFgf0g65_mDjYpWI259vsgAlcm_3EXqVI-h4n069lhPC1euSKSuUfDolkUZnW6OXIN7oQc3YpMeUPYUeXi9AgHAGEg_SE9xmtlrRhdnf2PSVpEM73flWRxivxV",
+        "device_id": device!,
+        "device_type": Platform.isIOS ? "iPhone" : "android",
+        "device_name": deviceInfo.toString(),
+        "device_token": "$deviceToken",
       }, context: context);
     }
   }
@@ -129,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             ),
                             filled: true,
-                            hintText: 'email',
+                            hintText: 'Email',
                             prefixIcon: const Icon(Icons.email_rounded),
                             hintStyle: TextStyle(color: Colors.grey[600]),
                             fillColor: const Color.fromRGBO(250, 250, 254, 1)),
@@ -164,16 +195,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children: const [
+                      children:  [
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 25.0, vertical: 2.0),
-                          child: Text(
-                            'Forgot password?',
-                            style: TextStyle(
-                                fontSize: 18.0,
-                                fontWeight: FontWeight.bold,
-                                color: Color(0xff1456f1)),
+                          child: TextButton(
+                            onPressed: (){
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>  ForgotPasswordScreen(),
+                                ),
+                              );
+
+                            },
+                            child: Text(
+                              'Forgot password?',
+                              style: TextStyle(
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.bold,
+                                  color: Color(0xff1456f1)),
+                            ),
                           ),
                         ),
                       ],
