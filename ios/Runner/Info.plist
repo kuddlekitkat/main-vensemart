@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>975078537678-u8nded7fehjb3r0n7begdr0rh2p5sjkd.apps.googleusercontent.com</string>
+	<string>794483813636-2qmeufk093nubbufga5s9voas5n13c3o.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.975078537678-u8nded7fehjb3r0n7begdr0rh2p5sjkd</string>
+	<string>com.googleusercontent.apps.794483813636-2qmeufk093nubbufga5s9voas5n13c3o</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDDDlwwC8yRWHmGkqvUbB7RKtOfsK5gCU0</string>
+	<string>AIzaSyBiUYV-Ds0RueFeVC4s884rhx0J_E3hXBU</string>
 	<key>GCM_SENDER_ID</key>
-	<string>975078537678</string>
+	<string>794483813636</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.vensemart.vensemart</string>
 	<key>PROJECT_ID</key>
-	<string>vensemart-5f9e8</string>
+	<string>vensemartserviceprovider</string>
 	<key>STORAGE_BUCKET</key>
-	<string>vensemart-5f9e8.appspot.com</string>
+	<string>vensemartserviceprovider.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:975078537678:ios:a0f932872eb433138b539f</string>
+	<string>1:794483813636:ios:3c9b7b1d1b5327ff2df451</string>
 </dict>
 </plist>

@@ -1,40 +1,76 @@
 {
   "project_info": {
-    "project_number": "975078537678",
-    "project_id": "vensemart-5f9e8",
-    "storage_bucket": "vensemart-5f9e8.appspot.com"
+    "project_number": "794483813636",
+    "project_id": "vensemartserviceprovider",
+    "storage_bucket": "vensemartserviceprovider.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:975078537678:android:7a7c75178b6c90298b539f",
+        "mobilesdk_app_id": "1:794483813636:android:7da957078756d9ab2df451",
         "android_client_info": {
           "package_name": "com.vensemart.vensemart"
         }
       },
       "oauth_client": [
         {
-          "client_id": "975078537678-dbo7as14t3uul5n77a1cennkbk8dqtke.apps.googleusercontent.com",
+          "client_id": "794483813636-0or45fg7fto739hv5e9144l0bqpb9j6q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBjZuomVXckH9OH8te8phTsaU96EwQVpXI"
+          "current_key": "AIzaSyCd08SkEWAvsul0jv-JqgcQTuin1jEeHRc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "975078537678-dbo7as14t3uul5n77a1cennkbk8dqtke.apps.googleusercontent.com",
+              "client_id": "794483813636-0or45fg7fto739hv5e9144l0bqpb9j6q.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "975078537678-u8nded7fehjb3r0n7begdr0rh2p5sjkd.apps.googleusercontent.com",
+              "client_id": "794483813636-9cgrsm331ucf7s65oatoqlvg90c55d29.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.vensemart.vensemart"
+                "bundle_id": "com.vensemart.vensemartserviceprovider"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:794483813636:android:2ed5012a1e63a5682df451",
+        "android_client_info": {
+          "package_name": "com.vensemart.vensemartserviceprovider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "794483813636-0or45fg7fto739hv5e9144l0bqpb9j6q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd08SkEWAvsul0jv-JqgcQTuin1jEeHRc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "794483813636-0or45fg7fto739hv5e9144l0bqpb9j6q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "794483813636-9cgrsm331ucf7s65oatoqlvg90c55d29.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.vensemart.vensemartserviceprovider"
               }
             }
           ]
