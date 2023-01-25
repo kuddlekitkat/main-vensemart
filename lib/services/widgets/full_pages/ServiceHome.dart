@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:vensemart/services/screens/ServicesGridScreen.dart';
 import 'package:vensemart/services/screens/TrendingServicesScreen.dart';
 import 'package:vensemart/services/widgets/components/ExploreServicesList.dart';
+import 'package:vensemart/services/widgets/components/SatisfactionServicesList.dart';
 import 'package:vensemart/services/widgets/components/TrendingServicesList.dart';
 
 import '../../provider/provider_services.dart';
@@ -227,49 +228,7 @@ class _ServiceHomeState extends State<ServiceHome> {
                   ),
                 ),
                 TrendingServicesList(),
-                Container(
-                  height: MediaQuery.of(context).size.height / 10.2,
-                  width: MediaQuery.of(context).size.width / 1.01,
-                  decoration: BoxDecoration(
-                    color: Color.fromRGBO(20, 85, 249, 2),
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(2.0),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 140,
-                          width: 70,
-                          decoration: const BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/images/servicescheckmark.png'))),
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Your Satisfaction is guaranteed',
-                              style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Container(
-                                width: MediaQuery.of(context).size.width / 1.3,
-                                child: Text(
-                                  'Our Service providers are trained professionals that are well vetted and verified by our team of excellent service and sector leaders',
-                                  style: TextStyle(
-                                      fontSize: 10.0, color: Colors.white),
-                                )),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                SatisfactionServicesList(),
               ],
             ),
           );

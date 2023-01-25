@@ -97,6 +97,12 @@ class ProviderServices extends ChangeNotifier {
       _servicesModel?.data != null &&
       _servicesModel!.data!.isNotEmpty;
 
+
+  bool get isReady =>
+      _trendingserviceModel != null &&
+          _trendingserviceModel?.data != null &&
+          _trendingserviceModel!.data!.isNotEmpty;
+
   bool get isPresent =>
       _productCategoryModel != null &&
           _productCategoryModel?.data != null &&

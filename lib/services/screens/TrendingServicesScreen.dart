@@ -28,9 +28,11 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
 
   ProviderServices? providerServices;
   TextEditingController timeController = TextEditingController();
+  TextEditingController controller = TextEditingController();
 
   late DateTime _selectedDate;
-
+  String _query = '';
+  List searchItem = [];
 
   TextEditingController _textEditingController = TextEditingController();
   @override
@@ -38,6 +40,7 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
 
     providerServices = Provider.of<ProviderServices>(context, listen: false);
     providerServices?.trendingServices();
+    searchItem.clear();
 
     super.initState();
   }
@@ -121,6 +124,12 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                         width: MediaQuery.of(context).size.width,
                         margin: EdgeInsets.all(11.0),
                         child: TextFormField(
+                          controller: controller,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          onChanged: (v) {
+                            // searchItem.clear();
+                            setState(() => _query = v);
+                          },
                           decoration: InputDecoration(
                             border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
@@ -146,12 +155,16 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                           padding: const EdgeInsets.all(10),
 
                           children: <Widget>[
-                            if (provider != null)
+                            if (provider.isReady)
+
                               ...provider.trendingserviceModel!.data!
-
+                                  .where((element) => element.categoryName!
+                                  .toLowerCase()
+                                  .contains(_query.toLowerCase()))
                                   .map((e) {
-
+                                    
                                 return  TrendingServicesCard(
+
                                   trendingserviceModel: e,
                                 );
                               }).toList()
