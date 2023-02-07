@@ -107,7 +107,6 @@ class ProviderServices extends ChangeNotifier {
   void signIn({Map<String, String>? map, BuildContext? context}) async {
     try {
       _isLoading = true;
-      notifyListeners();
       Response? response = await authRepo.login(map!);
       if (response != null && response.statusCode == 200) {
         _isLoading = false;
@@ -125,7 +124,7 @@ class ProviderServices extends ChangeNotifier {
         ));
         SessionManager.instance.authToken = _loginModel!.data!.apiToken!;
         Navigator.pushReplacement(
-          context!,
+          context,
           MaterialPageRoute(
             builder: (context) => const ChoiceIntroScreen(),
           ),
@@ -148,6 +147,7 @@ class ProviderServices extends ChangeNotifier {
       debugPrint("Error: $e");
       debugPrint("StackTrace: $str");
     }
+    notifyListeners();
   }
 
   void signOut() async {
