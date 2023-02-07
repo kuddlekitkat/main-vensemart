@@ -33,7 +33,7 @@ class AppointmentCard extends StatelessWidget {
 
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(
+                const SizedBox(
                   width: 20,
                 ),
                 Padding(
@@ -41,8 +41,8 @@ class AppointmentCard extends StatelessWidget {
                   child: Container(
                     height:50,
                     width: 60,
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(10.0),
                           topRight: Radius.circular(10.0),
                           bottomRight: Radius.circular(10.0),
@@ -84,9 +84,7 @@ class AppointmentCard extends StatelessWidget {
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width/3.6,
                 ),
-                // TextButton(onPressed: (){
-                //
-                // },child: Icon(Icons.outbond_outlined,color:Colors.black),),
+
               ],
             ),
 
@@ -94,17 +92,27 @@ class AppointmentCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
 
+
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal:20.0,vertical: 12.0),
-                  child: Container(
-                    width: 70,
-                    height: 40,
+                  child: upcomingBooking?.status == 2 ? Container(
+                    width: MediaQuery.of(context).size.width/4.1,
+                    height: MediaQuery.of(context).size.width/9.5,
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(6.0)
+                    ),
+                    child: TextButton(
+                      onPressed: (){}, child: Flexible( child: Text('Booked',style: TextStyle(color: Colors.white, fontSize: 10),)),),
+                  ) : Container(
+                    width: MediaQuery.of(context).size.width/4.2,
+                    height: MediaQuery.of(context).size.width/9.5,
                     decoration: BoxDecoration(
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(6.0)
                     ),
                     child: TextButton(
-                      onPressed: (){}, child: Text('pending',style: TextStyle(color: Colors.white),),),
+                      onPressed: (){}, child: Flexible( child: Text('Pending',style: TextStyle(color: Colors.white,fontSize: 10),)),),
                   ),
                 ),
 
@@ -117,28 +125,28 @@ class AppointmentCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 12.0),
                       child: Container(
-                        width: 100,
-                        height: 40,
+                        width: MediaQuery.of(context).size.width/4.0,
+                        height: MediaQuery.of(context).size.width/9.5,
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(252,239,231,3),
+                            color: Colors.blue,
                             borderRadius: BorderRadius.circular(6.0)
                         ),
                         child: TextButton(
-                          onPressed: (){}, child: Text(upcomingBooking?.bookingDate,style: TextStyle(color: Colors.redAccent),),),
+                          onPressed: (){}, child: Flexible(child: Text(upcomingBooking?.bookingDate,style: TextStyle(color: Colors.white, fontSize: 10),)),),
                       ),
                     ),
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 12.0),
                       child: Container(
-                        width: 100,
-                        height: 40,
+                        width: MediaQuery.of(context).size.width/4,
+                        height: MediaQuery.of(context).size.width/9.5,
                         decoration: BoxDecoration(
                             color: Colors.blue,
                             borderRadius: BorderRadius.circular(6.0)
                         ),
                         child: TextButton(
-                          onPressed: (){}, child: Text(upcomingBooking?.bookingTime,style: TextStyle(backgroundColor: Colors.blue,color: Colors.white),),),
+                          onPressed: (){}, child: Flexible(child: Text(upcomingBooking?.bookingTime,style: TextStyle(backgroundColor: Colors.blue,color: Colors.white,fontSize: 12),)),),
                       ),
                     ),
                   ],

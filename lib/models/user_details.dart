@@ -48,10 +48,10 @@ class Data {
   dynamic idProf;
   String? documentsApproved;
   dynamic isOnline;
-  String? whatApp;
-  String? sms;
-  String? notification;
-  String? serviceTypePrice;
+  dynamic whatApp;
+  dynamic sms;
+  dynamic notification;
+  dynamic serviceTypePrice;
   dynamic guarantorName;
   dynamic guarantorEmail;
   dynamic guarantorPhoneNumber;
@@ -59,7 +59,7 @@ class Data {
   dynamic serviceDiscription;
   String? state;
   String? town;
-  String? gpsLocationStatus;
+  dynamic gpsLocationStatus;
   String? createdAt;
   String? updatedAt;
 

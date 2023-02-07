@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:geocode/geocode.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/apiservices/validator.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
@@ -24,6 +24,7 @@ class AddAddressScreen extends StatefulWidget {
 }
 
 class _AddAddressScreenState extends State<AddAddressScreen> {
+
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -32,7 +33,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   TextEditingController genderController = TextEditingController();
   TextEditingController addressController = TextEditingController();
 
-
+  String? selectedValue;
 
 
   final _pickImage = ImagePickerHandler();
@@ -49,20 +50,24 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
   void initState() {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
     providerServices?.userLocation();
+    nameController.text = providerServices?.userLocationModel?.data?.location ?? '';
     super.initState();
   }
 
   void setAddress(context) async {
-GeoCode geoCode = GeoCode();
-      final query = nameController.text.trim();
-      var addresses = await geoCode.forwardGeocoding(
-        address:query);
-      // var first = addresses.first;
-      print("${addresses.latitude} : ${addresses.longitude}");
+// GeoCode geoCode = GeoCode();
+//       final query = nameController.text.trim();
+//       var addresses = await geoCode.forwardGeocoding(
+//         address:query);
+//       // var first = addresses.first;
+//       print("${addresses.latitude} : ${addresses.longitude}");
       providerServices?.sendLocation(map: {
         "location": nameController.text.trim(),
-        "location_lat": "${addresses.latitude}",
-        "location_long": " ${addresses.longitude}"
+        "location_lat": "9.0658",
+        "location_long": "7.4287",
+        "state" : selectedValue.toString()
+        // "location_lat": "${addresses.latitude}",
+        // "location_long": " ${addresses.longitude}"
       }, context: context);
 
       Navigator.push(
@@ -84,6 +89,11 @@ GeoCode geoCode = GeoCode();
           });
     } catch (e) {}
   }
+
+  final List<String> items = [
+    'Abuja',
+
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -189,6 +199,52 @@ GeoCode geoCode = GeoCode();
                             fillColor: Colors.white),
                       ),
                       const SizedBox(height: 14.0),
+
+
+                      Container(
+                        decoration: BoxDecoration(
+                            color: Color.fromRGBO(250, 250, 254, 1),
+                            borderRadius: BorderRadius.circular(
+                                12.0) //<-- SEE HERE
+                        ),
+                        margin: EdgeInsets.all(12.0),
+                        child: Center(
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton2(
+                              hint: Text(
+                                'Select State',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Theme
+                                      .of(context)
+                                      .hintColor,
+                                ),
+                              ),
+                              items: items.map((item) =>
+                                  DropdownMenuItem<String>(
+                                    value: item.toString(),
+                                    child: Text(
+                                      item.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ))
+                                  .toList(),
+                              value: selectedValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedValue = value as String;
+                                });
+                              },
+                              buttonHeight: 70,
+                              buttonWidth: 280,
+                              itemHeight: 50,
+                            ),
+                          ),
+                        ),
+                      ),
+
 
                       const SizedBox(height: 14.0),
 

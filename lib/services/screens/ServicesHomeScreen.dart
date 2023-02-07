@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
@@ -65,42 +67,59 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       _selectedIndex = index;
     });
   }
-
+  var presscount = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56), // 56 is default height
-        child: _appBars[_selectedIndex],
-      ),
-      drawer: PreferredSize(
-        preferredSize: const Size.fromHeight(56), // 56 is default height
-        child: _drawers[_selectedIndex],
-      ),
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt_sharp),
-            label: 'Appointments',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.wallet_giftcard_rounded),
-            label: 'Offers',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.blue,
-        onTap: _onItemTapped,
+    return WillPopScope(
+      onWillPop: () async {
+        presscount++;
+
+        if (presscount == 3) {
+          exit(0);
+        } else {
+          var snackBar =
+          const SnackBar(content: Text(
+            'Press again to exit app',style: TextStyle(
+            fontSize: 20.0, fontWeight: FontWeight.w400,
+          ),),);
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          return false;
+        }
+      },
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(56), // 56 is default height
+          child: _appBars[_selectedIndex],
+        ),
+        drawer: PreferredSize(
+          preferredSize: const Size.fromHeight(56), // 56 is default height
+          child: _drawers[_selectedIndex],
+        ),
+        body: _widgetOptions.elementAt(_selectedIndex),
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'Home',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.list_alt_sharp),
+              label: 'Appointments',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.wallet_giftcard_rounded),
+              label: 'Offers',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'Profile',
+            ),
+          ],
+          currentIndex: _selectedIndex,
+          selectedItemColor: Colors.blue,
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,8 @@ class SatisfactionServicesList extends StatefulWidget {
 
 class _SatisfactionServicesListState extends State<SatisfactionServicesList> {
   ProviderServices? providerServices;
+  int _current = 0;
+  final CarouselController _controller = CarouselController();
 
   @override
   void initState() {
@@ -25,67 +28,102 @@ class _SatisfactionServicesListState extends State<SatisfactionServicesList> {
     super.initState();
   }
 
+
+
+
+  // Widget Container(){
+  //
+  //   return Row(
+  //     children: [
+  //       Container(
+        //   height: 100,
+        //   width: 40,
+        //   decoration: const BoxDecoration(
+        //       image: DecorationImage(
+        //           image: AssetImage(
+        //               'assets/images/servicescheckmark.png'))),
+        // ),
+        // Column(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     Text(
+        //       'Your Satisfaction is guaranteed',
+        //       style: TextStyle(
+        //           fontSize: 16.0,
+        //           color: Colors.white,
+        //           fontWeight: FontWeight.bold),
+        //     ),
+        //     Container(
+        //         margin:EdgeInsets.only(right: 10),
+        //         width: 200,
+        //         child: Text(
+        //           'Our Service providers are trained professionals that are well vetted and verified by our team of excellent service and sector leaders',
+        //           maxLines: 5, style: TextStyle(
+        //           fontSize: 10.0, color: Colors.white, ),
+        //         )),
+        //   ],
+        // ),
+  //     ],
+  //   );
+  // }
+  //
+
+  List images = [
+    'assets/images/1.png',
+    'assets/images/2.png',
+    'assets/images/3.png',
+    'assets/images/4.png'
+
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 130.0,
+      height: 80.0,
       width: MediaQuery.of(context).size.width,
-      child:
-         ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 4,
-              itemBuilder: ((context, index) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
+      child: CarouselSlider(
+        carouselController: _controller,
+        options: CarouselOptions(
+            height: 230.0,
+            autoPlay: true,
+            enlargeCenterPage: true,
+            aspectRatio: 2.0,
+            onPageChanged: (index, reason) {
+              setState(() {
+                _current = index;
+              });
+            }
 
-                      height: MediaQuery.of(context).size.height / 10.2,
-                      width: MediaQuery.of(context).size.width / 1.01,
-                      decoration: BoxDecoration(
-                        color: Color.fromRGBO(20, 85, 249, 2),
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 140,
-                              width: 70,
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                      image: AssetImage(
-                                          'assets/images/servicescheckmark.png'))),
-                            ),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Your Satisfaction is guaranteed',
-                                  style: TextStyle(
-                                      fontSize: 16.0,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Container(
-                                    width: MediaQuery.of(context).size.width / 1.3,
-                                    child: Text(
-                                      'Our Service providers are trained professionals that are well vetted and verified by our team of excellent service and sector leaders',
-                                      style: TextStyle(
-                                          fontSize: 10.0, color: Colors.white),
-                                    )),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 12,)
-                  ],
+        ),
+        items: images.map((i) {
+          return Builder(
+            builder: (BuildContext context) {
+              return  Container(
+                width: 1000,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  image: DecorationImage(image: AssetImage(
+                    i
+
+                  ),
+                    fit: BoxFit.cover,
+
+                  )
+                ),
                 );
-              })),
+            },
+          );
+        }).toList(),
+      ),
+
+
+         );
+
+
+
+
+
 
           //  ListView(
           //   // This next line does the trick.
@@ -193,7 +231,7 @@ class _SatisfactionServicesListState extends State<SatisfactionServicesList> {
           // );
 
 
-    );
+
   }
 
   listWidget({imageUrl, text,id}) {

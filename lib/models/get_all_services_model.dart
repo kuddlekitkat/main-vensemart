@@ -28,12 +28,12 @@ class ServiceCategoryModel {
 }
 
 class Data {
-  String? id;
-  String? categoryIcon;
-  String? categoryName;
-  String? createdAt;
-  String? updatedAt;
-  String? categoryId;
+  dynamic id;
+  dynamic categoryIcon;
+  dynamic categoryName;
+  dynamic createdAt;
+  dynamic updatedAt;
+  dynamic categoryId;
 
   Data(
       {this.id,

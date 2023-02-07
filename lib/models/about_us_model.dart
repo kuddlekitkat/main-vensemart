@@ -23,7 +23,7 @@ class AboutUsModel {
 }
 
 class Data {
-  String? id;
+  dynamic? id;
   String? type;
   String? description;
   String? createdAt;

@@ -30,18 +30,14 @@ class Data {
   String? netAmount;
   String? discount;
 
-
-
-
-  Data(
-      {
-        this.productId,
-        this.categoryId,
-        this.quantity,
-        this.uomId,
-        this.netAmount,
-        this.discount,
-      });
+  Data({
+    this.productId,
+    this.categoryId,
+    this.quantity,
+    this.uomId,
+    this.netAmount,
+    this.discount,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     productId = json['product_id'];
@@ -50,9 +46,6 @@ class Data {
     uomId = json['uom_id'];
     netAmount = json['net_amount'];
     discount = json['discount'];
-
-
-
   }
 
   Map<String, dynamic> toJson() {

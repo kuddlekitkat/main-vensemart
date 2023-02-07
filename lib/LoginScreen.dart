@@ -1,17 +1,13 @@
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:dio/dio.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:vensemart/ChoiceIntroScreen.dart';
 import 'package:vensemart/ForgotPasswordScreen.dart';
 import 'package:vensemart/apiservices/validator.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
 import 'dart:io';
 import 'RegisterScreen.dart';
-import 'apiservices/auth_repo.dart';
 
 class LoginScreen extends StatefulWidget {
   static var routeName = '/login';
@@ -33,7 +29,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String? deviceToken;
   var deviceInfo;
   String? device = '';
-
+  late bool _passwordVisible;
 
   Future<String?> _getId() async {
     var deviceInfo = DeviceInfoPlugin();
@@ -53,15 +49,33 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
     _getId();
+    _passwordVisible = false;
     // _firebaseMessaging.getToken().then((token) {
     //   deviceToken = token;
     //   print("token is $token");
     // });
+
+    initOneSignal(context);
     super.initState();
   }
 
+  Future<void> initOneSignal(BuildContext context) async {
+    /// Set App Id.
+    await OneSignal.shared.setAppId("580dc8b3-a23b-4ef4-9ec9-fa1fd78c83bb");
 
-
+    /// Get the Onesignal userId and update that into the firebase.
+    /// So, that it can be used to send Notifications to users later.̥
+    final status = await OneSignal.shared.getDeviceState();
+    final String? osUserID = status?.userId;
+    deviceToken = osUserID;
+    // We will update this once he logged in and goes to dashboard.
+    ////updateUserProfile(osUserID);
+    // Store it into shared prefs, So that later we can use it.
+    // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
+    await OneSignal.shared.promptUserForPushNotificationPermission(
+      fallbackToSettings: true,
+    );
+  }
 
   void signIn(context) async {
     if (_globalFormKey.currentState!.validate()) {
@@ -79,21 +93,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var isChecked = false;
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
-
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
-      };
-      if (states.any(interactiveStates.contains)) {
-        return const Color(0xff1456f1);
-      }
-      return Colors.red;
-    }
 
     return Scaffold(
         backgroundColor: const Color(0xff1456f1),
@@ -125,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height / 1.8,
+                height: MediaQuery.of(context).size.height / 2,
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -144,53 +145,68 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: EdgeInsets.symmetric(horizontal: 22.0),
                       child: Text('Email'),
                     ),
-                    Container(
-                      margin: const EdgeInsets.all(12.0),
-                      child: TextFormField(
-                        validator: Validators.validateEmail(),
-                        controller: emailController,
-                        decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10.0),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height/9,
+                      child: Container(
+                        margin: const EdgeInsets.all(12.0),
+                        child: TextFormField(
+                          validator: Validators.validateEmail(),
+                          controller: emailController,
+                          decoration: InputDecoration(
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                                borderSide: BorderSide(
+                                  width: 0,
+                                  style: BorderStyle.none,
+                                ),
                               ),
-                              borderSide: BorderSide(
-                                width: 0,
-                                style: BorderStyle.none,
-                              ),
-                            ),
-                            filled: true,
-                            hintText: 'Email',
-                            prefixIcon: const Icon(Icons.email_rounded),
-                            hintStyle: TextStyle(color: Colors.grey[600]),
-                            fillColor: const Color.fromRGBO(250, 250, 254, 1)),
+                              filled: true,
+                              hintText: 'email',
+                              prefixIcon: const Icon(Icons.email_rounded),
+                              hintStyle: TextStyle(color: Colors.grey[600]),
+                              fillColor: const Color.fromRGBO(250, 250, 254, 1)),
+                        ),
                       ),
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 22.0),
                       child: Text('password'),
                     ),
-                    Container(
-                      margin: const EdgeInsets.all(12.0),
-                      child: TextFormField(
-                        controller: passwordController,
-                        validator: Validators.validatePlainPassword(),
-                        decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10.0),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height/9,
+                      child: Container(
+                        margin: const EdgeInsets.all(12.0),
+                        child: TextFormField(
+                          obscureText: !_passwordVisible,
+                          controller: passwordController,
+                          validator: Validators.validatePlainPassword(),
+                          decoration: InputDecoration(
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                                borderSide: BorderSide(
+                                  width: 0,
+                                  style: BorderStyle.none,
+                                ),
                               ),
-                              borderSide: BorderSide(
-                                width: 0,
-                                style: BorderStyle.none,
-                              ),
-                            ),
-                            filled: true,
-                            hintText: 'password',
-                            prefixIcon: const Icon(Icons.lock),
-                            suffixIcon: const Icon(Icons.remove_red_eye),
-                            hintStyle: TextStyle(color: Colors.grey[600]),
-                            fillColor: const Color.fromRGBO(250, 250, 254, 1)),
+                              filled: true,
+                              hintText: 'password',
+                              prefixIcon: const Icon(Icons.lock),
+                              suffixIcon:IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    _passwordVisible = !_passwordVisible;
+                                  });
+                                }, icon: Icon(_passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                                  color: Theme.of(context).primaryColorDark),),
+                              hintStyle: TextStyle(color: Colors.grey[600]),
+                              fillColor: const Color.fromRGBO(250, 250, 254, 1)),
+                        ),
                       ),
                     ),
                     Row(
@@ -207,9 +223,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   builder: (context) =>  ForgotPasswordScreen(),
                                 ),
                               );
-
                             },
-                            child: Text(
+                            child: const Text(
                               'Forgot password?',
                               style: TextStyle(
                                   fontSize: 18.0,
@@ -225,7 +240,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Consumer<ProviderServices>(
                         builder: (_, value, __) => Center(
                           child: Container(
-                            height: screenHeight / 14,
+                            height: screenHeight / 14.4,
                             width: screenWidth / 1.10,
                             decoration: BoxDecoration(
                               color: const Color(0xff1456f1),
@@ -233,17 +248,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             child: value.isLoading == true
                                 ? const SpinKitCircle(
-                                    color: Colors.white,
-                                  )
+                              color: Colors.white,
+                            )
                                 : const Center(
-                                    child: Text(
-                                      'Sign in',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
+                              child: Text(
+                                'Sign in',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -254,7 +269,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Don\'t have an account?',
+                        const Text('Don\'t have an account? ',
                             style: TextStyle(
                                 fontWeight: FontWeight.normal, fontSize: 20.0)),
                         GestureDetector(

@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +15,6 @@ class OtpVerification extends StatefulWidget {
 }
 
 class _OtpVerificationState extends State<OtpVerification> {
-
   TextEditingController controller1 = TextEditingController();
 
   TextEditingController controller2 = TextEditingController();
@@ -48,6 +46,16 @@ class _OtpVerificationState extends State<OtpVerification> {
     }
   }
 
+  void sendOtp(context) async {
+    setState(() {});
+
+    providerServices?.sendOTP(context);
+    ScaffoldMessenger.of(context!).showSnackBar(const SnackBar(
+      content: Text('OTP Resent'),
+      duration: Duration(seconds: 10),
+    ));
+  }
+
   @override
   void initState() {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
@@ -55,11 +63,9 @@ class _OtpVerificationState extends State<OtpVerification> {
     super.initState();
   }
 
-
   @override
   void dispose() {
     errorController!.close();
-
     super.dispose();
   }
 
@@ -72,6 +78,7 @@ class _OtpVerificationState extends State<OtpVerification> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +95,8 @@ class _OtpVerificationState extends State<OtpVerification> {
                 height: MediaQuery.of(context).size.height / 3,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(30),
-                  child: Image.network('https://vensemart.com/assets/images/logo.png'),
+                  child: Image.network(
+                      'https://vensemart.com/assets/images/logo.png'),
                 ),
               ),
               const SizedBox(height: 8),
@@ -102,23 +110,22 @@ class _OtpVerificationState extends State<OtpVerification> {
               ),
               Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
-                // child: RichText(
-                //   text: TextSpan(
-                //       text: "Enter the code sent to ",
-                //       children: [
-                //         TextSpan(
-                //             text: "${otpNumber}",
-                //             style: const TextStyle(
-                //                 color: Colors.black,
-                //                 fontWeight: FontWeight.bold,
-                //                 fontSize: 15)),
-                //
-                //       ],
-                //       style:
-                //       const TextStyle(color: Colors.black54, fontSize: 15)),
-                //   textAlign: TextAlign.center,
-                // ),
+                    const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
+                child: RichText(
+                  text: const TextSpan(
+                      text:
+                          "Please wait at least one minute before sending code ",
+                      children: [
+                        TextSpan(
+                            text: "",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15)),
+                      ],
+                      style: TextStyle(color: Colors.black54, fontSize: 15)),
+                  textAlign: TextAlign.center,
+                ),
               ),
               const SizedBox(
                 height: 20,
@@ -153,8 +160,6 @@ class _OtpVerificationState extends State<OtpVerification> {
                         shape: PinCodeFieldShape.box,
                         borderRadius: BorderRadius.circular(5),
                         fieldHeight: 50,
-
-
                         fieldWidth: 60,
                         activeFillColor: Colors.white,
                       ),
@@ -206,25 +211,25 @@ class _OtpVerificationState extends State<OtpVerification> {
               const SizedBox(
                 height: 20,
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     const Text(
-              //       "Didn't receive the code? ",
-              //       style: TextStyle(color: Colors.black54, fontSize: 15),
-              //     ),
-              //     TextButton(
-              //       onPressed: () => snackBar("OTP resend!!"),
-              //       child: const Text(
-              //         "RESEND",
-              //         style: TextStyle(
-              //             color: Color(0xFF91D3B3),
-              //             fontWeight: FontWeight.bold,
-              //             fontSize: 16),
-              //       ),
-              //     )
-              //   ],
-              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "Didn't receive the code? ",
+                    style: TextStyle(color: Colors.black54, fontSize: 15),
+                  ),
+                  TextButton(
+                    onPressed: () => sendOtp(context),
+                    child: const Text(
+                      "RESEND",
+                      style: TextStyle(
+                          color: Color(0xFF91D3B3),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    ),
+                  )
+                ],
+              ),
               const SizedBox(
                 height: 14,
               ),
@@ -240,15 +245,15 @@ class _OtpVerificationState extends State<OtpVerification> {
                         ),
                         child: provider.isLoading == true
                             ? const SpinKitCircle(
-                          color: Colors.white,
-                        )
+                                color: Colors.white,
+                              )
                             : const Center(
-                          child: Text('Verify Token',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500)),
-                        )),
+                                child: Text('Verify Token',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500)),
+                              )),
                   )),
               const SizedBox(
                 height: 16,
@@ -258,11 +263,11 @@ class _OtpVerificationState extends State<OtpVerification> {
                 children: <Widget>[
                   Flexible(
                       child: TextButton(
-                        child: const Text("Clear"),
-                        onPressed: () {
-                          textEditingController.clear();
-                        },
-                      )),
+                    child: const Text("Clear"),
+                    onPressed: () {
+                      textEditingController.clear();
+                    },
+                  )),
                   // Flexible(
                   //     child: TextButton(
                   //       child: const Text("Set Text"),

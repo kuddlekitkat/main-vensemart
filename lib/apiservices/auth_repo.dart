@@ -120,6 +120,16 @@ class AuthRepo with ApiServices {
     return null;
   }
 
+  Future<Response?> rateCustomer(Map<String, String> credentials) async {
+    Response? response = await apiPostRequests(
+        "rate-service-provider", credentials);
+
+    if (response != null) {
+      return response;
+    }
+    return null;
+  }
+
 
   Future<Response?> upcomingBookings() async {
     Response? response = await apiGetRequests("bookingsservicelist/1");
@@ -155,6 +165,26 @@ class AuthRepo with ApiServices {
   }
 
 
+  Future<Response?> sendPasswordChange(Map<String, String> credentials) async {
+    Response? response = await apiPostRequests("forgot-password", credentials);
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+
+  Future<Response?> changePassword(Map<String, String> credentials) async {
+    Response? response = await apiPostRequests("forgot-password-change", credentials);
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
 
 
 
@@ -219,6 +249,8 @@ class AuthRepo with ApiServices {
 
 
 
+
+
   Future<Response?> termsCondition() async {
     Response? response = await apiGetRequests("terms-conditions");
 
@@ -267,6 +299,15 @@ class AuthRepo with ApiServices {
     return null;
   }
 
+
+  Future<Response?> sendSupportMessage(Map<String, String> credentials) async {
+    Response? response = await apiPostRequests("send-support-message", credentials);
+
+    if (response != null) {
+      return response;
+    }
+    return null;
+  }
 
   Future<Response?> serviceCategory() async {
     Response? response = await apiGetRequests("get-all-service-categories");

@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 enum ProfileOptionAction {
   viewImage,
@@ -101,13 +102,36 @@ class ImagePickerHandler {
     try {
       final pickedFile = await ImagePicker.platform.pickImage(source: source);
       if (pickedFile != null) {
-        return await _cropImage(context, pickedFile);
+        return compressFile(context, File(pickedFile!.path));
+
+        // return File(pickedFile!.path);
       }
     } catch (e) {
       debugPrint('Error: $e');
     }
     return null;
   }
+
+
+  Future<File?> compressFile(BuildContext context, File file) async {
+    final filePath = file.absolute.path;
+
+    // Create output file path
+    // eg:- "Volume/VM/abcd_out.jpeg"
+    final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
+    final splitted = filePath.substring(0, (lastIndex));
+    final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
+    var result = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path, outPath,
+      quality: 5,
+    );
+
+
+
+    return  result;
+  }
+
+
 
   Future<File?> _cropImage(BuildContext context, PickedFile imageFile) async {
     CroppedFile? croppedFile = await ImageCropper().cropImage(

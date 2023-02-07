@@ -30,18 +30,23 @@ class ServiceProviderIdModel {
 }
 
 class Data {
-  String? name;
+
+  dynamic name;
   dynamic id;
-  String? serviceType;
-  String? locationLat;
-  String? locationLong;
-  String? profile;
-  String? categoryName;
-  String? categoryIcon;
-  String? location;
-  String? serviceTypePrice;
+  dynamic serviceType;
+  dynamic locationLat;
+  dynamic locationLong;
+  dynamic phone;
+  dynamic profile;
+  dynamic categoryName;
+  dynamic categoryIcon;
+  dynamic location;
+  dynamic serviceTypePrice;
   dynamic serviceProviderImage;
   dynamic serviceProviderRating;
+
+
+
 
   Data(
       {
@@ -50,6 +55,7 @@ class Data {
         this.serviceType,
         this.locationLat,
         this.locationLong,
+        this.phone,
         this.profile,
         this.categoryName,
         this.categoryIcon,
@@ -67,6 +73,7 @@ class Data {
     locationLat =  json["location_lat"];
     locationLong =  json["location_long"];
     profile =  json["profile"];
+    phone =  json["phone"];
     categoryName =  json["category_name"];
     categoryIcon =  json["category_icon"];
     location =  json["location"];
@@ -79,10 +86,12 @@ class Data {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['id'] = id;
+    data['phone'] = phone;
     data['service_type'] =  serviceType;
     data['location_lat'] =  locationLat;
     data['location_long'] = locationLong;
     data['profile'] = profile;
+    data['phone'] = phone;
     data['category_name'] =  categoryName;
     data['category_icon'] =  categoryIcon;
     data['location'] =  location;

@@ -1,12 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/LoginScreen.dart';
 import 'package:vensemart/ProductsComingSoon.dart';
 import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
 import 'package:vensemart/services/screens/AboutUsScreen.dart';
 import 'package:vensemart/services/screens/ContactScreen.dart';
+import 'package:vensemart/services/screens/CustomerSupportScreen.dart';
 import 'package:vensemart/services/screens/FeedbackScreen.dart';
 import 'package:vensemart/services/screens/NotificationScreen.dart';
 import 'package:vensemart/services/screens/ProfileEditScreen.dart';
@@ -15,6 +17,7 @@ import 'package:vensemart/services/screens/ServicesAppoinmentScreen.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
 import 'package:vensemart/services/widgets/full_pages/ServiceHome.dart';
 
+import '../../../core/session_manager.dart';
 import '../../provider/provider_services.dart';
 import '../../screens/AvailableServicesListScreen.dart';
 
@@ -243,22 +246,39 @@ void Logout() async {
                          //     title: Text('Feedback'),
                          //   ),
                          // ),
-                         // GestureDetector(
-                         //   onTap: () {
-                         //     Navigator.push(
-                         //       context,
-                         //       MaterialPageRoute(
-                         //         builder: (context) => const RateUsScreen(),
-                         //       ),
-                         //     );
-                         //   },
-                         //   child: const ListTile(
-                         //     leading: Icon(Icons.rate_review_rounded),
-                         //     title: Text('Rate our app'),
-                         //   ),
-                         // ),
                          GestureDetector(
                            onTap: () {
+                             Navigator.push(
+                               context,
+                               MaterialPageRoute(
+                                 builder: (context) => const CustomerSupportScreen(),
+                               ),
+                             );
+                           },
+                           child: const ListTile(
+                             leading: Icon(Icons.support_agent),
+                             title: Text('Support'),
+                           ),
+                         ),
+
+                         // GestureDetector(
+                         //   onTap: () async {
+                         //     final InAppReview inAppReview = InAppReview.instance;
+                         //
+                         //     if (await inAppReview.isAvailable()) {
+                         //     inAppReview.requestReview();
+                         //     }
+                         //   },
+                         //   child: const ListTile(
+                         //     leading: Icon(
+                         //       Icons.rate_review,),
+                         //     title: Text('Rating'),
+                         //   ),
+                         // ),
+
+                         GestureDetector(
+                           onTap: () {
+                             SessionManager.instance.logOut();
                              Navigator.pushReplacement(
                                context!,
                                MaterialPageRoute(

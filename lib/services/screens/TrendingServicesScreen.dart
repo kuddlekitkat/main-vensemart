@@ -5,8 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
-import 'package:vensemart/services/widgets/components/AvailableServicesBottomListView.dart';
-import 'package:vensemart/services/widgets/components/ServiceCard.dart';
 import 'package:intl/intl.dart';
 import 'package:vensemart/services/widgets/components/TrendingServicesCard.dart';
 import '../provider/provider_services.dart';
@@ -111,7 +109,8 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
         child: Consumer<ProviderServices>(
             builder: (_, provider, __) {
 
-              if (provider.trendingserviceModel?.data == null) {
+              if (provider.trendingserviceModel == null ||
+                  provider.trendingserviceModel!.data!.isEmpty) {
                 return Center(child: const CircularProgressIndicator());
               } else {
 
@@ -155,14 +154,12 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                           padding: const EdgeInsets.all(10),
 
                           children: <Widget>[
-                            if (provider.isReady)
-
-                              ...provider.trendingserviceModel!.data!
-                                  .where((element) => element.categoryName!
-                                  .toLowerCase()
+                            if (provider != null)
+                              ...provider.trendingserviceModel!.data!.
+                              where((element) => element.categoryName!
+                                .toLowerCase()
                                   .contains(_query.toLowerCase()))
                                   .map((e) {
-                                    
                                 return  TrendingServicesCard(
 
                                   trendingserviceModel: e,
@@ -205,8 +202,8 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
         Container(
           height: MediaQuery.of(context).size.height - 670,
           width: MediaQuery.of(context).size.width - 270,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
+          decoration: const BoxDecoration(
+            borderRadius: BorderRadius.only(
               topLeft: Radius.circular(10.0),
             ),
 
@@ -242,7 +239,7 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children:  [
+                children:  const [
                   SizedBox(height: 8,),
 
                   // SizedBox(height: 2,),
@@ -529,7 +526,7 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                                                   .circular(30.0),
                                               color: Colors.blue,
                                             ),
-                                            child: Center(child: Text(
+                                            child: const Center(child: Text(
                                               'Book now', style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 12),)),
@@ -567,7 +564,7 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
 void _openTimePicker(BuildContext context) {
   BottomPicker.time(
     title: 'Set your next meeting time',
-    titleStyle: TextStyle(
+    titleStyle: const TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 15,
       color: Colors.orange,

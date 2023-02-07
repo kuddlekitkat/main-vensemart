@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class RateUsScreen extends StatelessWidget {
+class RateUsScreen extends StatefulWidget {
   const RateUsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<RateUsScreen> createState() => _RateUsScreenState();
+}
+
+class _RateUsScreenState extends State<RateUsScreen> {
+
 
   @override
   Widget build(BuildContext context) {

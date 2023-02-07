@@ -48,20 +48,22 @@ class Data {
   dynamic idProf;
   String? documentsApproved;
   dynamic isOnline;
-  String? whatApp;
-  String? sms;
-  String? notification;
+  dynamic whatApp;
+  dynamic sms;
+  dynamic notification;
   String? serviceTypePrice;
   dynamic guarantorName;
   dynamic guarantorEmail;
   dynamic guarantorPhoneNumber;
   dynamic guarantorAddress;
   dynamic serviceDiscription;
-  String? state;
-  String? town;
-  String? gpsLocationStatus;
+  dynamic state;
+  dynamic town;
+  dynamic gpsLocationStatus;
+  dynamic isPhoneVerified;
   String? createdAt;
   String? updatedAt;
+  int? isPlanActive;
 
   Data(
       {this.id,

@@ -31,6 +31,10 @@ class _AvailableServicesListScreenState extends State<AvailableServicesListScree
   TextEditingController timeController = TextEditingController();
 
   late DateTime _selectedDate;
+  String _query = '';
+  List searchItem = [];
+  TextEditingController controller = TextEditingController();
+
 
 
   TextEditingController _textEditingController = TextEditingController();
@@ -39,6 +43,7 @@ class _AvailableServicesListScreenState extends State<AvailableServicesListScree
 
     providerServices = Provider.of<ProviderServices>(context, listen: false);
     providerServices?.servicesCate(widget.id.toString());
+    searchItem.clear();
 
     super.initState();
   }
@@ -110,7 +115,7 @@ class _AvailableServicesListScreenState extends State<AvailableServicesListScree
         builder: (_, provider, __) {
 
     if (provider.serviceProviderIdModel?.data == null) {
-    return const CircularProgressIndicator();
+        return Center(child: SpinKitCircle(color: Colors.blue,));
     } else {
 
       return SingleChildScrollView(
@@ -122,6 +127,12 @@ class _AvailableServicesListScreenState extends State<AvailableServicesListScree
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.all(11.0),
               child: TextFormField(
+                controller: controller,
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                onChanged: (v) {
+                  // searchItem.clear();
+                  setState(() => _query = v);
+                },
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(
                     borderRadius: BorderRadius.all(
@@ -148,7 +159,11 @@ class _AvailableServicesListScreenState extends State<AvailableServicesListScree
 
                 children: <Widget>[
                   if (provider != null)
-                    ...provider.serviceProviderIdModel!.data!.map((e) {
+                    ...provider.serviceProviderIdModel!.data!.
+                    where((element) => element.categoryName!
+                    .toLowerCase()
+                    .contains(_query.toLowerCase())).
+                    map((e) {
                       print('print e for me $e');
                       return ServiceCard(
                         servicesProviderIdModel: e,

@@ -31,6 +31,7 @@ class Data {
 
   dynamic name;
   dynamic id;
+  dynamic state;
   dynamic serviceType;
   dynamic locationLat;
   dynamic locationLong;
@@ -44,6 +45,7 @@ class Data {
       {
         this.name,
         this.id,
+        this.state,
         this.serviceType,
         this.locationLat,
         this.locationLong,
@@ -56,6 +58,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     id = json['id'];
+    state = json['state'];
     serviceType = json['service_type'];
     locationLat = json['location_lat'];
     locationLong = json['location_long'];
@@ -71,6 +74,7 @@ class Data {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['id'] = id;
+    data['state'] = state;
     data['service_type'] = serviceType;
     data['location_lat'] = locationLat;
     data['location_long'] = locationLong;

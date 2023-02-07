@@ -9,14 +9,13 @@ import 'package:vensemart/services/provider/provider_services.dart';
 import 'apiservices/validator.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
-   ForgotPasswordScreen({Key? key}) : super(key: key);
+  const ForgotPasswordScreen({Key? key}) : super(key: key);
 
   @override
   State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-
   TextEditingController controller1 = TextEditingController();
 
   TextEditingController controller2 = TextEditingController();
@@ -26,27 +25,25 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   TextEditingController controller4 = TextEditingController();
 
   TextEditingController textEditingController = TextEditingController();
-
   // ..text = "123456";
+
+  // ignore: close_sinks
   StreamController<ErrorAnimationType>? errorController;
 
   bool hasError = false;
-
   String currentText = "";
-
   final formKey = GlobalKey<FormState>();
 
   ProviderServices? providerServices;
 
   final _globalFormKey = GlobalKey<FormState>();
 
-  String otpNumber = '';
-
-  void verifyOtp(context) async {
+  void sendPasswordChange(context) async {
     if (_globalFormKey.currentState!.validate()) {
-      otpNumber = textEditingController.text.trim();
+      TextEditingController phoneController = TextEditingController();
       setState(() {});
-      providerServices?.verifyOTP(context: context, otpNumber: otpNumber);
+      providerServices?.sendPasswordChange(
+          context: context, phoneNumber: controller1.text.trim());
     }
   }
 
@@ -64,178 +61,130 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
-  // snackBar Widget
-  snackBar(String? message) {
-    return ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message!),
-        duration: const Duration(seconds: 2),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: GestureDetector(
-        onTap: () {},
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-          child: ListView(
-            children: <Widget>[
-              const SizedBox(height: 30),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 3,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(30),
-                  child: Image.network('https://vensemart.com/assets/images/logo.png'),
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Color.fromRGBO(234, 234, 234, 1),
+        appBar: AppBar(
+          backgroundColor: Color(0xff1456f1),
+          title: Text("Forgot Password?"),
+          leading: IconButton(
+            icon: CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.white,
+              child: Center(
+                child: IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.black,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ),
-              const SizedBox(height: 8),
-              const Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  'Forgot Password?',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
-                  textAlign: TextAlign.center,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Form(
+            key: _globalFormKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left: 12.0, bottom: 4.0),
+                  child: const Text(
+                    'Forgot',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40,
+                        color: Color(0xff1456f1)),
+                  ),
                 ),
-              ),
-              Padding(
-                padding:
-                const EdgeInsets.symmetric(horizontal: 30.0, vertical: 8),
-                // child: RichText(
-                //   text: TextSpan(
-                //       text: "Enter the code sent to ",
-                //       children: [
-                //         TextSpan(
-                //             text: "${otpNumber}",
-                //             style: const TextStyle(
-                //                 color: Colors.black,
-                //                 fontWeight: FontWeight.bold,
-                //                 fontSize: 15)),
-                //
-                //       ],
-                //       style:
-                //       const TextStyle(color: Colors.black54, fontSize: 15)),
-                //   textAlign: TextAlign.center,
-                // ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Form(
-                key: _globalFormKey,
-                child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 8.0, horizontal: 30),
-                    child: Container(
-                      margin: const EdgeInsets.all(12.0),
-                      child: TextFormField(
-                        validator: Validators.validateEmail(),
-                        controller: controller1,
-                        decoration: InputDecoration(
-                            border: const OutlineInputBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10.0),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left: 12.0, bottom: 4.0),
+                  child: const Text(
+                    'Password ?',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40,
+                        color: Color(0xff1456f1)),
+                  ),
+                ),
+                const SizedBox(height: 10.0),
+                Container(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left: 12.0, bottom: 4.0),
+                  child: const Text(
+                    'Please enter phone number registered with account',
+                    style: TextStyle(
+                        fontWeight: FontWeight.normal,
+                        fontSize: 15,
+                        color: Colors.grey),
+                  ),
+                ),
+                SizedBox(height: 10.0),
+                TextFormField(
+                  controller: controller1,
+                  validator: Validators.validatePhone(),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                      hintText: 'Mobile Number',
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10.0),
+                        ),
+                        borderSide: BorderSide(
+                          width: 0,
+                          style: BorderStyle.none,
+                        ),
+                      ),
+                      filled: true,
+                      hintStyle: TextStyle(color: Colors.grey[600]),
+                      fillColor: Colors.white),
+                ),
+                const SizedBox(
+                  height: 40.0,
+                ),
+                GestureDetector(
+                  onTap: () => sendPasswordChange(context),
+                  child: Consumer<ProviderServices>(
+                    builder: (_, value, __) => Center(
+                      child: Container(
+                        height: MediaQuery.of(context).size.height / 14,
+                        width: MediaQuery.of(context).size.width / 1.10,
+                        decoration: BoxDecoration(
+                          color: const Color(0xff1456f1),
+                          borderRadius: BorderRadius.circular(90.0),
+                        ),
+                        child: value.isLoading == true
+                            ? const SpinKitCircle(
+                                color: Colors.white,
+                              )
+                            : const Center(
+                                child: Text(
+                                  'Change Password',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
-                              borderSide: BorderSide(
-                                width: 0,
-                                style: BorderStyle.none,
-                              ),
-                            ),
-                            filled: true,
-                            hintText: 'Email',
-                            prefixIcon: const Icon(Icons.email_rounded),
-                            hintStyle: TextStyle(color: Colors.grey[600]),
-                            fillColor: const Color.fromRGBO(250, 250, 254, 1)),
                       ),
                     ),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                child: Text(
-                  hasError ? "*Please fill up all the cells properly" : "",
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: [
-              //     const Text(
-              //       "Didn't receive the code? ",
-              //       style: TextStyle(color: Colors.black54, fontSize: 15),
-              //     ),
-              //     TextButton(
-              //       onPressed: () => snackBar("OTP resend!!"),
-              //       child: const Text(
-              //         "RESEND",
-              //         style: TextStyle(
-              //             color: Color(0xFF91D3B3),
-              //             fontWeight: FontWeight.bold,
-              //             fontSize: 16),
-              //       ),
-              //     )
-              //   ],
-              // ),
-              const SizedBox(
-                height: 14,
-              ),
-              GestureDetector(
-                  onTap: () => verifyOtp(context),
-                  child: Consumer<ProviderServices>(
-                    builder: (_, provider, __) => Container(
-                        padding: EdgeInsets.all(10),
-                        margin: EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Colors.blue,
-                        ),
-                        child: provider.isLoading == true
-                            ? const SpinKitCircle(
-                          color: Colors.white,
-                        )
-                            : const Center(
-                          child: Text('Reset Password',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500)),
-                        )),
-                  )),
-              const SizedBox(
-                height: 16,
-              ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[
-              //     Flexible(
-              //         child: TextButton(
-              //           child: const Text("Clear"),
-              //           onPressed: () {
-              //             textEditingController.clear();
-              //           },
-              //         )),
-              //     // Flexible(
-              //     //     child: TextButton(
-              //     //       child: const Text("Set Text"),
-              //     //       onPressed: () {
-              //     //         setState(() {
-              //     //           textEditingController.text = "1234";
-              //     //         });
-              //     //       },
-              //     //     )),
-              //   ],
-              // )
-            ],
+              ],
+            ),
           ),
         ),
       ),

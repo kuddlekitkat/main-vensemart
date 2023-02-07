@@ -39,6 +39,25 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: CircleAvatar(
+            radius: 20,
+            backgroundColor: Colors.white,
+            child: Center(
+              child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.black,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ),
+          ),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+
         title: const Text(
           'Services',
           style: TextStyle(color: Colors.grey),
@@ -46,6 +65,7 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
         backgroundColor: const Color.fromRGBO(234, 234, 234, 2),
         elevation: 0.00,
       ),
+
       backgroundColor: const Color.fromRGBO(234, 234, 234, 2),
       body: Consumer<ProviderServices>(
         builder: (_, provider, __) {
@@ -123,7 +143,7 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
     );
   }
 
-  contentContainer({String? homeId,String? text, String? image}) => ClipRRect(
+  contentContainer({int? homeId,String? text, String? image}) => ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: GridTile(
           footer: GridTileBar(

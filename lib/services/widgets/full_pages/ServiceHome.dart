@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+
 import 'package:flutter/services.dart';
-import 'package:location/location.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
+
+
 
 
 import 'package:provider/provider.dart';
@@ -25,37 +28,115 @@ class _ServiceHomeState extends State<ServiceHome> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   ProviderServices? _providerServices;
+  ProviderServices? providerServices;
+  late Position position;
+  late List<Placemark>  placeMarks;
+
   @override
   void initState() {
     _providerServices = Provider.of<ProviderServices>(context, listen: false);
     _providerServices?.userDetails();
 
+    getCurrentLocation().then((value) {
+
+      setState(() {
+         addressController.text;
+      });
+      sendLocationAlternate(context);
+    });
+
     super.initState();
 
-
   }
 
 
-  fetchCurrentLocation(context) async {
-    print("STARTING LOCATION SERVICE");
-    Location? location = Location();
-    location.changeSettings(
-        accuracy: LocationAccuracy.low, interval: 1000, distanceFilter: 500);
-    if (await location.hasPermission() == true) {
-      await location.requestPermission();
-    }
+  void getLocation(){
+    getCurrentLocation().then((value) {
 
-    try {
-      await location.onLocationChanged.listen((LocationData currentLocation) {
-        print(currentLocation.latitude);
-        print(currentLocation.longitude);
-        var latitude = currentLocation.latitude;
-        var longitude = currentLocation.longitude;
+      setState(() {
+        addressController.text;
       });
-    } on PlatformException {
-      location = null;
-    }
+      sendLocationAlternate(context);
+    });
   }
+
+
+
+  void sendLocationAlternate(context) async {
+
+    providerServices?.sendLocation(map: {
+      "location": addressController.text,
+      "location_lat": "9.0787",
+      "location_long": "7.47018",
+      "state": "Abuja"
+    }, context: context);
+  }
+
+  TextEditingController addressController = TextEditingController();
+
+  // Future<Position?> determinePosition() async {
+  //   LocationPermission permission;
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.deniedForever) {
+  //       return Future.error('Location Not Available');
+  //     }
+  //   } else {
+  //     throw Exception('Error');
+  //   }
+  //   return await Geolocator.getCurrentPosition();
+  // }
+
+
+  Future<String?> getCurrentLocation  () async {
+
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location Not Available');
+      }
+    } else {
+      throw Exception('Error');
+    }
+    Position newPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high
+    );
+    position = newPosition;
+    placeMarks = await placemarkFromCoordinates(position!.latitude, position!.longitude);
+    Placemark pMark = placeMarks![0];
+    String completeAddress =  '${pMark.subThoroughfare} ${pMark.thoroughfare}, ${pMark.locality},'
+        '${pMark.subAdministrativeArea}  ${pMark.postalCode}';
+    addressController.text = completeAddress;
+
+
+
+
+  }
+
+
+  // fetchCurrentLocation(context) async {
+  //   print("STARTING LOCATION SERVICE");
+  //   Location? location = Location();
+  //   location.changeSettings(
+  //       accuracy: LocationAccuracy.low, interval: 1000, distanceFilter: 500);
+  //   if (await location.hasPermission() == true) {
+  //     await location.requestPermission();
+  //   }
+  //
+  //   try {
+  //     await location.onLocationChanged.listen((LocationData currentLocation) {
+  //       print(currentLocation.latitude);
+  //       print(currentLocation.longitude);
+  //       var latitude = currentLocation.latitude;
+  //       var longitude = currentLocation.longitude;
+  //     });
+  //   } on PlatformException {
+  //     location = null;
+  //   }
+  // }
 
 
   // fetchCurrentLocation() async {
@@ -131,13 +212,24 @@ class _ServiceHomeState extends State<ServiceHome> {
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 12.0, vertical: 12.0),
-                          child: Container(
-                            height: 50,
-                            width: 150,
-                            decoration: BoxDecoration(
-                                color: Color(0xff1456f1),
-                                borderRadius: BorderRadius.circular(25.0)),
-                            child: const Center(child: Text('get started')),
+                          child: InkWell(
+                            onTap: (){
+                                getLocation();
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ServicesGridScreen()
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 50,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                  color: Color(0xff1456f1),
+                                  borderRadius: BorderRadius.circular(25.0)),
+                              child: const Center(child: Text('get started',style: TextStyle(color: Colors.white),)),
+                            ),
                           ),
                         )
                       ],

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
+import 'package:vensemart/services/provider/provider_services.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
 
 import 'ProductsComingSoon.dart';
@@ -14,11 +17,23 @@ class ChoiceIntroScreen extends StatefulWidget {
 
 class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
 
+
+  TextEditingController addressController = TextEditingController();
+  ProviderServices? providerServices;
+
   @override
   void initState() {
     firebaseService.firebasePushNotification(context);
     super.initState();
+
+
   }
+
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,12 +81,13 @@ class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
                 ),
                 child: GestureDetector(
                   onTap: (){
-                    Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                        builder: (context) => ServicesHomeScreen(),
-                      ),
-                    );
+
+                    Navigator.pushAndRemoveUntil(
+                        context!,
+                        MaterialPageRoute(
+                            builder: (context) => ServicesHomeScreen(), maintainState: true),
+                            (Route<dynamic> route) => false);
+                    
                   },
                   child: Image.asset('assets/images/ChoicesService.png')
                 ),

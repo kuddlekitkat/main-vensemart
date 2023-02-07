@@ -57,11 +57,13 @@ class Data {
   dynamic guarantorPhoneNumber;
   dynamic guarantorAddress;
   dynamic serviceDiscription;
-  String? state;
-  String? town;
+  dynamic state;
+  dynamic town;
   dynamic gpsLocationStatus;
+  dynamic isPhoneVerified;
   String? createdAt;
   String? updatedAt;
+  int? isPlanActive;
 
   Data(
       {this.id,

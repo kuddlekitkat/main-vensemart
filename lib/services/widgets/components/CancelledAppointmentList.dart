@@ -23,6 +23,7 @@ class _CancelledAppointmentListState extends State<CancelledAppointmentList> {
   void initState() {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
     providerServices?.getAllCanceledBookings();
+
     super.initState();
   }
 
@@ -47,7 +48,7 @@ class _CancelledAppointmentListState extends State<CancelledAppointmentList> {
               print('print e for me $e');
 
               return CancelledAppointmentCard(
-                CancelledBooking: e,image: 'assets/images/upcoming1.png',name: 'Amarachi', occupation: 'barber');
+                cancelledBooking: e,image: 'assets/images/upcoming1.png',name: 'Amarachi', occupation: 'barber');
 
 
             }).toList()

@@ -39,8 +39,8 @@ class Data {
   dynamic userAddress;
   dynamic userLat;
   dynamic userLong;
-  dynamic bookingDate;
-  dynamic bookingTime;
+  String? bookingDate;
+  String? bookingTime;
   String? price;
   dynamic status;
   dynamic cancelReason;
@@ -50,11 +50,11 @@ class Data {
   dynamic mobileNumber;
   String? createdAt;
   String? updatedAt;
-  dynamic name;
+  String? name;
+  String? profile;
   String? email;
   String? mobile;
-  dynamic profile;
-  dynamic categoryName;
+  String? categoryName;
 
 
 
@@ -82,9 +82,9 @@ class Data {
     this.createdAt,
     this.updatedAt,
     this.name,
+    this.profile,
     this.email,
     this.mobile,
-    this.profile,
     this.categoryName,
   });
 

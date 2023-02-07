@@ -9,16 +9,16 @@ class CancelledAppointmentCard extends StatelessWidget {
   final String name;
   final String occupation;
   final Data? cancelledBooking;
-  const CancelledAppointmentCard( {required this.image,required this.name,required this.occupation, this.cancelledBooking, required CancelledBooking});
+  const CancelledAppointmentCard( {required this.image,required this.name,required this.occupation, this.cancelledBooking});
 
   @override
   Widget build(BuildContext context) {
-    return  Padding(
+    return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            color: Colors.white,
+          borderRadius: BorderRadius.circular(10.0),
+          color: Colors.white,
           boxShadow: [
             BoxShadow(
               offset: Offset(0, 1),
@@ -42,18 +42,17 @@ class CancelledAppointmentCard extends StatelessWidget {
                   child: Container(
                     height:50,
                     width: 60,
-                    decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(10.0),
-                          topRight: Radius.circular(10.0),
-                          bottomRight: Radius.circular(10.0),
-                          bottomLeft: Radius.circular(10.0),
-                        ),
+                    decoration:  const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10.0),
+                        topRight: Radius.circular(10.0),
+                        bottomRight: Radius.circular(10.0),
+                        bottomLeft: Radius.circular(10.0),
+                      ),
 
                     ),
-
-                   child:  CachedNetworkImage(
-                      imageUrl: cancelledBooking?.profile,
+                    child: CachedNetworkImage(
+                      imageUrl: cancelledBooking?.profile.toString() ?? '',
                       fit: BoxFit.cover,
                       placeholder: (
                           context,
@@ -68,7 +67,7 @@ class CancelledAppointmentCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
+                SizedBox(
                   width: 10,
                 ),
                 Column(
@@ -77,17 +76,23 @@ class CancelledAppointmentCard extends StatelessWidget {
                   children: [
 
                     Container(
-                      child: Text(cancelledBooking?.name,style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.0),),
+                      child: Text(cancelledBooking?.name ?? '',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18.0),),
                       margin: EdgeInsets.symmetric(vertical: 12.0),
                     ),
-                    Text(cancelledBooking?.categoryName),
+                    Text(occupation),
                   ],
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width/3.6,
                 ),
-                TextButton(onPressed: (){
-
-                },child: Icon(Icons.outbond_outlined,color:Colors.black),),
+                // TextButton(onPressed: (){
+                //   Navigator.push(
+                //     context!,
+                //     MaterialPageRoute(
+                //         builder: (context) =>  RateScreen(bookingId:'${completedBooking?.id}' )),
+                //
+                //   );
+                //
+                // },child: Icon(Icons.outbond_outlined,color:Colors.black),),
               ],
             ),
 
@@ -96,16 +101,21 @@ class CancelledAppointmentCard extends StatelessWidget {
               children: [
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:20.0,vertical: 12.0),
+                  padding: const EdgeInsets.symmetric(horizontal:15.0,vertical: 12.0),
                   child: Container(
-                    width: 70,
-                    height: 40,
+                    width: MediaQuery.of(context).size.width/4,
+                    height: MediaQuery.of(context).size.width/10,
                     decoration: BoxDecoration(
-                        color: Colors.grey,
+                        color: Color.fromRGBO(234, 234, 234, 3),
                         borderRadius: BorderRadius.circular(6.0)
                     ),
                     child: TextButton(
-                      onPressed: (){}, child: Text('pending',style: TextStyle(color: Colors.white),),),
+                      onPressed: (){}, child: Row(
+                      children: [
+                        Icon(Icons.cancel,color: Colors.red,),
+                        Text('cancelled',style: TextStyle(color: Colors.black,fontSize: 8),),
+                      ],
+                    ),),
                   ),
                 ),
 
@@ -118,35 +128,36 @@ class CancelledAppointmentCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 12.0),
                       child: Container(
-                        width: 100,
-                        height: 40,
+                        width: MediaQuery.of(context).size.width/3.8,
+                        height: MediaQuery.of(context).size.width/9.5,
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(252,239,231,3),
+                            color: Colors.blue,
                             borderRadius: BorderRadius.circular(6.0)
                         ),
                         child: TextButton(
-                          onPressed: (){}, child: Text(cancelledBooking?.bookingDate,style: TextStyle(color: Colors.redAccent),),),
+                          onPressed: (){}, child: Flexible(child: Text(cancelledBooking?.bookingDate ?? '',style: TextStyle(backgroundColor: Colors.blue,color: Colors.white,fontSize: 10),)),),
                       ),
                     ),
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 12.0),
                       child: Container(
-                        width: 100,
-                        height: 40,
+                        width: MediaQuery.of(context).size.width/3.8,
+                        height: MediaQuery.of(context).size.width/9.5,
                         decoration: BoxDecoration(
                             color: Colors.blue,
                             borderRadius: BorderRadius.circular(6.0)
                         ),
                         child: TextButton(
-                          onPressed: (){}, child: Text(cancelledBooking?.bookingTime,style: TextStyle(backgroundColor: Colors.blue,color: Colors.white),),),
+                          onPressed: (){}, child: Flexible(child: Text(cancelledBooking?.bookingTime ?? '',style: TextStyle(backgroundColor: Colors.blue,color: Colors.white,fontSize: 12),)),),
                       ),
                     ),
                   ],
                 )
 
               ],
-            )
+            ),
+
 
 
           ],

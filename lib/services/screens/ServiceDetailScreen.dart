@@ -1,21 +1,25 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/services/screens/ServiceDeliveryDetailScreen.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
 import '../provider/provider_services.dart';
 
 
 class ServiceDetailScreen extends StatefulWidget {
-  String classId;
+  int? classId;
    ServiceDetailScreen({required this.classId});
 
   @override
@@ -31,6 +35,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
 
   var mytime;
   var plain;
+  String _time = "Not set";
 
 
 
@@ -73,7 +78,6 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
 
     providerServices = Provider.of<ProviderServices>(context, listen: false);
     providerServices?.serviceId(widget.classId.toString());
-    providerServices?.trendingServices();
     servicename = providerServices?.serviceIdModel?.data?.name ?? '';
     super.initState();
   }
@@ -82,12 +86,87 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
     if (true) {
       setState(() {});
       providerServices?.addNewBooking(map: {
-        "service_provider_id" : widget.toString(),
+        "service_provider_id" : widget.classId.toString(),
         "booking_date" : "23-12-2022",
         "booking_time" : "12:30 PM"
       }, context: context);
     }
   }
+
+
+  late Position position;
+  late List<Placemark>  placeMarks;
+  TextEditingController addressController = TextEditingController();
+
+
+  Future<Position?> determinePosition() async {
+    LocationPermission permission;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.deniedForever) {
+        return Future.error('Location Not Available');
+      }
+    } else {
+      throw Exception('Error');
+    }
+    return await Geolocator.getCurrentPosition();
+  }
+
+
+  getCurrentLocation  () async {
+
+    determinePosition();
+    ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+      content:  Text('getting current locaton now, please wait '),
+      duration: const Duration(seconds: 10),
+      action: SnackBarAction(
+        label: 'ACTION',
+        onPressed: () { },
+      ),
+    ));
+
+    Position newPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high
+    );
+    position = newPosition;
+    placeMarks = await placemarkFromCoordinates(position!.latitude, position!.longitude);
+    Placemark pMark = placeMarks![0];
+
+
+
+
+    String completeAddress =  '${pMark.subThoroughfare} ${pMark.thoroughfare},${pMark.locality},'
+        '${pMark.subAdministrativeArea}  ${pMark.postalCode}';
+    addressController.text = completeAddress;
+
+    setAddress(context);
+
+  }
+
+
+  void setAddress(context) async {
+// GeoCode geoCode = GeoCode();
+//       final query = nameController.text.trim();
+//       var addresses = await geoCode.forwardGeocoding(
+//         address:query);
+//       // var first = addresses.first;
+//       print("${addresses.latitude} : ${addresses.longitude}");
+    providerServices?.sendLocation(map: {
+      "location": addressController.text.trim(),
+      "location_lat": "${position!.latitude}",
+      "location_long": "${position!.longitude}",
+      "state" : "Abuja",
+      // "location_lat": "${addresses.latitude}",
+      // "location_long": " ${addresses.longitude}"
+    }, context: context);
+
+
+
+  }
+
+
+
 
 
   //please help me make the date and time dynamic by using the cupertino time picker and date picker
@@ -244,7 +323,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                               fontSize: 22.0,
                                             ),
                                           ),
-                                          Text(
+                                          const Text(
                                             'Select your convenient time and date',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.normal,
@@ -269,19 +348,22 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                                 if (pickedDate != null) {
                                                   print(
                                                       pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
-                                                  String formattedDate = DateFormat(
-                                                      'yyyy-MM-dd').format(
-                                                      pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
-                                                  print(
-                                                      formattedDate); //formatted date output using intl package =>  2022-07-04
+                                                  String formattedDate = DateFormat.yMMMMd().format(
+                                                      pickedDate);
+
+                                                  // format date in required form here we use yyyy-MM-dd that means time is removed
+                                                  //formatted date output using intl package =>  2022-07-04
                                                   //You can format date as per your need
                                                   mystate(() {
                                                     timeController.text =
                                                         formattedDate;
+
                                                   });
                                                   setState(() {
                                                     timeController.text =
-                                                        formattedDate; //set foratted date to TextField value.
+                                                        formattedDate;
+
+                                                    //set foratted date to TextField value.
                                                   });
                                                 } else {
                                                   print("Date is not selected");
@@ -309,7 +391,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                                       onTap: () =>
                                                           _openDatePicker(
                                                               context),
-                                                      child: Icon(Icons
+                                                      child: const Icon(Icons
                                                           .calendar_month)),
                                                   hintStyle: new TextStyle(
                                                       color: Colors.grey[600]),
@@ -329,83 +411,43 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
 
                                               _DatePickerItem(
                                                 children: <Widget>[
-                                                  const Text('Time Entry'),
+                                                  const Text('Time Entry h:m:s'),
                                                   CupertinoButton(
                                                     // Display a CupertinoDatePicker in time picker mode.
                                                     onPressed: () =>
-                                                        _showDialog(
-                                                            Scaffold(
-                                                              body: Container(
-                                                                  padding: EdgeInsets
-                                                                      .all(15),
-                                                                  height: 150,
-                                                                  child: Center(
-                                                                      child: TextField(
-                                                                        controller: timeinput,
-                                                                        //editing controller of this TextField
-                                                                        decoration: const InputDecoration(
-                                                                            icon: Icon(
-                                                                                Icons
-                                                                                    .timer),
-                                                                            //icon of text field
-                                                                            labelText: "Enter Time" //label text of field
-                                                                        ),
-                                                                        readOnly: true,
-                                                                        //set it true, so that user will not able to edit text
-                                                                        onTap: () async {
-                                                                          TimeOfDay? pickedTime = await showTimePicker(
-                                                                            initialTime: TimeOfDay
-                                                                                .now(),
-                                                                            context: context,
-                                                                          );
 
-                                                                          if (pickedTime !=
-                                                                              null) {
-                                                                            print(
-                                                                                pickedTime
-                                                                                    .format(
-                                                                                    context)); //output 10:51 PM
-                                                                            DateTime parsedTime = DateFormat
-                                                                                .jm()
-                                                                                .parse(
-                                                                                pickedTime
-                                                                                    .format(
-                                                                                    context)
-                                                                                    .toString());
-                                                                            //converting to DateTime so that we can further format on different pattern.
-                                                                            print(
-                                                                                parsedTime); //output 1970-01-01 22:53:00.000
-                                                                            String formattedTime = DateFormat(
-                                                                                'HH:mm:ss')
-                                                                                .format(
-                                                                                parsedTime);
-                                                                            print(
-                                                                                formattedTime); //output 14:59:00
 
-                                                                            mystate(() {
-                                                                              timeinput
-                                                                                  .text =
-                                                                                  formattedTime;
-                                                                            });
-                                                                            //DateFormat() is from intl package, you can format the time on any pattern you need.
+                                               DatePicker.showTime12hPicker(context,
+                                                            theme: DatePickerTheme(
+                                                              containerHeight: 210.0,
+                                                            ),
+                                                            showTitleActions: true, onConfirm: (time) {
+                                                              print('confirm $time');
+                                                              _time = '${time.hour}:${time.minute}:20';
+                                                              mystate(() {
 
-                                                                            setState(() {
-                                                                              timeinput
-                                                                                  .text =
-                                                                                  formattedTime;
+                                                                // final dateFormat = DateFormat('h:mm a');
+                                                                print(DateFormat.jm().format(DateFormat("hh:mm:ss").parse("$_time")));
+                                                                // var date = '2022-05-20';
+                                                                // var time = _time.trim();
 
-                                                                              //set the value of text field.
-                                                                            });
-                                                                          } else {
-                                                                            print(
-                                                                                "Time is not selected");
-                                                                          }
-                                                                        },
-                                                                      )
-                                                                  )
-                                                              ),
-                                                            )
-                                                        ),
+
+
+
+                                                                timeinput.text = DateFormat.jm().format(DateFormat("hh:mm:ss").parse("$_time"));
+                                                                // timeinput.text = _time;
+                                                              });
+                                                              setState(() {
+                                                                // final dateFormat = DateFormat('h:mm a');
+                                                                // var date = '2022-05-20';
+                                                                // var time = _time.trim();
+
+                                                                DateFormat.jm().format(DateFormat("hh:mm:ss").parse("$_time"));
+
+                                                                // timeinput.text = _time;
+                                                              });
+                                                            }, currentTime: DateTime.now(), locale: LocaleType.en),
+
                                                     // In this example, the time value is formatted manually.
                                                     // You can use the intl package to format the value based on
                                                     // the user's locale settings.
@@ -430,20 +472,39 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
 
                                             onTap: () {
                                               Navigator.pop(context);
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Consumer<
-                                                          ProviderServices>(
-                                                        builder: (_, provider,
-                                                            __) =>
-                                                            ServiceDeliveryDetailScreen(
-                                                                service_name: timeController
-                                                                    .text,service_date: timeinput.text,service_id: widget.classId.toString()),
-                                                      ),
-                                                ),
-                                              );
+
+                                              if(timeController.text != null && timeinput.text != null){
+                                                Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        Consumer<
+                                                            ProviderServices>(
+                                                          builder: (_, provider,
+                                                              __) =>
+                                                              ServiceDeliveryDetailScreen(
+                                                                  service_name: timeController
+                                                                      .text,service_date: timeinput.text, service_id: widget.classId.toString()),
+                                                        ),
+                                                  ),
+                                                );
+
+
+                                              }else{
+
+                                                ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+                                                  content:  Text('Please fill in date and time for appointment'),
+                                                  duration: const Duration(seconds: 10),
+                                                  action: SnackBarAction(
+                                                    label: 'ACTION',
+                                                    onPressed: () { },
+                                                  ),
+                                                ));
+
+
+                                              }
+
+
                                             },
                                             child: Container(
                                               height: 30,
@@ -504,55 +565,81 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                   SizedBox(height: 16.0,),
                   Row(
                     children: [
-                      Icon(Icons.location_on),
+                      Icon(Icons.location_on,color: Colors.red,),
                       SizedBox(width: 12.0,),
                       Text('${provider.serviceIdModel?.data?.location}', style: TextStyle(fontWeight: FontWeight.bold),),
                     ],
                   ),
                   SizedBox(height: 16.0,),
+
+
+                  // Row(
+                  //   children: [
+                  //     FaIcon(FontAwesomeIcons.clock),
+                  //     SizedBox(width: 12.0,),
+                  //     Text('Monday to Saturday || 8:00 - 9:00pm,',style: TextStyle(fontWeight: FontWeight.bold),),
+                  //   ],
+                  // ),
+
+                  // SizedBox(height: 16.0,),
+
+                  // Row(
+                  //   children: [
+                  //     FaIcon(FontAwesomeIcons.circleCheck),
+                  //     SizedBox(width: 12.0,),
+                  //     Text('Monday to Saturday || 8:00 - 9:00pm,',style: TextStyle(fontWeight: FontWeight.bold),),
+                  //   ],
+                  // ),
+                  // SizedBox(height: 16.0,),
+
                   Row(
                     children: [
-                      FaIcon(FontAwesomeIcons.clock),
-                      SizedBox(width: 12.0,),
-                      Text('Monday to Saturday || 8:00 - 9:00pm,',style: TextStyle(fontWeight: FontWeight.bold),),
+                      FaIcon(FontAwesomeIcons.phone,color: Colors.green,),
+                      SizedBox(width: 5.0,),
+                      TextButton(
+                        onPressed: (){
+                          FlutterPhoneDirectCaller.callNumber('${provider.serviceIdModel?.data?.phone}');
+
+                        },
+                          child: Text('${provider.serviceIdModel?.data?.phone}',style: TextStyle(fontWeight: FontWeight.bold),)),
                     ],
                   ),
+                  SizedBox(height: 10.0,),
 
+                  Row(
+                    children: [
+                      FaIcon(FontAwesomeIcons.star,color: Colors.indigo,),
+                      SizedBox(width: 12.0,),
+                      Text('Bronze Level Member',style: TextStyle(fontWeight: FontWeight.bold),),
+                    ],
+                  ),
                   SizedBox(height: 16.0,),
 
                   Row(
                     children: [
-                      FaIcon(FontAwesomeIcons.circleCheck),
+                      FaIcon(FontAwesomeIcons.moneyBill,color: Colors.green,),
                       SizedBox(width: 12.0,),
-                      Text('Monday to Saturday || 8:00 - 9:00pm,',style: TextStyle(fontWeight: FontWeight.bold),),
-                    ],
-                  ),
-                  SizedBox(height: 16.0,),
-
-                  Row(
-                    children: [
-                      FaIcon(FontAwesomeIcons.phone),
-                      SizedBox(width: 12.0,),
-                      Text('234809834858,',style: TextStyle(fontWeight: FontWeight.bold),),
-                    ],
-                  ),
-                  SizedBox(height: 16.0,),
-
-                  Row(
-
-                    children: [
-                      Icon(Icons.chat,),
-                      SizedBox(width: 12.0,),
-
-                      Text('chat',style: TextStyle(fontWeight: FontWeight.bold),),
-
-
+                      Text('${provider.serviceIdModel?.data?.serviceTypePrice}',style: TextStyle(fontWeight: FontWeight.bold),),
                     ],
                   ),
 
-                  SizedBox(height: 16.0,),
 
-                  Text('Photos',style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+
+                  // Row(
+                  //
+                  //   children: [
+                  //     Icon(Icons.chat,),
+                  //     SizedBox(width: 12.0,),
+                  //
+                  //     Text('chat',style: TextStyle(fontWeight: FontWeight.bold),),
+                  //
+                  //
+                  //   ],
+                  // ),
+                  //
+                  // SizedBox(height: 16.0,),
+                  //
+                  // Text('Photos',style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
 
 
                   // Padding(

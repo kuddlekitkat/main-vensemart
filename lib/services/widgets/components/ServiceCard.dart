@@ -3,13 +3,15 @@ import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cupertino_date_picker_fork/flutter_cupertino_date_picker_fork.dart';
+
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/models/service_provider_id_model.dart';
 import 'package:vensemart/services/screens/AddBookingsScreen.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+
 import 'package:vensemart/services/screens/ServiceDeliveryDetailScreen.dart';
 
 import '../../provider/provider_services.dart';
@@ -36,6 +38,7 @@ class _ServiceCardState extends State<ServiceCard> {
   DateTime date = DateTime(2016, 10, 26);
   DateTime time = DateTime(2016, 5, 10, 22, 35);
   DateTime dateTime = DateTime(2016, 8, 3, 17, 45);
+  String _time = "Not set";
   TextEditingController timeController = TextEditingController();
 
   late DateTime _selectedDate;
@@ -127,14 +130,16 @@ class _ServiceCardState extends State<ServiceCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Icon(Icons.location_on,color: Colors.red,size: 15,),
-                        Text('${widget.servicesProviderIdModel?.location}',style: TextStyle(fontSize: 12,color: Colors.grey[700]),),
+
+
+                        Text('${widget.servicesProviderIdModel?.location != null ? widget.servicesProviderIdModel?.location.length > 13  ? '${widget.servicesProviderIdModel?.location.substring(0, 11)}...' : widget.servicesProviderIdModel?.location : widget.servicesProviderIdModel?.location }',style: TextStyle(fontSize: 12,color: Colors.grey[700]),),
                       ],
                     ),
                     SizedBox(height: 2,),
                     Row(
                       children: [
-                        Text("*" ,style: TextStyle(fontSize: 20,color: Colors.red),),
-                        Text("*" ,style: TextStyle(fontSize: 20,color: Colors.black),),
+                        Text("*" * 2  ,style: TextStyle(fontSize: 20,color: Colors.red),),
+                        // Text("*" ,style: TextStyle(fontSize: 20,color: Colors.black),),
                       ],
                     ),
                   ],
@@ -213,19 +218,22 @@ class _ServiceCardState extends State<ServiceCard> {
                                                 if (pickedDate != null) {
                                                   print(
                                                       pickedDate); //get the picked date in the format => 2022-07-04 00:00:00.000
-                                                  String formattedDate = DateFormat(
-                                                      'yyyy-MM-dd').format(
-                                                      pickedDate); // format date in required form here we use yyyy-MM-dd that means time is removed
-                                                  print(
-                                                      formattedDate); //formatted date output using intl package =>  2022-07-04
+                                                  String formattedDate = DateFormat.yMMMMd().format(
+                                                      pickedDate);
+
+                                                  // format date in required form here we use yyyy-MM-dd that means time is removed
+                                                  //formatted date output using intl package =>  2022-07-04
                                                   //You can format date as per your need
                                                   mystate(() {
                                                     timeController.text =
                                                         formattedDate;
+
                                                   });
                                                   setState(() {
                                                     timeController.text =
-                                                        formattedDate; //set foratted date to TextField value.
+                                                        formattedDate;
+
+                                                    //set foratted date to TextField value.
                                                   });
                                                 } else {
                                                   print("Date is not selected");
@@ -273,94 +281,43 @@ class _ServiceCardState extends State<ServiceCard> {
 
                                               _DatePickerItem(
                                                 children: <Widget>[
-                                                  const Text('Time Entry'),
+                                                  const Text('Time Entry h:m:s'),
                                                   CupertinoButton(
                                                     // Display a CupertinoDatePicker in time picker mode.
                                                     onPressed: () =>
-                                                        _showDialog(
-                                                            Scaffold(
-                                                              body: Container(
-                                                                  padding: const EdgeInsets
-                                                                      .all(15),
-                                                                  height: 150,
-                                                                  child: Column(
-                                                                    children: [
-                                                                      Center(
-                                                                          child: TextField(
-                                                                            controller: timeinput,
-                                                                            //editing controller of this TextField
-                                                                            decoration: const InputDecoration(
-                                                                                icon: Icon(
-                                                                                    Icons
-                                                                                        .timer),
-                                                                                //icon of text field
-                                                                                labelText: "Enter Time" //label text of field
-                                                                            ),
-                                                                            readOnly: true,
-                                                                            //set it true, so that user will not able to edit text
-                                                                            onTap: () async {
-                                                                              TimeOfDay? pickedTime = await showTimePicker(
-                                                                                initialTime: TimeOfDay
-                                                                                    .now(),
-                                                                                context: context,
-                                                                              );
-
-                                                                              if (pickedTime !=
-                                                                                  null) {
-                                                                                print(
-                                                                                    pickedTime
-                                                                                        .format(
-                                                                                        context)); //output 10:51 PM
-                                                                                DateTime parsedTime = DateFormat
-                                                                                    .jm()
-                                                                                    .parse(
-                                                                                    pickedTime
-                                                                                        .format(
-                                                                                        context)
-                                                                                        .toString());
-                                                                                //converting to DateTime so that we can further format on different pattern.
-                                                                                print(
-                                                                                    parsedTime); //output 1970-01-01 22:53:00.000
-                                                                                String formattedTime = DateFormat(
-                                                                                    'HH:mm:ss')
-                                                                                    .format(
-                                                                                    parsedTime);
-                                                                                print(
-                                                                                    formattedTime); //output 14:59:00
-
-                                                                                mystate(() {
-                                                                                  timeinput
-                                                                                      .text =
-                                                                                      formattedTime;
-                                                                                });
-                                                                                //DateFormat() is from intl package, you can format the time on any pattern you need.
-
-                                                                                setState(() {
-                                                                                  timeinput
-                                                                                      .text =
-                                                                                      formattedTime;
-
-                                                                                  //set the value of text field.
-                                                                                });
-                                                                              } else {
-                                                                                print(
-                                                                                    "Time is not selected");
-                                                                              }
-                                                                            },
 
 
-                                                                          )
+                                                        DatePicker.showTime12hPicker(context,
+                                                            theme: DatePickerTheme(
+                                                              containerHeight: 210.0,
+                                                            ),
+                                                            showTitleActions: true, onConfirm: (time) {
+                                                              print('confirm $time');
+                                                              _time = '${time.hour}:${time.minute}:20';
+                                                              mystate(() {
 
-                                                                      ),
-                                                                      // ElevatedButton(onPressed: (){
-                                                                      //   Navigator.pop(context);
-                                                                      // }, child: Text('OK'))
-                                                                    ],
-                                                                  )
+                                                                // final dateFormat = DateFormat('h:mm a');
+                                                                print(DateFormat.jm().format(DateFormat("hh:mm:ss").parse("$_time")));
+                                                                // var date = '2022-05-20';
+                                                                // var time = _time.trim();
 
-                                                              ),
-                                                            )
-                                                        ),
+
+
+
+                                                                timeinput.text = DateFormat.jm().format(DateFormat("hh:mm:ss").parse("$_time"));
+                                                                // timeinput.text = _time;
+                                                              });
+                                                              setState(() {
+                                                                // final dateFormat = DateFormat('h:mm a');
+                                                                // var date = '2022-05-20';
+                                                                // var time = _time.trim();
+
+                                                                DateFormat.jm().format(DateFormat("hh:mm:ss").parse("$_time"));
+
+                                                                // timeinput.text = _time;
+                                                              });
+                                                            }, currentTime: DateTime.now(), locale: LocaleType.en),
+
                                                     // In this example, the time value is formatted manually.
                                                     // You can use the intl package to format the value based on
                                                     // the user's locale settings.
@@ -395,7 +352,7 @@ class _ServiceCardState extends State<ServiceCard> {
                                                             __) =>
                                                             ServiceDeliveryDetailScreen(
                                                                 service_name: timeController
-                                                                    .text,service_date: timeinput.text,service_id: widget.servicesProviderIdModel?.id),
+                                                                    .text,service_date: timeinput.text, service_id: '${widget.servicesProviderIdModel?.id}'),
                                                       ),
                                                 ),
                                               );

@@ -27,18 +27,16 @@ class Data {
   String? bookingDate;
   String? bookingTime;
 
-  Data(
-      {
-        this.serviceProviderId,
-        this.bookingDate,
-        this.bookingTime,
-      });
+  Data({
+    this.serviceProviderId,
+    this.bookingDate,
+    this.bookingTime,
+  });
 
   Data.fromJson(Map<String, dynamic> json) {
     serviceProviderId = json['service_provider_id'];
     bookingTime = json['booking_time'];
     bookingDate = json['booking_date'];
-
   }
 
   Map<String, dynamic> toJson() {
@@ -46,7 +44,6 @@ class Data {
     data['service_provider_id'] = serviceProviderId;
     data['booking_time'] = bookingTime;
     data['booking_date'] = bookingDate;
-
     return data;
   }
 }

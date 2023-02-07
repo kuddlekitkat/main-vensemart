@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:vensemart/services/provider/rating_service.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
 
 class ServicesSuccessScreen extends StatelessWidget {
@@ -63,13 +64,15 @@ class ServicesSuccessScreen extends StatelessWidget {
 
               ),
               child: GestureDetector(
-                onTap: (){
+                onTap: () async {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => ServicesHomeScreen(),
                     ),
                   );
+                  RatingService ratingService = RatingService();
+                  await ratingService.isSecondTimeOpen();
                 },
                 child: Center(child: Text('Continue', style: TextStyle(color: Colors.white),),
                 ),

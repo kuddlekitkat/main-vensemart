@@ -60,7 +60,7 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                       color: Colors.blueAccent,
                     ),
                     Padding(
-                      padding: EdgeInsets.symmetric(
+                      padding: const EdgeInsets.symmetric(
                           horizontal: 25.0, vertical: 10.0),
                       child: CircleAvatar(
                         radius: 50.0,

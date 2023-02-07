@@ -1,5 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:vensemart/models/completed_bookings.dart';
+import 'package:vensemart/services/screens/FeedbackScreen.dart';
+import 'package:vensemart/services/screens/RateScreen.dart';
+
+import '../../../ChoiceIntroScreen.dart';
 class CompletedAppointmentCard extends StatelessWidget {
   final String image;
   final String name;
@@ -45,10 +51,21 @@ class CompletedAppointmentCard extends StatelessWidget {
                           bottomRight: Radius.circular(10.0),
                           bottomLeft: Radius.circular(10.0),
                         ),
-                        image: DecorationImage(
-                            image: AssetImage(image),
-                            fit: BoxFit.cover
-                        )
+
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: completedBooking?.profile ?? '',
+                      fit: BoxFit.cover,
+                      placeholder: (
+                          context,
+                          url,
+                          ) =>
+                          Container(
+                              margin: const EdgeInsets.all(10),
+                              child: const SpinKitCircle(
+                                color: Colors.grey,
+                              )),
+                      errorWidget: (context, url, error) => const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -69,9 +86,22 @@ class CompletedAppointmentCard extends StatelessWidget {
                 ),
                 SizedBox(width: MediaQuery.of(context).size.width/3.6,
                 ),
-                TextButton(onPressed: (){
 
-                },child: Icon(Icons.outbond_outlined,color:Colors.black),),
+
+                TextButton(
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.green),
+                  ),
+
+                  onPressed: (){
+                  Navigator.push(
+                    context!,
+                    MaterialPageRoute(
+                      builder: (context) =>  RateScreen(bookingId:'${completedBooking?.id}' )),
+
+                  );
+
+                },child: Text('Rate Service',style: TextStyle(fontSize: 10.0,color: Colors.white),),),
               ],
             ),
 
@@ -80,10 +110,10 @@ class CompletedAppointmentCard extends StatelessWidget {
               children: [
 
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:20.0,vertical: 12.0),
+                  padding: const EdgeInsets.symmetric(horizontal:15.0,vertical: 12.0),
                   child: Container(
-                    width: 80,
-                    height: 40,
+                    width: MediaQuery.of(context).size.width/4,
+                    height: MediaQuery.of(context).size.width/10,
                     decoration: BoxDecoration(
                         color: Color.fromRGBO(234, 234, 234, 3),
                         borderRadius: BorderRadius.circular(6.0)
@@ -107,35 +137,36 @@ class CompletedAppointmentCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 12.0),
                       child: Container(
-                        width: 100,
-                        height: 40,
+                        width: MediaQuery.of(context).size.width/3.8,
+                        height: MediaQuery.of(context).size.width/9.5,
                         decoration: BoxDecoration(
-                            color: Color.fromRGBO(252,239,231,3),
+                            color: Colors.blue,
                             borderRadius: BorderRadius.circular(6.0)
                         ),
                         child: TextButton(
-                          onPressed: (){}, child: Text('15 Oct 2022',style: TextStyle(color: Colors.redAccent),),),
+                          onPressed: (){}, child: Flexible(child: Text(completedBooking?.bookingDate ?? '',style: TextStyle(backgroundColor: Colors.blue,color: Colors.white,fontSize: 10),)),),
                       ),
                     ),
 
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal:8.0,vertical: 12.0),
                       child: Container(
-                        width: 100,
-                        height: 40,
+                        width: MediaQuery.of(context).size.width/3.8,
+                        height: MediaQuery.of(context).size.width/9.5,
                         decoration: BoxDecoration(
                             color: Colors.blue,
                             borderRadius: BorderRadius.circular(6.0)
                         ),
                         child: TextButton(
-                          onPressed: (){}, child: Text('8:30 - 9:30',style: TextStyle(backgroundColor: Colors.blue,color: Colors.white),),),
+                          onPressed: (){}, child: Flexible(child: Text(completedBooking?.bookingTime ?? '',style: TextStyle(backgroundColor: Colors.blue,color: Colors.white,fontSize: 12),)),),
                       ),
                     ),
                   ],
                 )
 
               ],
-            )
+            ),
+
 
 
           ],

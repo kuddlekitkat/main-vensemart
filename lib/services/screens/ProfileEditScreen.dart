@@ -49,17 +49,37 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
 
   void updateProfile(context) async {
     if (_globalFormKey.currentState!.validate()) {
-      providerServices?.updateProfile(credentials: {
-        "name": nameController.text.trim(),
-        "email": emailController.text.trim(),
-        "mobile": phoneController.text.trim(),
-        // "address": addressController.text.trim(),
-        // "gender": genderController.text.trim(),
-        // "date_of_birth": dobController.text.trim(),
-        "profile": MultipartFile.fromBytes(
-            _formartFileImage(fileImage).readAsBytesSync(),
-            filename: fileImage!.path.split("/").last),
-      }, context: context);
+
+
+      if(fileImage != null){
+
+        providerServices?.updateProfile(credentials: {
+          "name": nameController.text.trim(),
+          "email": emailController.text.trim(),
+          "mobile": phoneController.text.trim(),
+          // "address": addressController.text.trim(),
+          // "gender": genderController.text.trim(),
+          // "date_of_birth": dobController.text.trim(),
+          "profile": MultipartFile.fromBytes(
+              _formartFileImage(fileImage).readAsBytesSync(),
+              filename: fileImage!.path.split("/").last),
+        }, context: context);
+
+
+      } else {
+
+        providerServices?.updateProfile(credentials: {
+          "name": nameController.text.trim(),
+          "email": emailController.text.trim(),
+          "mobile": phoneController.text.trim(),
+          // "address": addressController.text.trim(),
+          // "gender": genderController.text.trim(),
+          // "date_of_birth": dobController.text.trim(),
+
+        }, context: context);
+
+      }
+
     }
   }
 
@@ -175,8 +195,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         controller: nameController,
                         validator: Validators.validateString(),
                         decoration: InputDecoration(
-                            label: Text(
-                                provider.userDetailsModel?.data?.name ?? ''),
+                          // label: Text(
+                          //     provider.userDetailsModel?.data?.name ?? ''),
                             border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(10.0),
@@ -197,8 +217,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         controller: emailController,
                         validator: Validators.validateEmail(),
                         decoration: InputDecoration(
-                            label: Text(
-                                provider.userDetailsModel?.data?.email ?? ''),
+                          // label: Text(
+                          //     provider.userDetailsModel?.data?.email ?? ''),
                             border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(10.0),
@@ -219,8 +239,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         controller: phoneController,
                         validator: Validators.validatePhone(),
                         decoration: InputDecoration(
-                            label: Text(
-                                provider.userDetailsModel?.data?.mobile ?? ''),
+                          // label: Text(
+                          //     provider.userDetailsModel?.data?.mobile ?? ''),
                             border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(10.0),

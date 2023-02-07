@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/services/screens/ServicesSuccessScreen.dart';
 import 'package:vensemart/services/screens/SetAddressScreen.dart';
@@ -22,6 +24,10 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
   ProviderServices? providerServices;
   late String servicename;
   late String name;
+
+  late Position position;
+  late List<Placemark>  placeMarks;
+
   TextEditingController timeController = TextEditingController();
 
   late DateTime _selectedDate;
@@ -34,11 +40,13 @@ class _ServiceDeliveryDetailScreenState extends State<ServiceDeliveryDetailScree
   void initState() {
 
     providerServices = Provider.of<ProviderServices>(context, listen: false);
-    providerServices?.serviceId(widget.service_id.toString());
+    providerServices?.serviceId(widget.service_id);
     providerServices?.userLocation();
     providerServices?.userDetails();
     super.initState();
   }
+
+
 
   void addBooking(context) async {
     if (true) {

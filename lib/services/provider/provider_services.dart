@@ -10,6 +10,8 @@ import 'package:vensemart/models/login_model.dart';
 import 'package:vensemart/models/register.dart';
 import 'package:vensemart/models/services_model.dart';
 import 'package:vensemart/models/terms_and_condition_model.dart';
+import 'package:vensemart/services/screens/ConfirmAddressScreen.dart';
+import '../../ChangePassScreen.dart';
 import '../../ChoiceIntroScreen.dart';
 import '../../OtpVerification.dart';
 import '../../apiservices/auth_repo.dart';
@@ -44,14 +46,11 @@ class ProviderServices extends ChangeNotifier {
   TrendingServiceModel? get trendingserviceModel => _trendingserviceModel;
   TrendingServiceModel? _trendingserviceModel;
 
-
   UpdateProfileModel? get updateProfileModel => _updateProfileModel;
   UpdateProfileModel? _updateProfileModel;
 
-
   AddBookingModel? get addBooking => _addBookingModel;
   AddBookingModel? _addBookingModel;
-
 
   CustomerHomeModel? get customerHomeModel => _customerHomeModel;
   CustomerHomeModel? _customerHomeModel;
@@ -63,13 +62,11 @@ class ProviderServices extends ChangeNotifier {
   ServiceIdModel? get serviceIdModel => _serviceIdModel;
   ServiceIdModel? _serviceIdModel;
 
-
   ServiceProviderIdModel? get serviceProviderIdModel => _serviceProviderIdModel;
   ServiceProviderIdModel? _serviceProviderIdModel;
 
   ServiceCategoryModel? get serviceCategoryModel => _servicesCategoryModel;
   ServiceCategoryModel? _servicesCategoryModel;
-
 
   TermsAndConditionModel? get termsAndCondition => _termsSndCondition;
   TermsAndConditionModel? _termsSndCondition;
@@ -80,12 +77,12 @@ class ProviderServices extends ChangeNotifier {
   FaqsModel? get faqsModel => _faqsModel;
   FaqsModel? _faqsModel;
 
-
   UpcomingBooking? get upcomingBooking => _upcomingBooking;
   UpcomingBooking? _upcomingBooking;
 
   CompletedBooking? get completedBooking => _completedBooking;
   CompletedBooking? _completedBooking;
+
   CancelledBooking? get cancelledBooking => _cancelledBooking;
   CancelledBooking? _cancelledBooking;
 
@@ -97,16 +94,15 @@ class ProviderServices extends ChangeNotifier {
       _servicesModel?.data != null &&
       _servicesModel!.data!.isNotEmpty;
 
-
   bool get isReady =>
       _trendingserviceModel != null &&
-          _trendingserviceModel?.data != null &&
-          _trendingserviceModel!.data!.isNotEmpty;
+      _trendingserviceModel?.data != null &&
+      _trendingserviceModel!.data!.isNotEmpty;
 
   bool get isPresent =>
       _productCategoryModel != null &&
-          _productCategoryModel?.data != null &&
-          _productCategoryModel!.data!.isNotEmpty;
+      _productCategoryModel?.data != null &&
+      _productCategoryModel!.data!.isNotEmpty;
 
   void signIn({Map<String, String>? map, BuildContext? context}) async {
     try {
@@ -120,11 +116,11 @@ class ProviderServices extends ChangeNotifier {
         _loginModel = LoginModel.fromJson(response.data);
         print(_loginModel?.data?.apiToken);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content:  Text('${_loginModel?.message}'),
+          content: Text('${_loginModel?.message}'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
-            onPressed: () { },
+            onPressed: () {},
           ),
         ));
         SessionManager.instance.authToken = _loginModel!.data!.apiToken!;
@@ -135,14 +131,18 @@ class ProviderServices extends ChangeNotifier {
           ),
         );
       }
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+
       notifyListeners();
     } catch (e, str) {
       ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-        content:  Text('${_loginModel?.message}'),
+        content: Text('${_loginModel?.message}'),
         duration: const Duration(seconds: 10),
         action: SnackBarAction(
           label: 'ACTION',
-          onPressed: () { },
+          onPressed: () {},
         ),
       ));
       debugPrint("Error: $e");
@@ -150,22 +150,17 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-
-
   void signOut() async {
     try {
-
       SessionManager.instance.logOut();
 
       SessionManager.instance.isLoggedIn = false;
 
       notifyListeners();
-    }
-     catch (e, str) {
+    } catch (e, str) {
       debugPrint("Error: $e");
       debugPrint("StackTrace: $str");
     }
-
   }
 
   void register({Map<String, String>? map, BuildContext? context}) async {
@@ -177,11 +172,11 @@ class ProviderServices extends ChangeNotifier {
         _registerModel = RegisterModel.fromJson(response.data);
         print(_registerModel!.data!.email!);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content:  Text('${_registerModel?.message}'),
+          content: Text('${_registerModel?.message}'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
-            onPressed: () { },
+            onPressed: () {},
           ),
         ));
         SessionManager.instance.authToken = _registerModel!.data!.apiToken!;
@@ -195,14 +190,24 @@ class ProviderServices extends ChangeNotifier {
         // );
         notifyListeners();
       }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('${_registerModel?.message}'),
+          duration: const Duration(seconds: 10),
+        ));
+
+        _isLoading = false;
+      }
+
       notifyListeners();
     } catch (e, str) {
       ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-        content:  Text('${_registerModel?.message}'),
+        content: Text('${_registerModel?.message}'),
         duration: const Duration(seconds: 10),
         action: SnackBarAction(
           label: 'ACTION',
-          onPressed: () { },
+          onPressed: () {},
         ),
       ));
       debugPrint("Error: $e");
@@ -227,6 +232,20 @@ class ProviderServices extends ChangeNotifier {
         );
         notifyListeners();
       }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('make sure you have registered first'),
+          duration: const Duration(seconds: 10),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () {},
+          ),
+        ));
+
+        _isLoading = false;
+      }
+
       notifyListeners();
     } catch (e, str) {
       debugPrint("Error: $e");
@@ -234,7 +253,7 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-  void verifyOTP({context,otpNumber}) async {
+  void verifyOTP({context, otpNumber}) async {
     try {
       _isLoading = true;
       notifyListeners();
@@ -246,11 +265,25 @@ class ProviderServices extends ChangeNotifier {
         Navigator.push(
           context!,
           MaterialPageRoute(
-            builder: (context) => const ChoiceIntroScreen(),
+            builder: (context) => ConfirmAddressScreen(),
           ),
         );
         notifyListeners();
       }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: const Text('make sure you have registered first'),
+          duration: const Duration(seconds: 10),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () {},
+          ),
+        ));
+
+        _isLoading = false;
+      }
+
       notifyListeners();
     } catch (e, str) {
       debugPrint("Error: $e");
@@ -266,13 +299,9 @@ class ProviderServices extends ChangeNotifier {
       if (response != null) {
         _isLoading = false;
 
-        ScaffoldMessenger.of(context!).showSnackBar(const SnackBar(
-          content:  Text('profile updated Successfully'),
-          duration: Duration(seconds: 10),
-          // action: SnackBarAction(
-          //   label: 'ACTION',
-          //   onPressed: () { },
-          // ),
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: const Text('Update successful'),
+          duration: const Duration(seconds: 10),
         ));
         // Navigator.push(
         //   context!,
@@ -299,8 +328,8 @@ class ProviderServices extends ChangeNotifier {
       if (response != null && response.statusCode == 200) {
         _userLocationModel = UserLocationModel.fromJson(response.data);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content:  Text('${_userLocationModel?.message}'),
-          duration: const Duration(seconds: 7),
+          content: Text('${_userLocationModel?.message}'),
+          duration: const Duration(seconds: 5),
           // action: SnackBarAction(
           //   label: 'ACTION',
           //   onPressed: () { },
@@ -308,6 +337,19 @@ class ProviderServices extends ChangeNotifier {
         ));
         _isLoading = false;
         SessionManager.instance.isLoggedIn = true;
+      }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('Please make sure to enter the correct location'),
+          duration: const Duration(seconds: 10),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () {},
+          ),
+        ));
+
+        _isLoading = false;
       }
       notifyListeners();
     } catch (e, str) {
@@ -318,6 +360,46 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+  void sendSupportMessage(
+      {Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.sendSupportMessage(map!);
+      if (response != null && response.statusCode == 200) {
+        // _userLocationModel = UserLocationModel.fromJson(response.data);
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: const Text('message sent successfully'),
+          duration: const Duration(seconds: 5),
+          // action: SnackBarAction(
+          //   label: 'ACTION',
+          //   onPressed: () { },
+          // ),
+        ));
+        _isLoading = false;
+        SessionManager.instance.isLoggedIn = true;
+      }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('Please make sure to enter email, support and message'),
+          duration: const Duration(seconds: 10),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () {},
+          ),
+        ));
+
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      _isLoading = false;
+      notifyListeners();
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
 
   void getLocation({Map<String, String>? map, BuildContext? context}) async {
     try {
@@ -327,15 +409,28 @@ class ProviderServices extends ChangeNotifier {
       if (response != null && response.statusCode == 200) {
         _userLocationModel = UserLocationModel.fromJson(response.data);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content:  Text('${_userLocationModel?.message}'),
+          content: Text('${_userLocationModel?.message}'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
-            onPressed: () { },
+            onPressed: () {},
           ),
         ));
         _isLoading = false;
         SessionManager.instance.isLoggedIn = true;
+      }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('Please make sure you have set location first'),
+          duration: const Duration(seconds: 10),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () {},
+          ),
+        ));
+
+        _isLoading = false;
       }
       notifyListeners();
     } catch (e, str) {
@@ -346,16 +441,27 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-
-
-  void addNewBooking(
-      {Map<String, String>? map, BuildContext? context}) async {
+  void addNewBooking({Map<String, String>? map, BuildContext? context}) async {
     try {
       _isLoading = true;
       notifyListeners();
       Response? response = await authRepo.addBooking(map!);
       if (response != null && response.statusCode == 200) {
         _addBookingModel = AddBookingModel.fromJson(response.data);
+        _isLoading = false;
+      }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('Please make sure you have set location first'),
+          duration: const Duration(seconds: 10),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () {},
+          ),
+        ));
+
+        _isLoading = false;
       }
       notifyListeners();
     } catch (e, str) {
@@ -364,8 +470,6 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-
-
   void customerHome({Map<String, String>? map, BuildContext? context}) async {
     try {
       _isLoading = true;
@@ -373,6 +477,10 @@ class ProviderServices extends ChangeNotifier {
       Response? response = await authRepo.customerHome(map!);
       if (response != null && response.statusCode == 200) {
         _customerHomeModel = CustomerHomeModel.fromJson(response.data);
+      }
+
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
       }
       notifyListeners();
     } catch (e, str) {
@@ -389,6 +497,10 @@ class ProviderServices extends ChangeNotifier {
         _userDetailsModel = UserDetailsModel.fromJson(response.data);
         _isLoading = false;
       }
+
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
       notifyListeners();
     } catch (e, str) {
       debugPrint("Error: $e");
@@ -396,8 +508,52 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+  void rateCustomer({Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.rateCustomer(map!);
+      if (response != null && response.statusCode == 200) {
+        // _isLoading = false;
+        // SessionManager.instance.isLoggedIn = true;
 
+        // _completedRequestModel = CompletedRequestModel.fromJson(response.data);
+        //
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('${response.statusMessage}'),
+          duration: const Duration(seconds: 10),
+          // action: SnackBarAction(
+          //   label: 'ACTION',
+          //   onPressed: () { },
+          // ),
+        ));
+        // Navigator.pushReplacement(
+        //   context!,
+        //   MaterialPageRoute(
+        //     builder: (context) => const ServiceLocationScreen(),
+        //   ),
+        // );
+      }
 
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      _isLoading = false;
+      ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+        content: Text('$e'),
+        duration: const Duration(seconds: 10),
+        // action: SnackBarAction(
+        //   label: 'ACTION',
+        //   onPressed: () { },
+        // ),
+      ));
+      notifyListeners();
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
 
   void userLocation() async {
     try {
@@ -405,6 +561,10 @@ class ProviderServices extends ChangeNotifier {
       Response? response = await authRepo.userLocation();
       if (response != null && response.statusCode == 200) {
         _userLocationModel = UserLocationModel.fromJson(response.data);
+        _isLoading = false;
+      }
+
+      if (response != null && response.statusCode != 200) {
         _isLoading = false;
       }
       notifyListeners();
@@ -422,6 +582,10 @@ class ProviderServices extends ChangeNotifier {
         _servicesModel = ServicesModel.fromJson(response.data);
         _isLoading = false;
       }
+
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
       notifyListeners();
     } catch (e, str) {
       debugPrint("Error: $e");
@@ -429,13 +593,15 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-
   void trendingServices() async {
     try {
       _isLoading = true;
       Response? response = await authRepo.trendingServices();
       if (response != null && response.statusCode == 200) {
         _trendingserviceModel = TrendingServiceModel.fromJson(response.data);
+        _isLoading = false;
+      }
+      if (response != null && response.statusCode != 200) {
         _isLoading = false;
       }
       notifyListeners();
@@ -453,6 +619,10 @@ class ProviderServices extends ChangeNotifier {
         _productCategoryModel = ProductCategoryModel.fromJson(response.data);
         _isLoading = false;
       }
+
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
       notifyListeners();
     } catch (e, str) {
       debugPrint("Error: $e");
@@ -460,17 +630,104 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-
   void servicesCate(String num) async {
     try {
       _isLoading = true;
       Response? response = await authRepo.serviceCateg(num);
       if (response != null && response.statusCode == 200) {
-        _serviceProviderIdModel = ServiceProviderIdModel.fromJson(response.data);
+        _serviceProviderIdModel =
+            ServiceProviderIdModel.fromJson(response.data);
+        _isLoading = false;
+      }
+      if (response != null && response.statusCode != 200) {
         _isLoading = false;
       }
       notifyListeners();
     } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+  void sendPasswordChange(
+      {required context, required String phoneNumber}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response =
+          await authRepo.sendPasswordChange({'phone_number': phoneNumber!});
+      if (response != null && response.statusCode == 200) {
+        _isLoading = false;
+
+        Navigator.push(
+          context!,
+          MaterialPageRoute(
+            builder: (context) => ChangePassScreen(userPhone: phoneNumber!),
+          ),
+        );
+      }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('Please register first'),
+          duration: const Duration(seconds: 10),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () {},
+          ),
+        ));
+
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      _isLoading = false;
+      notifyListeners();
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+  void changePassword({Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.changePassword(map!);
+      if (response != null && response.statusCode == 200) {
+        // _registerModel = RegisterModel.fromJson(response.data);
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('${response?.statusMessage}'),
+          duration: const Duration(seconds: 10),
+        ));
+        _isLoading = false;
+        // sendOTP(context);
+      }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('${response?.statusMessage}'),
+          duration: const Duration(seconds: 10),
+          // action: SnackBarAction(
+          //   label: 'ACTION',
+          //   onPressed: () { },
+          // ),
+        ));
+
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      _isLoading = false;
+      var response;
+      ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+        content: Text('${response?.statusMessage}'),
+        duration: const Duration(seconds: 10),
+        // action: SnackBarAction(
+        //   label: 'ACTION',
+        //   onPressed: () { },
+        // ),
+      ));
+      notifyListeners();
       debugPrint("Error: $e");
       debugPrint("StackTrace: $str");
     }
@@ -484,20 +741,8 @@ class ProviderServices extends ChangeNotifier {
         _productIdModel = ProductIdModel.fromJson(response.data);
         _isLoading = false;
       }
-      notifyListeners();
-    } catch (e, str) {
-      debugPrint("Error: $e");
-      debugPrint("StackTrace: $str");
-    }
-  }
 
-
-  void serviceId(String num) async {
-    try {
-      _isLoading = true;
-      Response? response = await authRepo.serviceId(num);
-      if (response != null && response.statusCode == 200) {
-        _serviceIdModel = ServiceIdModel.fromJson(response.data);
+      if (response != null && response.statusCode != 200) {
         _isLoading = false;
       }
       notifyListeners();
@@ -507,13 +752,34 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-
-  void availableServ(String num,String lat, String long) async {
+  void serviceId(String num) async {
     try {
       _isLoading = true;
-      Response? response = await authRepo.availableServ(num,lat,long);
+      Response? response = await authRepo.serviceId(num);
       if (response != null && response.statusCode == 200) {
         _serviceIdModel = ServiceIdModel.fromJson(response.data);
+        _isLoading = false;
+      }
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+  void availableServ(String num, String lat, String long) async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.availableServ(num, lat, long);
+      if (response != null && response.statusCode == 200) {
+        _serviceIdModel = ServiceIdModel.fromJson(response.data);
+        _isLoading = false;
+      }
+
+      if (response != null && response.statusCode != 200) {
         _isLoading = false;
       }
       notifyListeners();
@@ -531,6 +797,9 @@ class ProviderServices extends ChangeNotifier {
         _termsSndCondition = TermsAndConditionModel.fromJson(response.data);
         _isLoading = false;
       }
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
       notifyListeners();
     } catch (e, str) {
       debugPrint("Error: $e");
@@ -544,6 +813,9 @@ class ProviderServices extends ChangeNotifier {
       Response? response = await authRepo.aboutUs();
       if (response != null && response.statusCode == 200) {
         _aboutUsModel = AboutUsModel.fromJson(response.data);
+        _isLoading = false;
+      }
+      if (response != null && response.statusCode != 200) {
         _isLoading = false;
       }
       notifyListeners();
@@ -561,6 +833,9 @@ class ProviderServices extends ChangeNotifier {
         _contactUsModel = ContactUsModel.fromJson(response.data);
         _isLoading = false;
       }
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
       notifyListeners();
     } catch (e, str) {
       debugPrint("Error: $e");
@@ -574,6 +849,9 @@ class ProviderServices extends ChangeNotifier {
       Response? response = await authRepo.faqs();
       if (response != null && response.statusCode == 200) {
         _faqsModel = FaqsModel.fromJson(response.data);
+        _isLoading = false;
+      }
+      if (response != null && response.statusCode != 200) {
         _isLoading = false;
       }
       notifyListeners();
@@ -591,15 +869,16 @@ class ProviderServices extends ChangeNotifier {
         _servicesCategoryModel = ServiceCategoryModel.fromJson(response.data);
         _isLoading = false;
       }
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+
       notifyListeners();
     } catch (e, str) {
       debugPrint("Error: $e");
       debugPrint("StackTrace: $str");
     }
   }
-
-
-
 
   void getAllUpcomingBookings() async {
     try {
@@ -609,14 +888,15 @@ class ProviderServices extends ChangeNotifier {
         _upcomingBooking = UpcomingBooking.fromJson(response.data);
         _isLoading = false;
       }
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
       notifyListeners();
     } catch (e, str) {
       debugPrint("Error: $e");
       debugPrint("StackTrace: $str");
     }
   }
-
-
 
   void getAllCompletedBookings() async {
     try {
@@ -626,20 +906,7 @@ class ProviderServices extends ChangeNotifier {
         _completedBooking = CompletedBooking.fromJson(response.data);
         _isLoading = false;
       }
-      notifyListeners();
-    } catch (e, str) {
-      debugPrint("Error: $e");
-      debugPrint("StackTrace: $str");
-    }
-  }
-
-
-  void getAllCanceledBookings() async {
-    try {
-      _isLoading = true;
-      Response? response = await authRepo.canceledBookings();
-      if (response != null && response.statusCode == 200) {
-        _cancelledBooking = CancelledBooking.fromJson(response.data);
+      if (response != null && response.statusCode != 200) {
         _isLoading = false;
       }
       notifyListeners();
@@ -649,12 +916,21 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-
-
-
+  void getAllCanceledBookings() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.canceledBookings();
+      if (response != null && response.statusCode == 200) {
+        _cancelledBooking = CancelledBooking.fromJson(response.data);
+        _isLoading = false;
+      }
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
 }
-
-
-
-
-

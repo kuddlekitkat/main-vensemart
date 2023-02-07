@@ -10,6 +10,9 @@ class CancelBooking extends StatefulWidget {
 class _CancelBookingState extends State<CancelBooking> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(body: Container(
+
+
+    ));
   }
 }

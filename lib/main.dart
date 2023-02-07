@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/LoginScreen.dart';
 import 'package:vensemart/OnboardingScreen.dart';
@@ -12,7 +13,6 @@ import 'ChoiceIntroScreen.dart';
 import 'apiservices/provider/provider.dart';
 import 'core/injector.dart';
 import 'core/session_manager.dart';
-import 'services/screens/ServicesGridScreen.dart';
 
 AndroidNotificationChannel channel = const AndroidNotificationChannel(
   'high_importance_channel', // id
@@ -22,7 +22,7 @@ AndroidNotificationChannel channel = const AndroidNotificationChannel(
 );
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin();
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -39,15 +39,21 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin
       .resolvePlatformSpecificImplementation<
-      AndroidFlutterLocalNotificationsPlugin>()
+          AndroidFlutterLocalNotificationsPlugin>()
       ?.createNotificationChannel(channel);
+
+  OneSignal.shared.setLogLevel(OSLogLevel.debug, OSLogLevel.none);
+  OneSignal.shared.setAppId("580dc8b3-a23b-4ef4-9ec9-fa1fd78c83bb");
+  OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {
+    print("Accepted permission: $accepted");
+  });
+
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     print(SessionManager.instance.authToken);
@@ -67,7 +73,8 @@ class MyApp extends StatelessWidget {
           ServicesHomeScreen.routeName: (ctx) => const ServicesHomeScreen(),
           LoginScreen.routeName: (ctx) => const ServicesHomeScreen(),
           AvailableServicesListScreen.routeName: (ctx) =>
-              AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: 385.toString()),
+              AvailableServicesListScreen(
+                  lat: 8.toString(), long: 9.toString(), id: 385.toString()),
         },
       ),
     );

@@ -29,24 +29,28 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Carousel with indicator controller demo')),
-      body: Column(children: [
-        Expanded(
-          child: CarouselSlider(
-            items: imageSliders,
-            carouselController: _controller,
-            options: CarouselOptions(
-                autoPlay: true,
-                enlargeCenterPage: true,
-                aspectRatio: 2.0,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _current = index;
-                  });
-                }),
+      body: Container(
+          height: 130.0,
+          width: MediaQuery.of(context).size.width,
+        child: Column(children: [
+          Expanded(
+            child: CarouselSlider(
+              items: imageSliders,
+              carouselController: _controller,
+              options: CarouselOptions(
+                  autoPlay: true,
+                  enlargeCenterPage: true,
+                  aspectRatio: 2.0,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _current = index;
+                    });
+                  }),
+            ),
           ),
-        ),
 
-      ]),
+        ]),
+      ),
     );
   }
 

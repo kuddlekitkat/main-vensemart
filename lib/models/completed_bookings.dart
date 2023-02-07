@@ -51,6 +51,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
   String? name;
+  String? profile;
   String? email;
   String? mobile;
   String? categoryName;
@@ -81,6 +82,7 @@ class Data {
     this.createdAt,
     this.updatedAt,
     this.name,
+    this.profile,
     this.email,
     this.mobile,
     this.categoryName,
@@ -110,6 +112,7 @@ class Data {
     name = json["name"];
     email = json["email"];
     mobile = json["mobile"];
+    profile = json["profile"];
     categoryName = json["category_name"];
   }
 
@@ -138,6 +141,7 @@ class Data {
     data['name'] = name;
     data['email'] = email;
     data['mobile'] = mobile;
+    data['profile'] = profile;
     data['category_name'] = categoryName;
     return data;
   }

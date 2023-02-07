@@ -25,6 +25,7 @@ class ServiceIdModel {
 class Data {
   String? name;
   dynamic id;
+  dynamic phone;
   String? serviceType;
   String? locationLat;
   String? locationLong;
@@ -40,6 +41,7 @@ class Data {
       {
         this.name,
         this.id,
+        this.phone,
         this.serviceType,
         this.locationLat,
         this.locationLong,
@@ -56,6 +58,7 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
+    phone = json['phone'];
     serviceType = json["service_type"];
     locationLat =  json["location_lat"];
     locationLong =  json["location_long"];
@@ -71,6 +74,7 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
+    data['phone'] = phone;
     data['id'] = id;
     data['service_type'] =  serviceType;
     data['location_lat'] =  locationLat;
