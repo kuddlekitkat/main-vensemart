@@ -60,12 +60,14 @@ class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
   Future<Position> _determinePosition(context) async {
     await requestLocationPermission();
     _position = await Geolocator.getCurrentPosition();
-           providerServices?.sendLocation( map:{
-          "location" : addressController.text,
-          "location_lat" : "${_position?.latitude}",
-          "location_long" : "${_position?.longitude}",
-          "state" : "sokoto"
-          },context: context);
+    if (_position != null) {
+      providerServices?.sendLocation(map: {
+        "location": addressController.text,
+        "location_lat": "${_position?.latitude}",
+        "location_long": "${_position?.longitude}",
+        "state": "sokoto"
+      }, context: context);
+    }
     return _position!;
   }
 
