@@ -57,15 +57,21 @@ class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
     return permission;
   }
 
-  Future<Position> _determinePosition() async {
+  Future<Position> _determinePosition(context) async {
     await requestLocationPermission();
     _position = await Geolocator.getCurrentPosition();
+           providerServices?.sendLocation( map:{
+          "location" : addressController.text,
+          "location_lat" : "${_position?.latitude}",
+          "location_long" : "${_position?.longitude}",
+          "state" : "sokoto"
+          },context: context);
     return _position!;
   }
 
   @override
   void initState() {
-    _determinePosition();
+    _determinePosition(context);
     firebaseService.firebasePushNotification(context);
     super.initState();
   }
