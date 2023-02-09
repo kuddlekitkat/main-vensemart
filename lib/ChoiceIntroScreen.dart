@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:logger/logger.dart';
+import 'package:provider/provider.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
 import 'ProductsComingSoon.dart';
@@ -62,19 +63,23 @@ class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
     _position = await Geolocator.getCurrentPosition();
     if (_position != null) {
       providerServices?.sendLocation(map: {
-        "location": addressController.text,
+        "location": "addressController.text",
         "location_lat": "${_position?.latitude}",
         "location_long": "${_position?.longitude}",
         "state": "sokoto"
       }, context: context);
     }
+
+    setState(() {});
     return _position!;
   }
 
   @override
   void initState() {
+    providerServices = Provider.of<ProviderServices>(context, listen: false);
     _determinePosition(context);
     firebaseService.firebasePushNotification(context);
+
     super.initState();
   }
 
@@ -82,6 +87,7 @@ class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
   Widget build(BuildContext context) {
     print(
         'lat:::...${_position?.latitude} and long:::...${_position?.longitude}');
+
     return Container(
       color: Colors.white,
       child: Column(

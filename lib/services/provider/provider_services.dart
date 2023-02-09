@@ -320,7 +320,13 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+  enterPro() {
+    print('object');
+    notifyListeners();
+  }
+
   void sendLocation({Map<String, String>? map, BuildContext? context}) async {
+    print('object provider');
     try {
       _isLoading = true;
       notifyListeners();
@@ -358,6 +364,7 @@ class ProviderServices extends ChangeNotifier {
       debugPrint("Error: $e");
       debugPrint("StackTrace: $str");
     }
+    notifyListeners();
   }
 
   void sendSupportMessage(
