@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_segment/flutter_advanced_segment.dart';
-import 'package:vensemart/services/widgets/components/AppointmentCard.dart';
+import 'package:vensemart/models/upcoming_bookings.dart';
+import 'package:vensemart/services/widgets/Drawers/ServicesHomeDrawer.dart';
 import 'package:vensemart/services/widgets/components/AppointmentList.dart';
 import 'package:vensemart/services/widgets/components/CancelledAppointmentList.dart';
-import 'package:vensemart/services/widgets/components/CompletedAppointmentCard.dart';
 import 'package:vensemart/services/widgets/components/CompletedAppointmentList.dart';
-
 
 enum Segment {
   all,
@@ -29,14 +28,12 @@ extension SegmentsExtension on Segment {
   bool get isStarred => this == Segment.starred;
 }
 
-
 class ServicesAppointmentScreen extends StatefulWidget {
-
-
   const ServicesAppointmentScreen({Key? key}) : super(key: key);
 
   @override
-  State<ServicesAppointmentScreen> createState() => _ServicesAppointmentScreenState();
+  State<ServicesAppointmentScreen> createState() =>
+      _ServicesAppointmentScreenState();
 }
 
 class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
@@ -48,18 +45,29 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Color.fromRGBO(234, 234, 234, 2),
+        appBar: AppBar(
+          backgroundColor: Color(0xff1456f1),
+          title: Text("Appointments"),
+          // leading: IconButton(
+          //   onPressed: () {
+          //     Navigator.pop(context);
+          //   },
+          //   icon: Icon(Icons.arrow_back_ios),
+          //   color: Colors.black,
+          // ),
+        ),
+        // drawer: ServicesHomeDrawer(),
         body: SingleChildScrollView(
           child: Center(
             child: Column(
               children: [
                 Container(
                   color: Colors.white,
-
                   child: Column(
                     children: [
-
-                      SizedBox(height: 5.0,),
-
+                      SizedBox(
+                        height: 12.0,
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(bottom: 13.0),
                         child: Center(
@@ -68,13 +76,12 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
                             segments: const {
                               'all': 'Upcoming',
                               'missed': 'Completed',
-                              'cancelled':'Cancelled'
+                              'cancelled': 'Cancelled',
                             },
                             backgroundColor: Colors.white10,
                             activeStyle: const TextStyle(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
-
                             ),
                             inactiveStyle: const TextStyle(
                               color: Colors.grey,
@@ -92,7 +99,7 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
                             case 'missed':
                               return const CompletedAppointmentList();
                             case 'cancelled':
-                              return CancelledAppointmentList();
+                              return const CancelledAppointmentList();
                             default:
                               return const SizedBox();
                           }
@@ -101,7 +108,6 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
                     ],
                   ),
                 ),
-
               ],
             ),
           ),
@@ -111,9 +117,9 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
   }
 
   Widget _buildLabel(
-      String label, {
-        Color color = Colors.black87,
-      }) {
+    String label, {
+    Color color = Colors.black87,
+  }) {
     return Container(
       padding: const EdgeInsets.symmetric(
         vertical: 25,
@@ -122,8 +128,8 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
         children: [
           Expanded(
               child: Divider(
-                color: color,
-              )),
+            color: color,
+          )),
           Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 10,
@@ -139,8 +145,8 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
           ),
           Expanded(
               child: Divider(
-                color: color,
-              )),
+            color: color,
+          )),
         ],
       ),
     );

@@ -80,6 +80,7 @@ class ImagePickerHandler {
     }
 
     if (action == null) return;
+
     final getFile = await handleProfileAction(context!, action: action);
     file!(getFile!);
   }
@@ -112,7 +113,6 @@ class ImagePickerHandler {
     return null;
   }
 
-
   Future<File?> compressFile(BuildContext context, File file) async {
     final filePath = file.absolute.path;
 
@@ -122,16 +122,13 @@ class ImagePickerHandler {
     final splitted = filePath.substring(0, (lastIndex));
     final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
     var result = await FlutterImageCompress.compressAndGetFile(
-      file.absolute.path, outPath,
+      file.absolute.path,
+      outPath,
       quality: 5,
     );
 
-
-
-    return  result;
+    return result;
   }
-
-
 
   Future<File?> _cropImage(BuildContext context, PickedFile imageFile) async {
     CroppedFile? croppedFile = await ImageCropper().cropImage(

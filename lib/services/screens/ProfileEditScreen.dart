@@ -31,7 +31,6 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   ProviderServices? providerServices;
   final _globalFormKey = GlobalKey<FormState>();
 
-
   _formartFileImage(File? imageFile) {
     if (imageFile == null) return;
     return File(imageFile.path.replaceAll('\'', '').replaceAll('File: ', ''));
@@ -42,17 +41,16 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
     providerServices?.userDetails();
     nameController.text = providerServices?.userDetailsModel?.data?.name ?? '';
-    emailController.text = providerServices?.userDetailsModel?.data?.email ?? '';
-    phoneController.text = providerServices?.userDetailsModel?.data?.mobile ?? '' ;
+    emailController.text =
+        providerServices?.userDetailsModel?.data?.email ?? '';
+    phoneController.text =
+        providerServices?.userDetailsModel?.data?.mobile ?? '';
     super.initState();
   }
 
   void updateProfile(context) async {
     if (_globalFormKey.currentState!.validate()) {
-
-
-      if(fileImage != null){
-
+      if (fileImage != null) {
         providerServices?.updateProfile(credentials: {
           "name": nameController.text.trim(),
           "email": emailController.text.trim(),
@@ -64,10 +62,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
               _formartFileImage(fileImage).readAsBytesSync(),
               filename: fileImage!.path.split("/").last),
         }, context: context);
-
-
       } else {
-
         providerServices?.updateProfile(credentials: {
           "name": nameController.text.trim(),
           "email": emailController.text.trim(),
@@ -75,11 +70,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           // "address": addressController.text.trim(),
           // "gender": genderController.text.trim(),
           // "date_of_birth": dobController.text.trim(),
-
         }, context: context);
-
       }
-
     }
   }
 
@@ -127,7 +119,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
           child: Consumer<ProviderServices>(
             builder: (_, provider, __) {
               if (provider.userDetailsModel == null) {
-                return  Center(
+                return Center(
                   child: SpinKitCircle(
                     color: Colors.blue[900],
                   ),
@@ -143,50 +135,57 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       GestureDetector(
                         onTap: () => _getImage(context),
                         child:
-                        // provider.userDetailModel!.data!.profile != null
-                        //     ? Center(
-                        //         child: CachedNetworkImage(
-                        //           imageUrl:
-                        //               provider.userDetailModel!.data!.profile!,
-                        //           placeholder: (
-                        //             context,
-                        //             url,
-                        //           ) =>
-                        //               Container(
-                        //                   margin: const EdgeInsets.all(10),
-                        //                   child: const SpinKitCircle(
-                        //                     color: Colors.grey,
-                        //                   )),
-                        //           errorWidget: (context, url, error) =>
-                        //               const Icon(Icons.error),
-                        //         ),
-                        //       ):
-                        fileImage != null
-                            ? Center(
-                          child: CircleAvatar(
-                              radius: 50,
-                              backgroundImage: FileImage(fileImage!)),
-                        )
-                            : Center(
-                          child: CircleAvatar(
-                            radius: 50.0,
-                            // backgroundImage:
-                            // AssetImage("assets/images/dp.png"),
-                            child: CachedNetworkImage(
-                              imageUrl: provider.userDetailsModel?.data?.profile.toString() ?? '',
-                              imageBuilder: (context, imageProvider) => Container(
-                                width: 100.0,
-                                height: 100.0,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  image: DecorationImage(
-                                      image: imageProvider, fit: BoxFit.cover),
-                                ),
-                              ),
-                              errorWidget: (context, url, error) => const Icon(Icons.error),
-                            ),
-                          ),
-                        ),
+                            // provider.userDetailModel!.data!.profile != null
+                            //     ? Center(
+                            //         child: CachedNetworkImage(
+                            //           imageUrl:
+                            //               provider.userDetailModel!.data!.profile!,
+                            //           placeholder: (
+                            //             context,
+                            //             url,
+                            //           ) =>
+                            //               Container(
+                            //                   margin: const EdgeInsets.all(10),
+                            //                   child: const SpinKitCircle(
+                            //                     color: Colors.grey,
+                            //                   )),
+                            //           errorWidget: (context, url, error) =>
+                            //               const Icon(Icons.error),
+                            //         ),
+                            //       ):
+                            fileImage != null
+                                ? Center(
+                                    child: CircleAvatar(
+                                        radius: 50,
+                                        backgroundImage: FileImage(fileImage!)),
+                                  )
+                                : Center(
+                                    child: CircleAvatar(
+                                      radius: 50.0,
+                                      // backgroundImage:
+                                      // AssetImage("assets/images/dp.png"),
+                                      child: CachedNetworkImage(
+                                        imageUrl: provider
+                                                .userDetailsModel?.data?.profile
+                                                .toString() ??
+                                            '',
+                                        imageBuilder:
+                                            (context, imageProvider) =>
+                                                Container(
+                                          width: 100.0,
+                                          height: 100.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover),
+                                          ),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                      ),
+                                    ),
+                                  ),
                       ),
                       const SizedBox(height: 10.0),
                       const Text('Name'),
@@ -195,8 +194,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         controller: nameController,
                         validator: Validators.validateString(),
                         decoration: InputDecoration(
-                          // label: Text(
-                          //     provider.userDetailsModel?.data?.name ?? ''),
+                            // label: Text(
+                            //     provider.userDetailsModel?.data?.name ?? ''),
                             border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(10.0),
@@ -217,8 +216,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         controller: emailController,
                         validator: Validators.validateEmail(),
                         decoration: InputDecoration(
-                          // label: Text(
-                          //     provider.userDetailsModel?.data?.email ?? ''),
+                            // label: Text(
+                            //     provider.userDetailsModel?.data?.email ?? ''),
                             border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(10.0),
@@ -239,8 +238,8 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         controller: phoneController,
                         validator: Validators.validatePhone(),
                         decoration: InputDecoration(
-                          // label: Text(
-                          //     provider.userDetailsModel?.data?.mobile ?? ''),
+                            // label: Text(
+                            //     provider.userDetailsModel?.data?.mobile ?? ''),
                             border: const OutlineInputBorder(
                               borderRadius: BorderRadius.all(
                                 Radius.circular(10.0),
@@ -338,12 +337,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                         height: 30.0,
                       ),
                       Center(
-                        child:  GestureDetector(
+                        child: GestureDetector(
                           onTap: () => updateProfile(context),
                           child: Consumer<ProviderServices>(
                             builder: (_, value, __) => Center(
                               child: Container(
-                                height:MediaQuery.of(context).size.height / 14,
+                                height: MediaQuery.of(context).size.height / 14,
                                 width: MediaQuery.of(context).size.width / 1.10,
                                 decoration: BoxDecoration(
                                   color: const Color(0xff1456f1),
@@ -351,17 +350,17 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                 ),
                                 child: value.isLoading == true
                                     ? const SpinKitCircle(
-                                  color: Colors.white,
-                                )
-                                    : const Center(
-                                  child: Text(
-                                    'Update profile',
-                                    style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
+                                      )
+                                    : const Center(
+                                        child: Text(
+                                          'Update profile',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
                               ),
                             ),
                           ),

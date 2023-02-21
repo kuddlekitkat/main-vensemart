@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dio/dio.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:geocoding/geocoding.dart';
@@ -17,15 +18,13 @@ import '../../ChoiceIntroScreen.dart';
 import '../widgets/image_picker_widget.dart';
 
 class ConfirmAddressScreen extends StatefulWidget {
-
-   ConfirmAddressScreen();
+  ConfirmAddressScreen();
 
   @override
   State<ConfirmAddressScreen> createState() => _ConfirmAddressScreenState();
 }
 
 class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
-
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
@@ -36,7 +35,6 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
 
   String? selectedValue;
 
-
   final _pickImage = ImagePickerHandler();
   File? fileImage;
   ProviderServices? providerServices;
@@ -44,13 +42,7 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
   int intval = 0;
 
   late Position position;
-  late List<Placemark>  placeMarks;
-
-
-
-
-
-
+  late List<Placemark> placeMarks;
 
   @override
   void initState() {
@@ -58,31 +50,61 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
 
     // providerServices?.getLocation();
 
-    getCurrentLocation();
-    print('addresscontroller');
-    print('$addressController.text');
+    SchedulerBinding.instance
+        .addPostFrameCallback((_) => showAlertDialog(context));
     super.initState();
   }
 
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("NO"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("YES"),
+      onPressed: () {
+        getCurrentLocation();
+
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Location Disclaimer"),
+      content: Text(
+          "Vensemart collects location data to get closest service providers around you and tailor notifications and"
+          " advertisements to make your experience on the app better, you can always change your location before booking a service,"
+          "would you like to proceed?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   void setAddress(context) async {
-
     providerServices?.sendLocation(map: {
       "location": addressController.text.trim(),
       "location_lat": "9.0658",
       "location_long": "7.4287",
-      "state" : selectedValue.toString()
-
+      "state": selectedValue.toString()
     }, context: context);
 
-    Navigator.pushReplacement(
-      context!,
-      MaterialPageRoute(
-        builder: (context) => const ChoiceIntroScreen()
-    ));
+    Navigator.pushReplacement(context!,
+        MaterialPageRoute(builder: (context) => const ChoiceIntroScreen()));
   }
-
-
 
   Future<Position?> determinePosition() async {
     LocationPermission permission;
@@ -95,15 +117,10 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
     } else {
       throw Exception('Error');
     }
-    return await Geolocator.getCurrentPosition();
+    return await getCurrentLocation();
   }
 
-
-  getCurrentLocation  () async {
-
-
-
-
+  getCurrentLocation() async {
     LocationPermission permission;
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
@@ -115,41 +132,32 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
       throw Exception('Error');
     }
 
-
-
     ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-      content:  const Text('please wait, getting your current location'),
+      content: const Text(
+          'Type location in or wait, while we get your current location'),
       duration: const Duration(seconds: 10),
       action: SnackBarAction(
         label: 'ACTION',
-        onPressed: () { },
+        onPressed: () {},
       ),
     ));
 
-
     Position newPosition = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high
-    );
+        desiredAccuracy: LocationAccuracy.high);
     position = newPosition;
-    placeMarks = await placemarkFromCoordinates(position!.latitude, position!.longitude);
+    placeMarks =
+        await placemarkFromCoordinates(position!.latitude, position!.longitude);
     Placemark pMark = placeMarks![0];
-    String completeAddress =  '${pMark.subThoroughfare} ${pMark.thoroughfare}, ${pMark.locality},'
+    String completeAddress =
+        '${pMark.subThoroughfare} ${pMark.thoroughfare}, ${pMark.locality},'
         '${pMark.subAdministrativeArea}  ${pMark.postalCode}';
     addressController.text = completeAddress;
 
     getCurrentLocation();
     setState(() {
-
       addressController.text = completeAddress;
-
     });
-
-
   }
-
-
-
-
 
   void _getImage(BuildContext context) {
     try {
@@ -164,7 +172,6 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
 
   final List<String> items = [
     'Abuja',
-
   ];
 
   @override
@@ -177,26 +184,31 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
           children: [
             Container(
               alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(left: 12.0,bottom: 4.0),
-              child: Text('Address Details',style: TextStyle(fontWeight:FontWeight.bold,fontSize: 40,color: Colors.white),),
+              margin: EdgeInsets.only(left: 12.0, bottom: 4.0),
+              child: Text(
+                'Address Details',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40,
+                    color: Colors.white),
+              ),
             ),
-
-
-
             Container(
-              height: MediaQuery.of(context).size.height/1.8,
+              height: MediaQuery.of(context).size.height / 1.8,
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0),),),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40.0),
+                  topRight: Radius.circular(40.0),
+                ),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(height: 25.0,),
-
-
-
+                  SizedBox(
+                    height: 25.0,
+                  ),
 
                   // Container(
                   //   decoration: BoxDecoration(
@@ -259,22 +271,23 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
                           filled: true,
                           hintText: 'Enter Address',
                           prefixIcon: IconButton(
-                              onPressed:(){
+                              onPressed: () {
                                 getCurrentLocation();
                               },
-                              icon: Icon(Icons.location_on,color: Colors.green,)),
+                              icon: Icon(
+                                Icons.location_on,
+                                color: Colors.green,
+                              )),
                           hintStyle: new TextStyle(color: Colors.grey[600]),
-                          fillColor: Color.fromRGBO(250,250,254,1)),
+                          fillColor: Color.fromRGBO(250, 250, 254, 1)),
                     ),
                   ),
-
 
                   Container(
                     decoration: BoxDecoration(
                         color: Color.fromRGBO(250, 250, 254, 1),
-                        borderRadius: BorderRadius.circular(
-                            12.0) //<-- SEE HERE
-                    ),
+                        borderRadius: BorderRadius.circular(12.0) //<-- SEE HERE
+                        ),
                     margin: EdgeInsets.all(12.0),
                     child: Center(
                       child: DropdownButtonHideUnderline(
@@ -283,21 +296,19 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
                             'Select State',
                             style: TextStyle(
                               fontSize: 20,
-                              color: Theme
-                                  .of(context)
-                                  .hintColor,
+                              color: Theme.of(context).hintColor,
                             ),
                           ),
-                          items: items.map((item) =>
-                              DropdownMenuItem<String>(
-                                value: item.toString(),
-                                child: Text(
-                                  item.toString(),
-                                  style: const TextStyle(
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ))
+                          items: items
+                              .map((item) => DropdownMenuItem<String>(
+                                    value: item.toString(),
+                                    child: Text(
+                                      item.toString(),
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                      ),
+                                    ),
+                                  ))
                               .toList(),
                           value: selectedValue,
                           onChanged: (value) {
@@ -313,12 +324,6 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
                     ),
                   ),
 
-
-
-
-
-
-
                   GestureDetector(
                     onTap: () => setAddress(context),
                     child: Consumer<ProviderServices>(
@@ -332,29 +337,25 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
                           ),
                           child: value.isLoading == true
                               ? const SpinKitCircle(
-                            color: Colors.white,
-                          )
-                              : const Center(
-                            child: Text(
-                              'Proceed',
-                              style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
+                                )
+                              : const Center(
+                                  child: Text(
+                                    'Proceed',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                         ),
                       ),
                     ),
                   ),
-
                 ],
               ),
             ),
-
           ],
-        )
-
-    );
+        ));
   }
 }

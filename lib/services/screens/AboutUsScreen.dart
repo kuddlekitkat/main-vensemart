@@ -20,6 +20,7 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
     // TODO: implement initState
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     var screenheight = MediaQuery.of(context).size.height;
@@ -31,7 +32,6 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: Color.fromRGBO(234, 234, 234, 3),
-
           leading: IconButton(
             icon: CircleAvatar(
               radius: 20,
@@ -69,59 +69,56 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                       color: Colors.white,
                       child: SingleChildScrollView(
                         child: SingleChildScrollView(
-                          child: Column(
-                              children: const [
-                                Text('About Us'),
-                                SizedBox(height: 12.0,),
+                          child: Column(children: const [
+                            Text('About Us'),
+                            SizedBox(
+                              height: 12.0,
+                            ),
 
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            Text(
+                                "Vensemart is a bespoke user friendly vendor and service providers platform, designed to easily connect tested, trusted, verified and certified professional service providers with customers.",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.w300)),
+                            SizedBox(
+                              height: 20.0,
+                            ),
 
-                                Text(
-                                    "Vensemart is a bespoke user friendly vendor and service providers solution, designed to easily connect tested, trusted, verified and certified professional service providers with customers."
+                            Text(
+                                " We provide a swift interface for freelancers, sme's and corporate companies to  attend to all kinds of customer needs from personal grooming (barbing/hairdo, makeup, massage and dressing), eletrical repaires, mechanical repairs, mechanical repairs and more.",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.w300)),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            Text(
+                                "Our goal is to enable end users to access the closest, skilled and experienced professional service within 3 minutes of location proximity. Once on the platform you can book and manage appointments at convenience and avoid queuing at public outlet for service needs with a relaxed and first class user experience.",
+                                style: TextStyle(
+                                    fontSize: 13, fontWeight: FontWeight.w300)),
 
-
-
-                                    ,style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
-                                SizedBox(height: 20.0,),
-                                Text( "We help freelancers, sme's and corporate companies to cater to all kinds of needs  from personal grooming"
-                                    " (barbing/hairdo, makeup,massage and dressing), "
-                                    "electrical repairs, mechanical repairs, to general"
-                                    " building, construction and repairs.",style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
-                                SizedBox(height: 20.0,),
-
-                                Text( " It is a guaranteed marketplace for person home and office daily consumptions "
-                                    "shopping and a reliable logistic service delivery solution.",style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
-                                SizedBox(height: 20.0,),
-                                Text( "It's a one-stop spot that guarantees affordable, effective, "
-                                    "efficient, safe and timely service delivery and products that "
-                                    "takes the hassle of transporting home service needs to service"
-                                    " outlets, inconveniences to cue at shopping mall and disappointment by "
-                                    "logistics delivery agencies, and translates value for money.",style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
-
-                                SizedBox(height: 20.0,),
-                                // Text( "It enables the end users to access closest and "
-                                //     "reliable services within 3 minutes of location proximity,"
-                                //     " book and manage appointments at convenience and avoid "
-                                //     "queuing at public outlet for service needs with a relaxed "
-                                //     "and first class user experience."),
-                                // SizedBox(height: 12.0,),
-                                //
-                                // Text("Vensemart Apps encourages business growth"
-                                //     " and curbs the increasing rate of job lost and global economic downturn, networknig onckexpon dingines%h realm economy (freelancing) to the corporate companies."),
-
-                              ]
-
-                          ),
+                            SizedBox(
+                              height: 20.0,
+                            ),
+                            // Text( "It enables the end users to access closest and "
+                            //     "reliable services within 3 minutes of location proximity,"
+                            //     " book and manage appointments at convenience and avoid "
+                            //     "queuing at public outlet for service needs with a relaxed "
+                            //     "and first class user experience."),
+                            // SizedBox(height: 12.0,),
+                            //
+                            // Text("Vensemart Apps encourages business growth"
+                            //     " and curbs the increasing rate of job lost and global economic downturn, networknig onckexpon dingines%h realm economy (freelancing) to the corporate companies."),
+                          ]),
                         ),
                       ),
                     ),
-
-                  ]
-              ),
+                  ]),
             ),
           ),
         ),
       ),
     );
-
   }
 }

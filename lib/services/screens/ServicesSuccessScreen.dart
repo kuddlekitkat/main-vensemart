@@ -14,54 +14,58 @@ class ServicesSuccessScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-
           children: [
-
             Container(
               height: 80,
               width: 80,
               decoration: BoxDecoration(
-                color: Colors.blueAccent,
-                image: DecorationImage(
-                  image: AssetImage(
-                    'assets/images/successcheck.png'
-                  )
-                )
-              ),
+                  color: Colors.blueAccent,
+                  image: DecorationImage(
+                      image:
+                          const AssetImage('assets/images/successcheck.png'))),
             ),
 
             // FaIcon(Icons.check_circle,color: Colors.blueAccent,size: 100,),
-            SizedBox(height: 50.0,),
+            SizedBox(
+              height: 50.0,
+            ),
             Container(
                 width: 320,
                 child: Column(
                   children: [
-                    Text('Booking Completed',style: TextStyle(fontSize: 20.0),),
-
+                    Text(
+                      'Booking Completed',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
                   ],
                 )),
-            SizedBox(height: 15.0,),
+            SizedBox(
+              height: 15.0,
+            ),
 
             Container(
-                width: 320,child: Column(
-              children: [
-                Text('The details of your appointment have been sent to',style: TextStyle(
-                    fontSize: 14,color: Colors.grey
-                ),),
-
-                Text('your email',style: TextStyle(
-                    fontSize: 14,color: Colors.grey
-                ),),
-              ],
-            )),
-            SizedBox(height: 50.0,),
+                width: 320,
+                child: Column(
+                  children: [
+                    Text(
+                      'The details of your appointment have been sent to',
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                    Text(
+                      'your email',
+                      style: TextStyle(fontSize: 14, color: Colors.grey),
+                    ),
+                  ],
+                )),
+            SizedBox(
+              height: 50.0,
+            ),
             Container(
-              height: screenHeight/16,
-              width: screenWidth/2.50,
+              height: screenHeight / 16,
+              width: screenWidth / 2.50,
               decoration: BoxDecoration(
                 color: Color(0xff1456F1),
                 borderRadius: BorderRadius.circular(40.0),
-
               ),
               child: GestureDetector(
                 onTap: () async {
@@ -74,11 +78,14 @@ class ServicesSuccessScreen extends StatelessWidget {
                   RatingService ratingService = RatingService();
                   await ratingService.isSecondTimeOpen();
                 },
-                child: Center(child: Text('Continue', style: TextStyle(color: Colors.white),),
+                child: Center(
+                  child: Text(
+                    'Continue',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ),
-
           ],
         ),
       ),

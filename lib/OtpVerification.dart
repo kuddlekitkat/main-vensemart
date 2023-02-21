@@ -261,13 +261,12 @@ class _OtpVerificationState extends State<OtpVerification> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Flexible(
-                      child: TextButton(
+                  TextButton(
                     child: const Text("Clear"),
                     onPressed: () {
                       textEditingController.clear();
                     },
-                  )),
+                  ),
                   // Flexible(
                   //     child: TextButton(
                   //       child: const Text("Set Text"),

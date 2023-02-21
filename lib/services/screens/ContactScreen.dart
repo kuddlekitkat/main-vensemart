@@ -12,7 +12,6 @@ class ContactScreen extends StatelessWidget {
         appBar: AppBar(
           elevation: 0,
           backgroundColor: const Color(0xff1456f1),
-
           leading: IconButton(
             icon: CircleAvatar(
               radius: 20,
@@ -32,19 +31,16 @@ class ContactScreen extends StatelessWidget {
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-        body:SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Column(
             children: [
               Container(
                 height: MediaQuery.of(context).size.height - 40,
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/contactus.png'),
-                      fit: BoxFit.cover
-                  )
-                ),
-
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/contactus.png'),
+                        fit: BoxFit.cover)),
               ),
             ],
           ),

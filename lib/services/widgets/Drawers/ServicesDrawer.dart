@@ -40,24 +40,19 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
     super.initState();
   }
 
-void Logout() async {
+  void Logout() async {
+    // providerServices?.signOut();
+    setState(() {
+      providerServices?.signOut();
+    });
 
-  // providerServices?.signOut();
-  setState(() {
-    providerServices?.signOut();
-  });
-
-  // Navigator.push(
-  //   context,
-  //   MaterialPageRoute(
-  //     builder: (context) => LoginScreen(),
-  //   ),
-  // );
-
-
-}
-
-
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => LoginScreen(),
+    //   ),
+    // );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,240 +64,254 @@ void Logout() async {
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         color: Colors.white,
-        child: Consumer<ProviderServices>(
-         builder: (_, provider, __) {
-           return SingleChildScrollView(
-             child: Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-               children: [
+        child: Consumer<ProviderServices>(builder: (_, provider, __) {
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Stack(
+                  children: [
+                    Container(
+                      height: 80,
+                      width: double.infinity,
+                      color: Colors.blueAccent,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 40.0),
+                      child: CircleAvatar(
+                        radius: 50.0,
+                        // backgroundImage: NetworkImage(
+                        //     "${provider.userDetailsModel?.data?.profile}"),
+                        child: CachedNetworkImage(
+                          imageUrl: provider.userDetailsModel?.data?.profile
+                                  .toString() ??
+                              '',
+                          imageBuilder: (context, imageProvider) => Container(
+                            width: 100.0,
+                            height: 100.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                  image: imageProvider, fit: BoxFit.cover),
+                            ),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 140,
+                      left: 20,
+                      child: Text(
+                        '${provider.userDetailsModel?.data?.name}',
+                        style: TextStyle(
+                            fontSize: 22.0, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ],
+                ),
+                Container(
+                    padding: EdgeInsets.only(left: 20.0),
+                    child: Text(
+                      'Your Profile',
+                      style: TextStyle(
+                          fontSize: 15.0, fontWeight: FontWeight.normal),
+                    )),
+                SizedBox(
+                  height: 20.0,
+                ),
+                Container(
+                  color: Color.fromRGBO(237, 234, 234, 22),
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 40.0),
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ServicesHomeScreen()),
+                            );
+                          },
+                          child: const ListTile(
+                            leading: Icon(Icons.menu),
+                            title: Text('Home'),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProfileEditScreen()),
+                            );
+                          },
+                          child: const ListTile(
+                            leading: Icon(Icons.person),
+                            title: Text('Profile'),
+                          ),
+                        ),
 
-                 Stack(
-                   children: [
-                     Container(
-                       height: 80,
-                       width: double.infinity,
-                       color: Colors.blueAccent,
-                     ),
-                      Padding(
-                       padding: EdgeInsets.symmetric(
-                           horizontal: 20.0, vertical: 40.0),
-                       child: CircleAvatar(
-                         radius: 50.0,
-                         // backgroundImage: NetworkImage(
-                         //     "${provider.userDetailsModel?.data?.profile}"),
-                         child: CachedNetworkImage(
-                           imageUrl: provider.userDetailsModel?.data?.profile.toString() ?? '',
-                           imageBuilder: (context, imageProvider) => Container(
-                             width: 100.0,
-                             height: 100.0,
-                             decoration: BoxDecoration(
-                               shape: BoxShape.circle,
-                               image: DecorationImage(
-                                   image: imageProvider, fit: BoxFit.cover),
-                             ),
-                           ),
-                           errorWidget: (context, url, error) => const Icon(Icons.error),
-                         ),
-                       ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //           builder: (context) =>
+                        //               ServicesAppointmentScreen()),
+                        //     );
+                        //   },
+                        //   child: const ListTile(
+                        //     leading: Icon(Icons.notifications),
+                        //     title: Text('Booking History'),
+                        //   ),
+                        // ),
 
-                     ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ProductsHomeScreen()),
+                            );
+                          },
+                          child: const ListTile(
+                            leading: Icon(Icons.notifications),
+                            title: Text('Switch to Working product'),
+                          ),
+                        ),
 
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProductComingSoonScreen(),
+                              ),
+                            );
+                          },
+                          child: const ListTile(
+                            leading: Icon(Icons.compare_arrows),
+                            title: Text('Switch to product'),
+                          ),
+                        ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => NotificationScreen(),
+                        //       ),
+                        //     );
+                        //   },
+                        //   child: const ListTile(
+                        //     leading: Icon(Icons.notifications),
+                        //     title: Text('Notifications'),
+                        //   ),
+                        // ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ContactScreen(),
+                              ),
+                            );
+                          },
+                          child: const ListTile(
+                            leading: Icon(Icons.phone),
+                            title: Text('contact'),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AboutUsScreen(),
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Icon(Icons.info),
+                            title: Text('About'),
+                          ),
+                        ),
 
-                      Positioned(
-                       top: 140,
-                       left: 20,
-                       child: Text('${provider.userDetailsModel?.data?.name}', style: TextStyle(
-                           fontSize: 22.0, fontWeight: FontWeight.bold),),
-                     ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => const FeedbackScreen(),
+                        //       ),
+                        //     );
+                        //   },
+                        //   child: const ListTile(
+                        //     leading: Icon(Icons.chat),
+                        //     title: Text('Feedback'),
+                        //   ),
+                        // ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    const CustomerSupportScreen(),
+                              ),
+                            );
+                          },
+                          child: const ListTile(
+                            leading: Icon(Icons.support_agent),
+                            title: Text('Support'),
+                          ),
+                        ),
 
+                        // GestureDetector(
+                        //   onTap: () async {
+                        //     final InAppReview inAppReview = InAppReview.instance;
+                        //
+                        //     if (await inAppReview.isAvailable()) {
+                        //     inAppReview.requestReview();
+                        //     }
+                        //   },
+                        //   child: const ListTile(
+                        //     leading: Icon(
+                        //       Icons.rate_review,),
+                        //     title: Text('Rating'),
+                        //   ),
+                        // ),
 
-                   ],
-                 ),
-
-                 Container(
-                     padding: EdgeInsets.only(left: 20.0),
-                     child: Text('Your Profile', style: TextStyle(
-                         fontSize: 15.0, fontWeight: FontWeight.normal),)),
-                 SizedBox(height: 20.0,),
-                 Container(
-                   color: Color.fromRGBO(237, 234, 234, 22),
-                   child: Padding(
-                     padding: const EdgeInsets.only(bottom: 40.0),
-                     child: Column(
-                       children: [
-                         GestureDetector(
-                           onTap: () {
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                   builder: (context) => ServicesHomeScreen()
-                               ),
-                             );
-                           },
-                           child: const ListTile(
-                             leading: Icon(Icons.menu),
-                             title: Text('Home'),
-                           ),
-                         ),
-                         GestureDetector(
-                           onTap: () {
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                   builder: (context) => ProfileEditScreen()
-                               ),
-                             );
-                           },
-                           child: const ListTile(
-                             leading: Icon(Icons.person),
-                             title: Text('Profile'),
-                           ),
-                         ),
-
-                         GestureDetector(
-                           onTap: () {
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                   builder: (context) =>
-                                       ServicesAppointmentScreen()
-                               ),
-                             );
-                           },
-                           child: const ListTile(
-                             leading: Icon(Icons.notifications),
-                             title: Text('Booking History'),
-                           ),
-                         ),
-                         GestureDetector(
-                           onTap: () {
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                 builder: (context) => ProductComingSoonScreen(),
-                               ),
-                             );
-                           },
-                           child: const ListTile(
-                             leading: Icon(Icons.compare_arrows),
-                             title: Text('Switch to product'),
-                           ),
-                         ),
-                         // GestureDetector(
-                         //   onTap: () {
-                         //     Navigator.push(
-                         //       context,
-                         //       MaterialPageRoute(
-                         //         builder: (context) => NotificationScreen(),
-                         //       ),
-                         //     );
-                         //   },
-                         //   child: const ListTile(
-                         //     leading: Icon(Icons.notifications),
-                         //     title: Text('Notifications'),
-                         //   ),
-                         // ),
-                         GestureDetector(
-                           onTap: () {
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                 builder: (context) => ContactScreen(),
-                               ),
-                             );
-                           },
-
-                           child: const ListTile(
-                             leading: Icon(Icons.phone),
-                             title: Text('contact'),
-                           ),
-                         ),
-                         GestureDetector(
-                           onTap: () {
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                 builder: (context) => const AboutUsScreen(),
-                               ),
-                             );
-                           },
-                           child: ListTile(
-                             leading: Icon(Icons.info),
-                             title: Text('About'),
-                           ),
-                         ),
-
-                         // GestureDetector(
-                         //   onTap: () {
-                         //     Navigator.push(
-                         //       context,
-                         //       MaterialPageRoute(
-                         //         builder: (context) => const FeedbackScreen(),
-                         //       ),
-                         //     );
-                         //   },
-                         //   child: const ListTile(
-                         //     leading: Icon(Icons.chat),
-                         //     title: Text('Feedback'),
-                         //   ),
-                         // ),
-                         GestureDetector(
-                           onTap: () {
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                 builder: (context) => const CustomerSupportScreen(),
-                               ),
-                             );
-                           },
-                           child: const ListTile(
-                             leading: Icon(Icons.support_agent),
-                             title: Text('Support'),
-                           ),
-                         ),
-
-                         // GestureDetector(
-                         //   onTap: () async {
-                         //     final InAppReview inAppReview = InAppReview.instance;
-                         //
-                         //     if (await inAppReview.isAvailable()) {
-                         //     inAppReview.requestReview();
-                         //     }
-                         //   },
-                         //   child: const ListTile(
-                         //     leading: Icon(
-                         //       Icons.rate_review,),
-                         //     title: Text('Rating'),
-                         //   ),
-                         // ),
-
-                         GestureDetector(
-                           onTap: () {
-                             SessionManager.instance.logOut();
-                             Navigator.pushReplacement(
-                               context!,
-                               MaterialPageRoute(
-                                 builder: (context) => const LoginScreen(),
-                               ),
-                             );
-                           },
-                           child: const ListTile(
-                             leading: Icon(
-                               Icons.logout_outlined, color: Colors.redAccent,),
-                             title: Text('Logout'),
-                           ),
-                         ),
-
-                       ],
-                     ),
-                   ),
-                 )
-
-               ],
-             ),
-           );
-         }
-        ),
+                        GestureDetector(
+                          onTap: () {
+                            SessionManager.instance.logOut();
+                            Navigator.pushReplacement(
+                              context!,
+                              MaterialPageRoute(
+                                builder: (context) => const LoginScreen(),
+                              ),
+                            );
+                          },
+                          child: const ListTile(
+                            leading: Icon(
+                              Icons.logout_outlined,
+                              color: Colors.redAccent,
+                            ),
+                            title: Text('Logout'),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+          );
+        }),
       ),
     );
   }

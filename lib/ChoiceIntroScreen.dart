@@ -16,8 +16,6 @@ class ChoiceIntroScreen extends StatefulWidget {
 }
 
 class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
-
-
   TextEditingController addressController = TextEditingController();
   ProviderServices? providerServices;
 
@@ -25,15 +23,7 @@ class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
   void initState() {
     firebaseService.firebasePushNotification(context);
     super.initState();
-
-
   }
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +33,16 @@ class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-
-          Text('Choose your shopping style',style: TextStyle(color: Colors.black,fontSize: 16,decoration: TextDecoration.none),),
-          SizedBox(height: 10.0,),
-
+          Text(
+            'Choose your shopping style',
+            style: TextStyle(
+                color: Colors.black,
+                fontSize: 16,
+                decoration: TextDecoration.none),
+          ),
+          SizedBox(
+            height: 10.0,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -54,43 +50,41 @@ class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
                 height: 150,
                 width: 150,
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.0),
-                    border: Border.all(color: Colors.blueAccent),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12.0),
+                  border: Border.all(color: Colors.blueAccent),
                 ),
                 child: GestureDetector(
-                  onTap: (){
-                    Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                        builder: (context) => ProductComingSoonScreen(),
-                      ),
-                    );
-                  },
-                  child: Image.asset('assets/images/choicesproduct2.png')
-                ),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                          builder: (context) => ProductComingSoonScreen(),
+                        ),
+                      );
+                    },
+                    child: Image.asset('assets/images/choicesproduct2.png')),
               ),
-              SizedBox(width: 12.0,),
+              SizedBox(
+                width: 12.0,
+              ),
               Container(
                 height: 150,
                 width: 150,
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(12.0),
-                    border: Border.all(color: Colors.blueAccent)
-                ),
+                    border: Border.all(color: Colors.blueAccent)),
                 child: GestureDetector(
-                  onTap: (){
-
-                    Navigator.pushAndRemoveUntil(
-                        context!,
-                        MaterialPageRoute(
-                            builder: (context) => ServicesHomeScreen(), maintainState: true),
-                            (Route<dynamic> route) => false);
-                    
-                  },
-                  child: Image.asset('assets/images/ChoicesService.png')
-                ),
+                    onTap: () {
+                      Navigator.pushAndRemoveUntil(
+                          context!,
+                          MaterialPageRoute(
+                              builder: (context) => ServicesHomeScreen(),
+                              maintainState: true),
+                          (Route<dynamic> route) => false);
+                    },
+                    child: Image.asset('assets/images/ChoicesService.png')),
               ),
             ],
           ),

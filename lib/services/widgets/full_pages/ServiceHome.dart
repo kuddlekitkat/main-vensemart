@@ -4,9 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
-
-
-
 import 'package:provider/provider.dart';
 import 'package:vensemart/services/screens/ServicesGridScreen.dart';
 import 'package:vensemart/services/screens/TrendingServicesScreen.dart';
@@ -30,40 +27,36 @@ class _ServiceHomeState extends State<ServiceHome> {
   ProviderServices? _providerServices;
   ProviderServices? providerServices;
   late Position position;
-  late List<Placemark>  placeMarks;
+  late List<Placemark> placeMarks;
 
   @override
   void initState() {
     _providerServices = Provider.of<ProviderServices>(context, listen: false);
     _providerServices?.userDetails();
 
-    getCurrentLocation().then((value) {
 
-      setState(() {
-         addressController.text;
-      });
-      sendLocationAlternate(context);
-    });
+    // getCurrentLocation().then((value) {
+
+    //   setState(() {
+    //      addressController.text;
+    //   });
+    //   sendLocationAlternate(context);
+    // });
 
     super.initState();
-
   }
 
+  // void getLocation(){
+  //   getCurrentLocation().then((value) {
 
-  void getLocation(){
-    getCurrentLocation().then((value) {
-
-      setState(() {
-        addressController.text;
-      });
-      sendLocationAlternate(context);
-    });
-  }
-
-
+  //     setState(() {
+  //       addressController.text;
+  //     });
+  //     sendLocationAlternate(context);
+  //   });
+  // }
 
   void sendLocationAlternate(context) async {
-
     providerServices?.sendLocation(map: {
       "location": addressController.text,
       "location_lat": "9.0787",
@@ -88,34 +81,29 @@ class _ServiceHomeState extends State<ServiceHome> {
   //   return await Geolocator.getCurrentPosition();
   // }
 
+  // Future<String?> getCurrentLocation  () async {
 
-  Future<String?> getCurrentLocation  () async {
+  //   LocationPermission permission;
+  //   permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.deniedForever) {
+  //       return Future.error('Location Not Available');
+  //     }
+  //   } else {
+  //     throw Exception('Error');
+  //   }
+  //   Position newPosition = await Geolocator.getCurrentPosition(
+  //       desiredAccuracy: LocationAccuracy.high
+  //   );
+  //   position = newPosition;
+  //   placeMarks = await placemarkFromCoordinates(position!.latitude, position!.longitude);
+  //   Placemark pMark = placeMarks![0];
+  //   String completeAddress =  '${pMark.subThoroughfare} ${pMark.thoroughfare}, ${pMark.locality},'
+  //       '${pMark.subAdministrativeArea}  ${pMark.postalCode}';
+  //   addressController.text = completeAddress;
 
-    LocationPermission permission;
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.deniedForever) {
-        return Future.error('Location Not Available');
-      }
-    } else {
-      throw Exception('Error');
-    }
-    Position newPosition = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high
-    );
-    position = newPosition;
-    placeMarks = await placemarkFromCoordinates(position!.latitude, position!.longitude);
-    Placemark pMark = placeMarks![0];
-    String completeAddress =  '${pMark.subThoroughfare} ${pMark.thoroughfare}, ${pMark.locality},'
-        '${pMark.subAdministrativeArea}  ${pMark.postalCode}';
-    addressController.text = completeAddress;
-
-
-
-
-  }
-
+  // }
 
   // fetchCurrentLocation(context) async {
   //   print("STARTING LOCATION SERVICE");
@@ -137,7 +125,6 @@ class _ServiceHomeState extends State<ServiceHome> {
   //     location = null;
   //   }
   // }
-
 
   // fetchCurrentLocation() async {
   //
@@ -176,21 +163,28 @@ class _ServiceHomeState extends State<ServiceHome> {
                         Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12.0, vertical: 12.0),
-                            child: Flexible(
+                            child: Container(
+                              width: MediaQuery.of(context).size.width/2,
                               child: RichText(
                                 overflow: TextOverflow.ellipsis,
                                 strutStyle: StrutStyle(fontSize: 40.0),
                                 text: TextSpan(
-                                    style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20),
-                                    text: 'Hi ${provider.userDetailsModel?.data?.name} '),
+                                    style: const TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                         overflow: TextOverflow.clip,
+                                    ),
+                                    text:
+                                        'Hi ${provider.userDetailsModel?.data?.name}'),
                               ),
                             )),
-                            //
-                            // Text(
-                            //   'Hi ${provider.userDetailsModel?.data?.name ?? ''}',
-                            //   style: const TextStyle(
-                            //       fontSize: 25.0, fontWeight: FontWeight.w600),
-                            // )),
+                        //
+                        // Text(
+                        //   'Hi ${provider.userDetailsModel?.data?.name ?? ''}',
+                        //   style: const TextStyle(
+                        //       fontSize: 25.0, fontWeight: FontWeight.w600),
+                        // )),
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 12.0),
                           child: Text('what service do',
@@ -213,13 +207,12 @@ class _ServiceHomeState extends State<ServiceHome> {
                           padding: EdgeInsets.symmetric(
                               horizontal: 12.0, vertical: 12.0),
                           child: InkWell(
-                            onTap: (){
-                                getLocation();
+                            onTap: () {
+                              // getLocation();
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => ServicesGridScreen()
-                                ),
+                                    builder: (context) => ServicesGridScreen()),
                               );
                             },
                             child: Container(
@@ -228,7 +221,11 @@ class _ServiceHomeState extends State<ServiceHome> {
                               decoration: BoxDecoration(
                                   color: Color(0xff1456f1),
                                   borderRadius: BorderRadius.circular(25.0)),
-                              child: const Center(child: Text('get started',style: TextStyle(color: Colors.white),)),
+                              child: const Center(
+                                  child: Text(
+                                'get started',
+                                style: TextStyle(color: Colors.white),
+                              )),
                             ),
                           ),
                         )

@@ -11,26 +11,40 @@ class ServicesHomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(onPressed: (){
-          Scaffold.of(context).openDrawer();
-        }, icon: Icon(Icons.sort),color: Colors.black,),
-        title: Center(child: const Text('Home',style: TextStyle(color: Colors.black),)),
+        leading: IconButton(
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+          icon: Icon(Icons.sort),
+          color: Colors.black,
+        ),
+        title: Center(
+            child: const Text(
+          'Home',
+          style: TextStyle(color: Colors.black),
+        )),
         backgroundColor: Colors.white,
         elevation: 0.00,
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                new MaterialPageRoute(
+                  builder: (context) => ServicesGridScreen(),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.search,
+              color: Colors.black,
+            ),
+          ),
 
-         IconButton(onPressed: (){
-           Navigator.push(
-             context,
-             new MaterialPageRoute(
-               builder: (context) => ServicesGridScreen(),
-             ),
-           );
-         }, icon: Icon(Icons.search,color: Colors.black,),),
-
-
-          Icon(Icons.notifications,color: Colors.black,),
-          SizedBox(width: 12,),
+          // Icon(Icons.notifications,color: Colors.black,),
+          SizedBox(
+            width: 12,
+          ),
         ],
       ),
     );

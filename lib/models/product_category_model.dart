@@ -28,9 +28,11 @@ class ProductCategoryModel {
 }
 
 class Data {
-  String? id;
+  dynamic id;
   String? shopId;
   String? categoryId;
+  String? categoryName;
+  String? categoryIcon;
   String? subCatId;
   String? productTitle;
   String? productDescription;
@@ -44,7 +46,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
   String? imagename;
-  String? categoryName;
+
   String? storeName;
   String? uomName;
 
@@ -52,6 +54,8 @@ class Data {
       {this.id,
       this.shopId,
       this.categoryId,
+        this.categoryName,
+        this.categoryIcon,
       this.subCatId,
       this.productTitle,
       this.productDescription,
@@ -65,7 +69,6 @@ class Data {
       this.createdAt,
       this.updatedAt,
       this.imagename,
-      this.categoryName,
       this.storeName,
       this.uomName});
 
@@ -73,6 +76,8 @@ class Data {
     id = json['id'];
     shopId = json['shop_id'];
     categoryId = json['category_id'];
+    categoryName = json['category_name'];
+    categoryIcon = json['category_icon'];
     subCatId = json['sub_cat_id'];
     productTitle = json['product_title'];
     productDescription = json['product_Description'];
@@ -96,6 +101,8 @@ class Data {
     data['id'] = id;
     data['shop_id'] = shopId;
     data['category_id'] = categoryId;
+    data['category_name'] = categoryName;
+    data['category_icon'] = categoryIcon;
     data['sub_cat_id'] = subCatId;
     data['product_title'] = productTitle;
     data['product_Description'] = productDescription;

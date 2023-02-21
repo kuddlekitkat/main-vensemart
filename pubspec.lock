@@ -286,6 +286,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.5.1"
+  flutter_facebook_keyhash:
+    dependency: "direct dev"
+    description:
+      name: flutter_facebook_keyhash
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   flutter_image_compress:
     dependency: "direct main"
     description:
@@ -765,6 +772,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "6.0.4"
+  rename:
+    dependency: "direct dev"
+    description:
+      name: rename
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.1"
   rxdart:
     dependency: transitive
     description:

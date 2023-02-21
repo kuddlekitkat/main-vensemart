@@ -6,10 +6,9 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/LoginScreen.dart';
 import 'package:vensemart/OnboardingScreen.dart';
+import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
 import 'package:vensemart/services/screens/AvailableServicesListScreen.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
-
-import 'ChoiceIntroScreen.dart';
 import 'apiservices/provider/provider.dart';
 import 'core/injector.dart';
 import 'core/session_manager.dart';
@@ -48,8 +47,17 @@ Future<void> main() async {
     print("Accepted permission: $accepted");
   });
 
+  // printKeyHash();
+
   runApp(const MyApp());
 }
+
+// void printKeyHash() async {
+//   print('printing key now');
+//   String? key = await FlutterFacebookKeyhash.getFaceBookKeyHash ??
+//       'Unknown platform version';
+//   print(key ?? "");
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -67,7 +75,7 @@ class MyApp extends StatelessWidget {
         ),
         // ignore: unnecessary_null_comparison
         home: SessionManager.instance.authToken.isNotEmpty
-            ? const ChoiceIntroScreen()
+            ? const ProductsHomeScreen()
             : const OnboardingScreen(),
         routes: {
           ServicesHomeScreen.routeName: (ctx) => const ServicesHomeScreen(),

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/ProductsComingSoon.dart';
+import 'package:vensemart/core/session_manager.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
 import 'package:vensemart/services/screens/AvailableServicesListScreen.dart';
 import 'package:vensemart/services/screens/ProfileEditScreen.dart';
@@ -67,7 +68,9 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                         // backgroundImage:
                         //     NetworkImage("${provider.userDetailsModel?.data?.profile} ?? '' "),
                         child: CachedNetworkImage(
-                          imageUrl: provider.userDetailsModel?.data?.profile.toString() ?? '',
+                          imageUrl: provider.userDetailsModel?.data?.profile
+                                  .toString() ??
+                              '',
                           imageBuilder: (context, imageProvider) => Container(
                             width: 100.0,
                             height: 100.0,
@@ -77,7 +80,8 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                                   image: imageProvider, fit: BoxFit.cover),
                             ),
                           ),
-                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                       ),
                     ),
@@ -94,22 +98,21 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                               fontWeight: FontWeight.normal,
                               color: Color.fromARGB(255, 33, 33, 243)),
                         ),
-                         GestureDetector(
-                           onTap: (){
-
-                             Navigator.push(
-                               context,
-                               MaterialPageRoute(
-                                 builder: (context) => const ProfileEditScreen(),
-                               ),
-                             );
-                           },
-                           child: Text(
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const ProfileEditScreen(),
+                              ),
+                            );
+                          },
+                          child: Text(
                             'Your Profile',
                             style: TextStyle(
                                 fontSize: 15.0, fontWeight: FontWeight.normal),
+                          ),
                         ),
-                         ),
                       ],
                     )),
                 const SizedBox(
@@ -122,12 +125,11 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                     child: Column(
                       children: [
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ServicesHomeScreen()
-                              ),
+                                  builder: (context) => ServicesHomeScreen()),
                             );
                           },
                           child: const ListTile(
@@ -136,14 +138,12 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ProfileEditScreen()
-                              ),
+                                  builder: (context) => ProfileEditScreen()),
                             );
-
                           },
                           child: const ListTile(
                             leading: Icon(Icons.person),
@@ -168,7 +168,7 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                         //   ),
                         // ),
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -196,8 +196,7 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                         //   ),
                         // ),
                         GestureDetector(
-                          onTap: (){
-
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -205,14 +204,13 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                               ),
                             );
                           },
-
                           child: const ListTile(
                             leading: Icon(Icons.phone),
                             title: Text('contact'),
                           ),
                         ),
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -259,8 +257,9 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                         //     title: Text('Rate our app'),
                         //   ),
                         // ),
+
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Navigator.pushReplacement(
                               context!,
                               MaterialPageRoute(
@@ -269,8 +268,24 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                             );
                           },
                           child: const ListTile(
-                            leading:Icon(Icons.logout_outlined,color: Colors.redAccent,),
+                            leading: Icon(
+                              Icons.logout_outlined,
+                              color: Colors.redAccent,
+                            ),
                             title: Text('Logout'),
+                          ),
+                        ),
+
+                        GestureDetector(
+                          onTap: () {
+                            showAlertDialog(context);
+                          },
+                          child: const ListTile(
+                            leading: Icon(
+                              Icons.delete_forever,
+                              color: Colors.redAccent,
+                            ),
+                            title: Text('Delete Account'),
                           ),
                         ),
                       ],
@@ -282,6 +297,50 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
           );
         },
       ),
+    );
+  }
+
+  void deleteAccount() {
+    _providerServices?.deleteAccount(map: {
+      "user_id": "${_providerServices?.userDetailsModel?.data?.id}",
+    }, context: context);
+
+    SessionManager.instance.logOut();
+
+    Navigator.push(context, MaterialPageRoute(builder: (ctx) => LoginScreen()));
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("YES"),
+      onPressed: () {
+        deleteAccount();
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text("NO"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Account Deletion Disclaimer"),
+      content: Text("Would you like to delete your account forever?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
     );
   }
 }

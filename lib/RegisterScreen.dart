@@ -1,5 +1,4 @@
 import 'package:device_info_plus/device_info_plus.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -29,7 +28,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController phnoeNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   String? deviceToken;
 
@@ -40,7 +38,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
-
 
     _passwordVisible = false;
 
@@ -62,7 +59,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.initState();
   }
 
-
   Future<void> initOneSignal(BuildContext context) async {
     /// Set App Id.
     await OneSignal.shared.setAppId("580dc8b3-a23b-4ef4-9ec9-fa1fd78c83bb");
@@ -79,9 +75,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     await OneSignal.shared.promptUserForPushNotificationPermission(
       fallbackToSettings: true,
     );
-
   }
-
 
   Future<String?> _getId() async {
     var deviceInfo = DeviceInfoPlugin();
@@ -96,10 +90,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
     return device;
   }
-
-
-
-
 
   void signUp(context) async {
     if (_globalFormKey.currentState!.validate() && isChecked == true) {
@@ -118,14 +108,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "state": "FCT",
         "town": "Abuja"
       }, context: context);
-
-
     }
   }
 
   void sendLocation(context) async {
     if (true) {
-
       providerServices?.sendLocation(map: {
         "location": 'Wuse 2 Abuja',
         "location_lat": "7.4701862",
@@ -158,7 +145,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-
               Container(
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(left: 12.0, bottom: 4.0),
@@ -181,14 +167,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height/1.3,
+                  height: MediaQuery.of(context).size.height / 1.3,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
-
                       SizedBox(
-                        height: MediaQuery.of(context).size.height/11.5,
+                        height: MediaQuery.of(context).size.height / 11.5,
                         child: Container(
                           margin: const EdgeInsets.all(12.0),
                           child: TextFormField(
@@ -208,14 +192,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 hintText: 'Full Name',
                                 prefixIcon: const Icon(Icons.person_rounded),
                                 hintStyle: TextStyle(color: Colors.grey[600]),
-                                fillColor: const Color.fromRGBO(250, 250, 254, 1)),
+                                fillColor:
+                                    const Color.fromRGBO(250, 250, 254, 1)),
                           ),
                         ),
                       ),
 
-
                       SizedBox(
-                        height:  MediaQuery.of(context).size.height/11.5,
+                        height: MediaQuery.of(context).size.height / 11.5,
                         child: Container(
                           margin: const EdgeInsets.all(12.0),
                           child: TextFormField(
@@ -235,13 +219,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 hintText: 'email',
                                 prefixIcon: const Icon(Icons.email_rounded),
                                 hintStyle: TextStyle(color: Colors.grey[600]),
-                                fillColor: const Color.fromRGBO(250, 250, 254, 1)),
+                                fillColor:
+                                    const Color.fromRGBO(250, 250, 254, 1)),
                           ),
                         ),
                       ),
 
                       SizedBox(
-                        height:  MediaQuery.of(context).size.height/11.5,
+                        height: MediaQuery.of(context).size.height / 11.5,
                         child: Container(
                           margin: const EdgeInsets.all(12.0),
                           child: TextFormField(
@@ -262,7 +247,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 prefixIcon: Container(
                                   height: 20,
                                   width: 25,
-                                  margin: EdgeInsets.only(left : 5),
+                                  margin: EdgeInsets.only(left: 5),
                                   decoration: const BoxDecoration(
                                       color: Color.fromRGBO(234, 234, 234, 3),
                                       borderRadius: BorderRadius.only(
@@ -279,13 +264,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   ),
                                 ),
                                 hintStyle: TextStyle(color: Colors.grey[600]),
-                                fillColor: const Color.fromRGBO(250, 250, 254, 1)),
+                                fillColor:
+                                    const Color.fromRGBO(250, 250, 254, 1)),
                           ),
                         ),
                       ),
 
                       SizedBox(
-                        height: MediaQuery.of(context).size.height/11.5,
+                        height: MediaQuery.of(context).size.height / 11.5,
                         child: Container(
                           margin: const EdgeInsets.all(12.0),
                           child: TextFormField(
@@ -310,24 +296,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     setState(() {
                                       _passwordVisible = !_passwordVisible;
                                     });
-                                  }, icon: Icon(_passwordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                    color: Theme.of(context).primaryColorDark),),
+                                  },
+                                  icon: Icon(
+                                      _passwordVisible
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color:
+                                          Theme.of(context).primaryColorDark),
+                                ),
                                 hintStyle: TextStyle(color: Colors.grey[600]),
-                                fillColor: const Color.fromRGBO(250, 250, 254, 1)),
+                                fillColor:
+                                    const Color.fromRGBO(250, 250, 254, 1)),
                           ),
                         ),
                       ),
                       SizedBox(
-                        height:   MediaQuery.of(context).size.height/26.5,
+                        height: MediaQuery.of(context).size.height / 26.5,
                         child: Row(
                           children: [
-                            SizedBox(width: 8,),
+                            const SizedBox(
+                              width: 8,
+                            ),
                             Checkbox(
                               checkColor: Colors.white,
                               fillColor:
-                              MaterialStateProperty.resolveWith(getColor),
+                                  MaterialStateProperty.resolveWith(getColor),
                               value: isChecked,
                               onChanged: (bool? value) {
                                 setState(() {
@@ -336,39 +329,33 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 });
                               },
                             ),
-                            const Flexible(
-
-                              child: Text(
-                                'By checking the box,agree to our ',
-                                style: TextStyle(fontSize: 10),
-                              ),
+                            const Text(
+                              'By checking the box,agree to our ',
+                              style: TextStyle(fontSize: 10),
                             ),
-
                             GestureDetector(
-                              onTap: (){
+                              onTap: () {
                                 Navigator.push(
                                   context!,
                                   MaterialPageRoute(
                                     builder: (context) => TermsScreen(),
                                   ),
                                 );
-
                               },
-                              child: const Flexible(
-
-                                child: Text(
-                                  'terms and conditions',
-                                  style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 10),
-                                ),
+                              child: const Text(
+                                'terms and conditions',
+                                style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 10),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(height: 8,),
+                      SizedBox(
+                        height: 8,
+                      ),
                       GestureDetector(
                         onTap: () => signUp(context),
                         child: Consumer<ProviderServices>(
@@ -382,22 +369,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               child: value.isLoading == true
                                   ? const SpinKitCircle(
-                                color: Colors.white,
-                              )
-                                  : const Center(
-                                child: Text(
-                                  'Register',
-                                  style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ),
+                                    )
+                                  : const Center(
+                                      child: Text(
+                                        'Register',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 20.0,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(height: 8,),
+                      SizedBox(
+                        height: 8,
+                      ),
                       // const SizedBox(
                       //   height: 10.0,
                       // ),
@@ -406,7 +395,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           const Text('Already have an account?',
                               style: TextStyle(
-                                  fontWeight: FontWeight.normal, fontSize: 20.0)),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 20.0)),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(

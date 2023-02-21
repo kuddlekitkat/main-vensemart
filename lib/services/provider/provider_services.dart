@@ -18,6 +18,7 @@ import '../../apiservices/auth_repo.dart';
 import '../../models/canceled_bookings.dart';
 import '../../models/completed_bookings.dart';
 import '../../models/faqs_model.dart';
+import '../../models/featured_shop_model.dart';
 import '../../models/get_all_services_model.dart';
 import '../../models/get_all_trending_services_model.dart';
 import '../../models/location_model.dart';
@@ -56,6 +57,11 @@ class ProviderServices extends ChangeNotifier {
   CustomerHomeModel? _customerHomeModel;
   ProductCategoryModel? get productCategory => _productCategoryModel;
   ProductCategoryModel? _productCategoryModel;
+
+  FeaturedShopModel? get featuredShopModel => _featuredShopModel;
+  FeaturedShopModel? _featuredShopModel;
+
+
   ProductIdModel? get productIdModel => _productIdModel;
   ProductIdModel? _productIdModel;
 
@@ -630,6 +636,46 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+  void getAllCategories() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.getAllCategories();
+      if (response != null && response.statusCode == 200) {
+        _productCategoryModel = ProductCategoryModel.fromJson(response.data);
+        _isLoading = false;
+      }
+
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+
+
+  void getAllFeaturedShops() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.getAllFeaturedShops();
+      if (response != null && response.statusCode == 200) {
+        _featuredShopModel = FeaturedShopModel.fromJson(response.data);
+        _isLoading = false;
+      }
+
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
   void servicesCate(String num) async {
     try {
       _isLoading = true;
@@ -727,6 +773,43 @@ class ProviderServices extends ChangeNotifier {
         //   onPressed: () { },
         // ),
       ));
+      notifyListeners();
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+  void deleteAccount({Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.deleteAccount(map!);
+      if (response != null && response.statusCode == 200) {
+        // _registerModel = RegisterModel.fromJson(response.data);
+        ScaffoldMessenger.of(context!).showSnackBar(const SnackBar(
+          content: Text('Account Deleted Successfully'),
+          duration: Duration(seconds: 10),
+        ));
+        _isLoading = false;
+        // sendOTP(context);
+      }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('${response?.statusMessage}'),
+          duration: const Duration(seconds: 10),
+          // action: SnackBarAction(
+          //   label: 'ACTION',
+          //   onPressed: () { },
+          // ),
+        ));
+
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      _isLoading = false;
+      print(e);
       notifyListeners();
       debugPrint("Error: $e");
       debugPrint("StackTrace: $str");
