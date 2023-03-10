@@ -15,7 +15,7 @@ class TopSellingImage extends StatelessWidget {
         Navigator.push(
           context,
           new MaterialPageRoute(
-            builder: (context) => ProductDetailScreen(),
+            builder: (context) => ProductDetailScreen(id: 3.toString()),
           ),
         );
       },

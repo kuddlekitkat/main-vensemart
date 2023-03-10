@@ -63,6 +63,16 @@ class AuthRepo with ApiServices {
     return null;
   }
 
+  Future<Response?> addProductToCart(Map<String, String> credentials) async {
+    Response? response = await apiPostRequests("add_cart", credentials);
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
   // Future<Response?> updateProfile(Map<String, String> credentials) async {
   //   Response? response = await apiPostRequests("update_profile", credentials);
   //
@@ -117,6 +127,16 @@ class AuthRepo with ApiServices {
 
   Future<Response?> services() async {
     Response? response = await apiGetRequests("get-all-service-categories");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+  Future<Response?> cartlist() async {
+    Response? response = await apiGetRequests("cart_list");
 
     if (response != null) {
       return response;
@@ -216,7 +236,6 @@ class AuthRepo with ApiServices {
     return null;
   }
 
-
   Future<Response?> getAllFeaturedShops() async {
     Response? response = await apiGetRequests("products/featured-stores");
 
@@ -241,6 +260,16 @@ class AuthRepo with ApiServices {
 
   Future<Response?> productId(String? num) async {
     Response? response = await apiGetRequests("product_details/$num");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+  Future<Response?> shopbyId(String? num) async {
+    Response? response = await apiGetRequests("shop/$num");
 
     if (response != null) {
       return response;

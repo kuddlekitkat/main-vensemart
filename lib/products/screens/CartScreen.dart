@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vensemart/products/screens/DeliveryDetailsScreen.dart';
 import 'package:vensemart/products/widgets/components/CartCard.dart';
+import 'package:vensemart/services/provider/provider_services.dart';
+
+import '../../services/provider/provider_services.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -10,6 +14,15 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  ProviderServices? providerServices;
+
+  @override
+  void initState() {
+    providerServices = Provider.of<ProviderServices>(context, listen: false);
+    providerServices?.cartlist();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,19 +67,10 @@ class _CartScreenState extends State<CartScreen> {
             Column(
               children: [
                 const CartCard(
-                  image: 'assets/images/topselling3.png',
+                  image: 'assets/images/2.png',
                 ),
                 const SizedBox(
                   height: 8.0,
-                ),
-                const CartCard(
-                  image: 'assets/images/topselling3.png',
-                ),
-                SizedBox(
-                  height: 8.0,
-                ),
-                CartCard(
-                  image: 'assets/images/topselling3.png',
                 ),
                 Padding(
                   padding: const EdgeInsets.all(15.0),

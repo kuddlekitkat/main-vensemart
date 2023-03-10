@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:vensemart/products/screens/CategoryScreen.dart';
 
-class CategoryImage extends StatelessWidget {
+class CategoryImage extends StatefulWidget {
   final String image;
   final String name;
-  const CategoryImage({required this.image,required this.name}) ;
+  final String id;
+  const CategoryImage({required this.image,required this.name, required this.id}) ;
 
+  @override
+  State<CategoryImage> createState() => _CategoryImageState();
+}
+
+class _CategoryImageState extends State<CategoryImage> {
   @override
   Widget build(BuildContext context) {
     return  GestureDetector(
@@ -13,8 +19,8 @@ class CategoryImage extends StatelessWidget {
 
         Navigator.push(
           context,
-          new MaterialPageRoute(
-            builder: (context) => CategoryScreen(),
+          MaterialPageRoute(
+            builder: (context) => CategoryScreen(categoryId: widget.id.toString()),
           ),
         );
       },
@@ -28,7 +34,7 @@ class CategoryImage extends StatelessWidget {
             decoration:  BoxDecoration(
               borderRadius: BorderRadius.circular(12.0),
               image:  DecorationImage(
-                  image: AssetImage(image),
+                  image: AssetImage(widget.image),
                   fit: BoxFit.cover
               ),
             ),

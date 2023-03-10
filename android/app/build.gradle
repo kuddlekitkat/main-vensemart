@@ -61,8 +61,8 @@ android {
         //changed it
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 3 // Change to a higher number
-        versionName "1.0.3" // Change to a higher number
+        versionCode 4 // Change to a higher number
+        versionName "1.0.4" // Change to a higher number
         
     }
 

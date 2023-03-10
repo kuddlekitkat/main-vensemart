@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:vensemart/models/upcoming_bookings.dart';
 
@@ -84,6 +85,15 @@ class AppointmentCard extends StatelessWidget {
                       margin: EdgeInsets.symmetric(vertical: 12.0),
                     ),
                     Text('${upcomingBooking?.categoryName ?? 'Barbing'}'),
+                    TextButton(
+                        onPressed: () {
+                          FlutterPhoneDirectCaller.callNumber(
+                              '${upcomingBooking?.mobile ?? 'no phone'}');
+                        },
+                        child: Text(
+                          '${upcomingBooking?.mobile ?? 'no phone'}',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )),
                   ],
                 ),
                 SizedBox(

@@ -15,7 +15,7 @@ class FeaturedImage extends StatelessWidget {
         Navigator.push(
           context,
           new MaterialPageRoute(
-            builder: (context) => ShopDetailScreen(),
+            builder: (context) => ShopDetailScreen(id: 3.toString(),),
           ),
         );
 

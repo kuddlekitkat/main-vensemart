@@ -2,12 +2,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:vensemart/products/screens/ProductDetailScreen.dart';
 import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
 
 import '../../services/provider/provider_services.dart';
 
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({Key? key}) : super(key: key);
+  final String categoryId;
+  const CategoryScreen({required this.categoryId});
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
@@ -19,7 +21,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   void initState() {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
-    providerServices?.productCate(1.toString());
+    providerServices?.productCate(widget.categoryId.toString());
     super.initState();
   }
 
@@ -88,7 +90,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               if (provider.isPresent)
                                 ...provider.productCategory!.data!
                                     .map((e) => contentContainer(
-                                        id: 385.toString(),
+                                        id:e.id.toString(),
                                         text: e.categoryName,
                                         image: e.productImage))
                                     .toList()
@@ -123,7 +125,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProductsHomeScreen(),
+                  builder: (context) => ProductDetailScreen(id: id.toString(),),
                 ),
               );
             },

@@ -23,17 +23,17 @@ class ProductIdModel {
 }
 
 class Data {
-  String? id;
-  String? shopId;
-  String? categoryId;
-  String? subCatId;
+  dynamic id;
+  dynamic shopId;
+  dynamic categoryId;
+  dynamic subCatId;
   String? productTitle;
   String? productDescription;
   String? productImage;
-  String? productPrice;
+  dynamic productPrice;
   String? discount;
-  String? quantity;
-  String? uomId;
+  dynamic quantity;
+  dynamic uomId;
   String? inStock;
   String? status;
   String? createdAt;

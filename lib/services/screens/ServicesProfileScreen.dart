@@ -276,18 +276,18 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                           ),
                         ),
 
-                        GestureDetector(
-                          onTap: () {
-                            showAlertDialog(context);
-                          },
-                          child: const ListTile(
-                            leading: Icon(
-                              Icons.delete_forever,
-                              color: Colors.redAccent,
-                            ),
-                            title: Text('Delete Account'),
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     showAlertDialog(context);
+                        //   },
+                        //   child: const ListTile(
+                        //     leading: Icon(
+                        //       Icons.delete_forever,
+                        //       color: Colors.redAccent,
+                        //     ),
+                        //     title: Text('Delete Account'),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

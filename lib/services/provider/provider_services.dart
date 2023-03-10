@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:vensemart/core/session_manager.dart';
 import 'package:vensemart/models/about_us_model.dart';
 import 'package:vensemart/models/add_booking_model.dart';
+import 'package:vensemart/models/add_product_to_cart_model.dart';
 import 'package:vensemart/models/contact_us_model.dart';
 import 'package:vensemart/models/customer_home_model.dart';
 import 'package:vensemart/models/general_model.dart';
+import 'package:vensemart/models/get_shop_by_id_model.dart';
 import 'package:vensemart/models/login_model.dart';
 import 'package:vensemart/models/register.dart';
 import 'package:vensemart/models/services_model.dart';
@@ -16,6 +18,7 @@ import '../../ChoiceIntroScreen.dart';
 import '../../OtpVerification.dart';
 import '../../apiservices/auth_repo.dart';
 import '../../models/canceled_bookings.dart';
+import '../../models/cart_model.dart';
 import '../../models/completed_bookings.dart';
 import '../../models/faqs_model.dart';
 import '../../models/featured_shop_model.dart';
@@ -41,8 +44,13 @@ class ProviderServices extends ChangeNotifier {
 
   UserLocationModel? get userLocationModel => _userLocationModel;
   UserLocationModel? _userLocationModel;
+
   ServicesModel? get servicesModel => _servicesModel;
   ServicesModel? _servicesModel;
+
+
+  CartModel? get cartModel => _cartModel;
+  CartModel? _cartModel;
 
   TrendingServiceModel? get trendingserviceModel => _trendingserviceModel;
   TrendingServiceModel? _trendingserviceModel;
@@ -53,6 +61,9 @@ class ProviderServices extends ChangeNotifier {
   AddBookingModel? get addBooking => _addBookingModel;
   AddBookingModel? _addBookingModel;
 
+  AddProductToCartModel? get addProductToCartModel => _addProductToCartModel;
+  AddProductToCartModel? _addProductToCartModel;
+
   CustomerHomeModel? get customerHomeModel => _customerHomeModel;
   CustomerHomeModel? _customerHomeModel;
   ProductCategoryModel? get productCategory => _productCategoryModel;
@@ -61,12 +72,14 @@ class ProviderServices extends ChangeNotifier {
   FeaturedShopModel? get featuredShopModel => _featuredShopModel;
   FeaturedShopModel? _featuredShopModel;
 
-
   ProductIdModel? get productIdModel => _productIdModel;
   ProductIdModel? _productIdModel;
 
   ServiceIdModel? get serviceIdModel => _serviceIdModel;
   ServiceIdModel? _serviceIdModel;
+
+  ShopByIdModel? get shopbyIdModel => _shopbyIdModel;
+  ShopByIdModel? _shopbyIdModel;
 
   ServiceProviderIdModel? get serviceProviderIdModel => _serviceProviderIdModel;
   ServiceProviderIdModel? _serviceProviderIdModel;
@@ -476,6 +489,36 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+  void addProductToCart(
+      {Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.addProductToCart(map!);
+      if (response != null && response.statusCode == 200) {
+        _addProductToCartModel = AddProductToCartModel.fromJson(response.data);
+        _isLoading = false;
+      }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('Failed to add Product to Cart'),
+          duration: const Duration(seconds: 10),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () {},
+          ),
+        ));
+
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
   void customerHome({Map<String, String>? map, BuildContext? context}) async {
     try {
       _isLoading = true;
@@ -599,6 +642,25 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+  void cartlist() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.cartlist();
+      if (response != null && response.statusCode == 200) {
+        _cartModel = CartModel.fromJson(response.data);
+        _isLoading = false;
+      }
+
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
   void trendingServices() async {
     try {
       _isLoading = true;
@@ -654,8 +716,6 @@ class ProviderServices extends ChangeNotifier {
       debugPrint("StackTrace: $str");
     }
   }
-
-
 
   void getAllFeaturedShops() async {
     try {
@@ -822,6 +882,25 @@ class ProviderServices extends ChangeNotifier {
       Response? response = await authRepo.productId(num);
       if (response != null && response.statusCode == 200) {
         _productIdModel = ProductIdModel.fromJson(response.data);
+        _isLoading = false;
+      }
+
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+  void ShopbyId(String num) async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.shopbyId(num);
+      if (response != null && response.statusCode == 200) {
+        _shopbyIdModel = ShopByIdModel.fromJson(response.data);
         _isLoading = false;
       }
 

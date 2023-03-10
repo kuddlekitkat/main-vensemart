@@ -57,7 +57,6 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
           ),
           onPressed: () => Navigator.of(context).pop(),
         ),
-
         title: const Text(
           'Services',
           style: TextStyle(color: Colors.grey),
@@ -65,7 +64,6 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
         backgroundColor: const Color.fromRGBO(234, 234, 234, 2),
         elevation: 0.00,
       ),
-
       backgroundColor: const Color.fromRGBO(234, 234, 234, 2),
       body: Consumer<ProviderServices>(
         builder: (_, provider, __) {
@@ -130,7 +128,8 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
                           // }
                           return contentContainer(
                               homeId: e.id,
-                              text: e.categoryName, image: e.categoryIcon);
+                              text: e.categoryName,
+                              image: e.categoryIcon);
                         }).toList()
                     ],
                   ),
@@ -143,7 +142,7 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
     );
   }
 
-  contentContainer({int? homeId,String? text, String? image}) => ClipRRect(
+  contentContainer({int? homeId, String? text, String? image}) => ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: GridTile(
           footer: GridTileBar(
@@ -159,12 +158,17 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) =>  AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: homeId.toString()),
+                  builder: (context) => AvailableServicesListScreen(
+                      lat: 8.toString(),
+                      long: 9.toString(),
+                      id: homeId.toString()),
                 ),
               );
             },
             child: CachedNetworkImage(
-              imageUrl: image.toString(),
+              imageUrl: homeId! > 35
+                  ? 'https://api.vensemart.com/storage/app/category_icons/070323280cobber.jpg'
+                  : image.toString(),
               fit: BoxFit.cover,
               placeholder: (
                 context,

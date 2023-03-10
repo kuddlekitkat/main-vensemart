@@ -1,19 +1,14 @@
 class ShopByIdModel {
   int? status;
   String? message;
-  List<Data>? data;
+  Data? data;
 
   ShopByIdModel({this.status, this.message, this.data});
 
   ShopByIdModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
-      });
-    }
+    data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -21,7 +16,7 @@ class ShopByIdModel {
     data['status'] = status;
     data['message'] = message;
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
@@ -29,7 +24,7 @@ class ShopByIdModel {
 
 class Data {
   
-  String? id;
+  dynamic id;
   String? franchiseId;
   String? storeName;
   String? storeImage;

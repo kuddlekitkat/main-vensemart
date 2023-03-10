@@ -9,7 +9,8 @@ import 'CartScreen.dart';
 import 'DeliveryDetailsScreen.dart';
 
 class ProductDetailScreen extends StatefulWidget {
-  const ProductDetailScreen({Key? key}) : super(key: key);
+  final  id;
+  const ProductDetailScreen({required this.id});
 
   @override
   State<ProductDetailScreen> createState() => _ProductDetailScreenState();
@@ -21,9 +22,37 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   @override
   void initState() {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
-    providerServices?.productId(3.toString());
+    providerServices?.productId(widget.id.toString());
     super.initState();
   }
+
+
+  void addToCart(context) async {
+      setState(() {});
+      providerServices?.addProductToCart(map: {
+        "product_id" : widget.id,
+        "cat_id" : 1.toString(),
+        "qty" : 1.toString(),
+        "uom_id" : 3.toString(),
+        "net_amount": 100.toString(),
+        "discount": 1.toString()
+      }, context: context);
+  }
+
+
+  void removeCart(context) async {
+    setState(() {});
+    providerServices?.addProductToCart(map: {
+      "product_id" : 3.toString(),
+      "cat_id" : 1.toString(),
+      "qty" : 1.toString(),
+      "uom_id" : 3.toString(),
+      "net_amount": 100.toString(),
+      "discount": 1.toString()
+    }, context: context);
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -257,6 +286,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
+
+                                    addToCart(context);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(

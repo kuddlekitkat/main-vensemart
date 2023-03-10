@@ -29,18 +29,18 @@ class ProductCategoryModel {
 
 class Data {
   dynamic id;
-  String? shopId;
-  String? categoryId;
+  dynamic shopId;
+  dynamic categoryId;
   String? categoryName;
   String? categoryIcon;
-  String? subCatId;
+  dynamic subCatId;
   String? productTitle;
   String? productDescription;
   String? productImage;
-  String? productPrice;
-  String? discount;
-  String? quantity;
-  String? uomId;
+  dynamic productPrice;
+  dynamic discount;
+  dynamic quantity;
+  dynamic uomId;
   String? inStock;
   String? status;
   String? createdAt;

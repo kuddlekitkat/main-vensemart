@@ -4,15 +4,15 @@ import 'CategoryImage.dart';
 
 class CategoriesGrid extends StatelessWidget {
 
-  final List<Widget> cardsList = const [
+  final List<Widget> cardsList =  [
 
-    CategoryImage(image: 'assets/images/user5.jpg', name: 'category1'),
-    CategoryImage(image: 'assets/images/user5.jpg', name: 'category1'),
-    CategoryImage(image: 'assets/images/user5.jpg', name: 'category1'),
+    CategoryImage(image: 'assets/images/user5.jpg', name: 'category1',id: 3.toString(),),
+    CategoryImage(image: 'assets/images/user5.jpg', name: 'category1',id: 3.toString(),),
+    CategoryImage(image: 'assets/images/user5.jpg', name: 'category1', id: 3.toString(),),
   ];
 
 
-  const CategoriesGrid({Key? key});
+   CategoriesGrid({Key? key});
 
 
   @override
