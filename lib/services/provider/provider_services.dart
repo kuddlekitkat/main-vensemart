@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:vensemart/core/session_manager.dart';
@@ -47,7 +49,6 @@ class ProviderServices extends ChangeNotifier {
 
   ServicesModel? get servicesModel => _servicesModel;
   ServicesModel? _servicesModel;
-
 
   CartModel? get cartModel => _cartModel;
   CartModel? _cartModel;
@@ -520,7 +521,6 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-
   void removeProductToCart(
       {Map<String, String>? map, BuildContext? context}) async {
     try {
@@ -552,10 +552,7 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-
-
-  void reduceQuantity(
-      {Map<String, String>? map, BuildContext? context}) async {
+  void reduceQuantity({Map<String, String>? map, BuildContext? context}) async {
     try {
       _isLoading = true;
       notifyListeners();
@@ -585,14 +582,12 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
-
-
-  void addQuantity(
-      {Map<String, String>? map, BuildContext? context}) async {
+  void addQuantity({Map<String, String>? map, BuildContext? context}) async {
     try {
       _isLoading = true;
-      notifyListeners();
+      // notifyListeners();
       Response? response = await authRepo.addQuantity(map!);
+      print(response);
       if (response != null && response.statusCode == 200) {
         // _addProductToCartModel = AddProductToCartModel.fromJson(response.data);
         _isLoading = false;
@@ -748,6 +743,7 @@ class ProviderServices extends ChangeNotifier {
       Response? response = await authRepo.cartlist();
       if (response != null && response.statusCode == 200) {
         _cartModel = CartModel.fromJson(response.data);
+        print('.....carter ${_cartModel!.toJson()}');
         _isLoading = false;
       }
 

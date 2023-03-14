@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 import 'api_services.dart';
@@ -63,10 +65,9 @@ class AuthRepo with ApiServices {
     return null;
   }
 
-
   Future<Response?> addQuantity(Map<String, String> credentials) async {
     Response? response = await apiPostRequests("add-qty-cart", credentials);
-
+    log(response.toString());
     if (response != null) {
       return response;
     }
@@ -83,7 +84,6 @@ class AuthRepo with ApiServices {
 
     return null;
   }
-
 
   Future<Response?> removeProduct(Map<String, String> credentials) async {
     Response? response = await apiPostRequests("remove-product", credentials);

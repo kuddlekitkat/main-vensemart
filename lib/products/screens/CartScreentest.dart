@@ -81,7 +81,7 @@ class _CarttestScreenState extends State<CarttestScreen> {
                         itemCount: provider.cartModel!.data!.cartList!.length,
                         itemBuilder: ((context, index) {
                           return CartCard(
-                            id :  provider.cartModel?.data?.cartList?[index].productId,
+                            id :  provider.cartModel?.data?.cartList?[index].id,
                             image: '${provider.cartModel?.data?.cartList?[index].productImage}',
                             name: '${provider.cartModel?.data?.cartList?[index].productName}',
                             amount: '${provider.cartModel?.data?.cartList?[index].netAmount}',

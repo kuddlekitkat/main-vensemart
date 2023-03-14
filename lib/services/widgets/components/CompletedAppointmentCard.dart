@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:vensemart/models/completed_bookings.dart';
-import 'package:vensemart/services/screens/FeedbackScreen.dart';
+// import 'package:vensemart/services/screens/FeedbackScreen.dart';
 import 'package:vensemart/services/screens/RateScreen.dart';
 
 import '../../../ChoiceIntroScreen.dart';
