@@ -32,20 +32,13 @@ class _ProductsHomeState extends State<ProductsHome> {
     _providerServices?.getAllCategories();
     _providerServices?.getAllFeaturedShops();
 
-    // getCurrentLocation().then((value) {
-
-    //   setState(() {
-    //      addressController.text;
-    //   });
-    //   sendLocationAlternate(context);
-    // });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return  Consumer<ProviderServices>(builder: (_, provider, __) {
-      if (provider.productCategory?.data == null) {
+      if (provider.productCategory?.data == null ) {
         return SpinKitCircle(
           color: Colors.blue[900],
         );
@@ -54,7 +47,6 @@ class _ProductsHomeState extends State<ProductsHome> {
       body: Padding(
         padding: EdgeInsets.all(8.0),
         child: SingleChildScrollView(
-
             child: Column(
               children: [
                 Container(
@@ -108,7 +100,7 @@ class _ProductsHomeState extends State<ProductsHome> {
                 ),
 
                 Container(
-                  height: MediaQuery.of(context).size.height / 1,
+                  height: MediaQuery.of(context).size.height / 1.1,
                   child: GridView.count(
                     primary: false,
                     padding: const EdgeInsets.all(10),
@@ -118,22 +110,9 @@ class _ProductsHomeState extends State<ProductsHome> {
                     children: <Widget>[
 
                         ...provider.productCategory!.data!
-                            // .where((element) => element.categoryName!
-                            // .toLowerCase()
-                            // .contains(_query.toLowerCase()))
+
                             .map((e) {
                           print('print e for me $e');
-                          // if (e.categoryName!
-                          //     .toString()
-                          //     .toLowerCase()
-                          //     .contains(_query.toLowerCase())) {
-                          //   searchItem.add(e);
-                          //   intval = searchItem.length-1;
-                          //   print('int val $intval');
-
-                          //   print(
-                          //       'object an image ${searchItem[intval].toJson().toString()}');
-                          // }
 
                           return contentContainer(image: e.categoryIcon,text: e.categoryName,homeId: e.id);
                         }).toList()
@@ -158,7 +137,7 @@ class _ProductsHomeState extends State<ProductsHome> {
                   height: MediaQuery.of(context).size.height / 1,
                   child: GridView.count(
                     primary: false,
-                    padding: const EdgeInsets.all(10),
+                    // padding: const EdgeInsets.all(10),
                     crossAxisSpacing: 8,
                     mainAxisSpacing: 8,
                     crossAxisCount: 3,

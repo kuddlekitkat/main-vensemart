@@ -13,6 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/AppBars/ProductsCartAppBar.dart';
 import '../widgets/full_pages/ProductsHome.dart';
+import 'SubscriptionList.dart';
 
 
 
@@ -44,8 +45,8 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     ProductsHome(),
-    const ProductOrderListScreen(),
-    CartScreen(),
+     ProductOrderListScreen(),
+     CartScreen(),
     ProductsOffersScreen(),
     ProductsProfile(),
   ];

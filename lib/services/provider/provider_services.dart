@@ -498,11 +498,111 @@ class ProviderServices extends ChangeNotifier {
       if (response != null && response.statusCode == 200) {
         _addProductToCartModel = AddProductToCartModel.fromJson(response.data);
         _isLoading = false;
+        notifyListeners();
       }
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
           content: Text('Failed to add Product to Cart'),
+          duration: const Duration(seconds: 10),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () {},
+          ),
+        ));
+
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+
+  void removeProductToCart(
+      {Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.removeProduct(map!);
+      if (response != null && response.statusCode == 200) {
+        // _addProductToCartModel = AddProductToCartModel.fromJson(response.data);
+        _isLoading = false;
+        notifyListeners();
+      }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('Failed to remove Product to Cart'),
+          duration: const Duration(seconds: 10),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () {},
+          ),
+        ));
+
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+
+
+  void reduceQuantity(
+      {Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.reduceQuantity(map!);
+      if (response != null && response.statusCode == 200) {
+        // _addProductToCartModel = AddProductToCartModel.fromJson(response.data);
+        _isLoading = false;
+        notifyListeners();
+      }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('Failed to reduce product quantity'),
+          duration: const Duration(seconds: 10),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () {},
+          ),
+        ));
+
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+
+
+  void addQuantity(
+      {Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.addQuantity(map!);
+      if (response != null && response.statusCode == 200) {
+        // _addProductToCartModel = AddProductToCartModel.fromJson(response.data);
+        _isLoading = false;
+
+        notifyListeners();
+      }
+
+      if (response != null && response.statusCode != 200) {
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: Text('Failed to add Quantity'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',

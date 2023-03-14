@@ -63,6 +63,38 @@ class AuthRepo with ApiServices {
     return null;
   }
 
+
+  Future<Response?> addQuantity(Map<String, String> credentials) async {
+    Response? response = await apiPostRequests("add-qty-cart", credentials);
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+  Future<Response?> reduceQuantity(Map<String, String> credentials) async {
+    Response? response = await apiPostRequests("sub-qty-cart", credentials);
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+
+  Future<Response?> removeProduct(Map<String, String> credentials) async {
+    Response? response = await apiPostRequests("remove-product", credentials);
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
   Future<Response?> addProductToCart(Map<String, String> credentials) async {
     Response? response = await apiPostRequests("add_cart", credentials);
 

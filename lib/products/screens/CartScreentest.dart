@@ -2,21 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/products/screens/DeliveryDetailsScreen.dart';
-import 'package:vensemart/products/screens/ProdC.dart';
 import 'package:vensemart/products/widgets/components/CartCard.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
 
 import '../../services/provider/provider_services.dart';
-import 'CartC.dart';
 
-class CartScreen extends StatefulWidget {
-  const CartScreen({Key? key}) : super(key: key);
+class CarttestScreen extends StatefulWidget {
+   CarttestScreen({Key? key}) : super(key: key);
 
   @override
-  State<CartScreen> createState() => _CartScreenState();
+  State<CarttestScreen> createState() => _CarttestScreenState();
 }
 
-class _CartScreenState extends State<CartScreen> {
+class _CarttestScreenState extends State<CarttestScreen> {
   ProviderServices? providerServices;
 
 
@@ -38,7 +36,7 @@ class _CartScreenState extends State<CartScreen> {
         backgroundColor: Color.fromRGBO(247, 248, 254, 5),
         elevation: 0.00,
         title:
-            Center(child: Text('Cart', style: TextStyle(color: Colors.black))),
+        Center(child: Text('Cart', style: TextStyle(color: Colors.black))),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -71,47 +69,29 @@ class _CartScreenState extends State<CartScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-    Consumer<ProviderServices>(
-    builder: (_, provider, __) {
-      print('object ${provider.cartModel?.data}');
-      if (provider.cartModel?.data == null) {
-        return Center(child: SpinKitCircle(color: Colors.blue,));
-      } else {
-        return   SingleChildScrollView(
-
-          child: Column(
-            children: [
-              ...provider.cartModel!.data!.cartList!.map((e) {
-                print('print e for me $e');
-                return CardC(
-                  cardList: e,
-                  name: e.productName.toString(),
-                 id: e.productId,
-                  image: '${e.productImage}',
-                  quantity: e.quantity,
-                  amount: e.netAmount,
-                );
-              }).toList()
-              // ...?provider.serviceProviderPlans?.data!
-              //     .map((e) => SubscriptionCard(
-              //           servicesProviderPlans: e,
-              //         ))
-              //     .toList()
-
-              // SizedBox(height: 10,),
-              //   SubscriptionCard(),
-              // SizedBox(height: 10,),
-              // SubscriptionCard(),
-              // SizedBox(height: 10,),
-              // SubscriptionCard(),
-              // SizedBox(height: 10,),
-              // SubscriptionCard(),
-            ],
-          ),
-        );
-      }
-    },
-    ),
+            Consumer<ProviderServices>(
+              builder: (_, provider, __) {
+                print('object ${provider.cartModel?.data}');
+                if (provider.cartModel?.data == null) {
+                  return Center(child: SpinKitCircle(color: Colors.blue,));
+                } else {
+                  return   Container(
+                    height: MediaQuery.of(context).size.height / 1.2,
+                    child: ListView.builder(
+                        itemCount: provider.cartModel!.data!.cartList!.length,
+                        itemBuilder: ((context, index) {
+                          return CartCard(
+                            id :  provider.cartModel?.data?.cartList?[index].productId,
+                            image: '${provider.cartModel?.data?.cartList?[index].productImage}',
+                            name: '${provider.cartModel?.data?.cartList?[index].productName}',
+                            amount: '${provider.cartModel?.data?.cartList?[index].netAmount}',
+                            quantity: '${provider.cartModel?.data?.cartList?[index].quantity}',
+                          );
+                        })),
+                  );
+                }
+              },
+            ),
             SizedBox(
               height: MediaQuery.of(context).size.width / 3,
             ),

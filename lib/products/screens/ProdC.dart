@@ -3,21 +3,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/cart_model.dart';
 import '../../services/provider/provider_services.dart';
 import '../widgets/components/TopSellingImage.dart';
 import 'CartScreen.dart';
 import 'DeliveryDetailsScreen.dart';
 
-class ProductDetailScreen extends StatefulWidget {
+class ProductC extends StatefulWidget {
   final  id;
-  const ProductDetailScreen({required this.id});
+  final CartList cartlist;
+  const ProductC({required this.id, required this.cartlist});
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  State<ProductC> createState() => _ProductCState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _ProductCState extends State<ProductC> {
   ProviderServices? providerServices;
+  
 
   @override
   void initState() {
@@ -28,15 +31,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 
 
   void addToCart(context) async {
-      setState(() {});
-      providerServices?.addProductToCart(map: {
-        "product_id" : widget.id,
-        "cat_id" : 1.toString(),
-        "qty" : 1.toString(),
-        "uom_id" : 3.toString(),
-        "net_amount": 100.toString(),
-        "discount": 1.toString()
-      }, context: context);
+    setState(() {});
+    providerServices?.addProductToCart(map: {
+      "product_id" : widget.id,
+      "cat_id" : 1.toString(),
+      "qty" : 1.toString(),
+      "uom_id" : 3.toString(),
+      "net_amount": 100.toString(),
+      "discount": 1.toString()
+    }, context: context);
   }
 
   void addQuantity(context,id) async {
@@ -92,12 +95,12 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
       body: SingleChildScrollView(
         child: Consumer<ProviderServices>(
           builder: (_, provider, __) {
-            print('object ${provider.productIdModel?.data}');
-            if (provider.productIdModel?.data == null) {
+            print('object ${provider.cartModel!.data!.cartList!.length}');
+            if (provider.cartModel!.data!.cartList == null) {
               return const Center(
                   child: SpinKitCircle(
-                color: Colors.blue,
-              ));
+                    color: Colors.blue,
+                  ));
             } else {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,7 +113,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                               image: NetworkImage(
-                                  '${provider.productIdModel?.data?.productImage}' ??
+                                  '${widget.cartlist.productImage}' ??
                                       ''),
                               fit: BoxFit.cover),
                         ),
@@ -201,9 +204,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     borderRadius: BorderRadius.circular(10.0)),
                                 child: Center(
                                     child: Text(
-                                  '${provider.productIdModel?.data?.storeName}',
-                                  style: TextStyle(color: Colors.white),
-                                )),
+                                      '${widget.cartlist.productName}',
+                                      style: TextStyle(color: Colors.white),
+                                    )),
                               ),
                             ),
                             SizedBox(
@@ -216,7 +219,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
 
                         Text(
-                          '${provider.productIdModel?.data?.productTitle}',
+                          '${widget.cartlist.productName}',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -224,8 +227,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           height: 12.0,
                         ),
 
-                         Text(
-                          '${provider.productIdModel?.data?.productDescription}',
+                        Text(
+                          '${widget.cartlist.quantity}',
                           style: TextStyle(letterSpacing: 1),
                         ),
                         SizedBox(
@@ -240,7 +243,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
                             Text(
-                              '${provider.productIdModel?.data?.categoryId}',
+                              '${widget.cartlist.quantity}',
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -253,7 +256,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         ),
 
                         Text(
-                          'N${provider.productIdModel?.data?.productPrice}.00',
+                          'N${widget.cartlist.netAmount}.00',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.bold),
                         ),
@@ -343,17 +346,17 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     height: MediaQuery.of(context).size.height /
                                         16.9,
                                     width:
-                                        MediaQuery.of(context).size.width / 2.6,
+                                    MediaQuery.of(context).size.width / 2.6,
                                     decoration: BoxDecoration(
                                         color: Color(0xff494E6E),
                                         borderRadius:
-                                            BorderRadius.circular(50.0)),
+                                        BorderRadius.circular(50.0)),
                                     child: Center(
                                         child: Text(
-                                      'Add to Cart',
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 10),
-                                    )),
+                                          'Add to Cart',
+                                          style: TextStyle(
+                                              color: Colors.white, fontSize: 10),
+                                        )),
                                   ),
                                 ),
                               ],
@@ -380,7 +383,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                   width: 4,
                                 ),
                                 Text(
-                                  '${provider.productIdModel?.data?.storeName}',
+                                  '${widget.cartlist.netAmount}',
                                   style: TextStyle(
                                       fontSize: 10.0,
                                       fontWeight: FontWeight.bold,

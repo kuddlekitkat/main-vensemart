@@ -1,96 +1,47 @@
 import 'package:flutter/material.dart';
-import '../../../models/cart_model.dart';
-import '../../../services/provider/provider_services.dart';
-import '../../screens/CartScreen.dart';
+import 'package:vensemart/models/cart_model.dart';
 
-class CartCard extends StatefulWidget {
+import '../../services/provider/provider_services.dart';
 
+class CardC extends StatefulWidget {
 
-   final  id;
-   final String image;
+  final  id;
+  final String image;
   final String name;
   final  quantity;
   final  amount;
-
-    CartCard({Key? key, required this.id, required this.image, required this.name, required this.quantity, required this.amount}): super(key: key);
+  final CartList cardList;
+  const CardC({Key? key, required this.id, required this.image, required this.name,this.quantity, required this.amount, required this.cardList}) : super(key: key);
 
   @override
-  State<CartCard> createState() => _CartCardState();
+  State<CardC> createState() => _CardCState();
 }
 
-class _CartCardState extends State<CartCard> {
+class _CardCState extends State<CardC> {
   ProviderServices? _providerServices;
 
 
+void printSomething (String id) async {
+  print('added');
 
-  @override
+  _providerServices?.addProductToCart(map: {
+    "product_id" : id.toString(),
+    "cat_id" : 1.toString(),
+    "qty" : 1.toString(),
+    "uom_id" : 3.toString(),
+    "net_amount": 100.toString(),
+    "discount": 1.toString()
+  }, );
+
+
+}
+
+ @override
   void initState() {
+    // TODO: implement initState
+
     super.initState();
-
   }
-
-
-
-  void addToCart(context) async {
-    setState(() {});
-    _providerServices?.addProductToCart(map: {
-      "product_id" : 296.toString(),
-      "cat_id" : 1.toString(),
-      "qty" : 1.toString(),
-      "uom_id" : 3.toString(),
-      "net_amount": 100.toString(),
-      "discount": 1.toString()
-    }, context: context);
-  }
-
-  void _addQuantity(context) async {
-    _providerServices?.addQuantity(map: {
-      "product_id" : widget.id,
-    }, context: context);
-
-    print('addition working');
-    _providerServices?.addQuantity(map: {
-      "product_id" : widget.id,
-    }, context: context);
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => CartScreen(),
-    //   ),
-    // );
-  }
-
-
-  void _reduceQuantity(context) async {
-    setState(() {});
-    _providerServices?.reduceQuantity(map: {
-      "product_id" : widget.id.toString(),
-
-    });
-    //
-    // print('reduction working');
-    // _providerServices?.reduceQuantity(map: {
-    //   "product_id" : widget.id.toString(),
-    //
-    // }, context: context);
-
-
-  }
-
-  void _removeCart(context) async {
-    setState(() {});
-    _providerServices?.removeProductToCart(map: {
-      "product_id" : widget.id.toString(),
-    }, context: context);
-    print('remove working');
-    _providerServices?.removeProductToCart(map: {
-      "product_id" : widget.id.toString(),
-    }, context: context);
-
-
-
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -118,11 +69,11 @@ class _CartCardState extends State<CartCard> {
             height: MediaQuery.of(context).size.height /8,
             width: MediaQuery.of(context).size.width - 290,
             decoration:  BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0),
-                image: DecorationImage(
-                    image: NetworkImage('${widget.image}'),
-                    fit: BoxFit.cover
-                ),
+              borderRadius: BorderRadius.circular(12.0),
+              image: DecorationImage(
+                  image: NetworkImage('${widget.image}'),
+                  fit: BoxFit.cover
+              ),
             ),
           ),
 
@@ -159,23 +110,23 @@ class _CartCardState extends State<CartCard> {
                     Padding(
                       padding:  EdgeInsets.only(top: 11.0),
                       child: InkWell(
-                        onTap: () => addToCart(context),
+                        onTap: () => printSomething(widget.cardList.id.toString()),
                         child: Container(
-                              width: MediaQuery.of(context).size.width/4.5,
-                              height: MediaQuery.of(context).size.height/24,
-                             decoration: BoxDecoration(
-                               color: Colors.red,
-                               borderRadius: BorderRadius.circular(50.0),
-                             ),
+                          width: MediaQuery.of(context).size.width/4.5,
+                          height: MediaQuery.of(context).size.height/24,
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(50.0),
+                          ),
 
-                            child: Center(child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Icon(Icons.delete_forever,color: Colors.white,size: 19,),
-                                Text("Remove",style: TextStyle(fontSize: 11,color: Colors.white,fontWeight: FontWeight.bold,),),
-                              ],
-                            ),
-                            ),
+                          child: Center(child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Icon(Icons.delete_forever,color: Colors.white,size: 19,),
+                              Text("Remove",style: TextStyle(fontSize: 11,color: Colors.white,fontWeight: FontWeight.bold,),),
+                            ],
+                          ),
+                          ),
                         ),
                       ),
                     ),
@@ -185,7 +136,7 @@ class _CartCardState extends State<CartCard> {
                       children: [
                         Container(
                           child: InkWell(
-                            onTap: () => _addQuantity(context),
+                            onTap: () => printSomething(widget.cardList.id.toString()),
                             child: Icon(
                               Icons.add,
                               color: Colors.white,
@@ -204,7 +155,7 @@ class _CartCardState extends State<CartCard> {
                         GestureDetector(
                           onTap: () =>
 
-                            _reduceQuantity(context),
+                             printSomething(widget.cardList.id.toString()),
 
                           child: Container(
                             child: Icon(

@@ -50,19 +50,21 @@ class Data {
 }
 
 class CartList {
+
   dynamic id;
   dynamic productId;
   dynamic categoryId;
   dynamic quantity;
   dynamic netAmount;
   dynamic afterDiscountAmount;
-  String? ProductName;
+  String? productName;
   String? productImage;
   dynamic shopId;
   String? productDescription;
   dynamic discount;
   String? categoryName;
   String? storeName;
+  String? productPrice;
   String? uomName;
   String? imageName;
   String? createdAt;
@@ -83,6 +85,7 @@ class CartList {
         this.updatedAt,
         this.shopId,
         this.productDescription,
+        this.productName,
         this.discount,
         this.categoryName,
         this.storeName,
@@ -94,6 +97,7 @@ class CartList {
   CartList.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     productId = json['product_id'];
+    productName = json['product_name'];
     categoryId = json['category_id'];
     quantity = json['qty'];
     netAmount = json['net_amount'];
@@ -114,6 +118,7 @@ class CartList {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['product_id'] = productId;
+    data['product_name'] = productName;
     data['category_id'] = categoryId;
     data['qty'] = quantity;
     data['net_amount'] = netAmount;

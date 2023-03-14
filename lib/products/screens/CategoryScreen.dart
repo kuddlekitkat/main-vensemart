@@ -30,7 +30,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Electronics',
+          'Products',
           style: TextStyle(color: Colors.black),
         ),
         backgroundColor: Color.fromRGBO(234, 234, 234, 2),
@@ -63,16 +63,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   ),
                 ),
               ),
-              Container(
-                height: MediaQuery.of(context).size.height / 5.5,
-                width: MediaQuery.of(context).size.width / 1.1,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/images/proj.png'),
-                  ),
-                  borderRadius: BorderRadius.circular(40.0),
-                ),
-              ),
+              // Container(
+              //   height: MediaQuery.of(context).size.height / 5.5,
+              //   width: MediaQuery.of(context).size.width / 1.1,
+              //   decoration: BoxDecoration(
+              //     image: DecorationImage(
+              //       image: AssetImage('assets/images/proj.png'),
+              //     ),
+              //     borderRadius: BorderRadius.circular(40.0),
+              //   ),
+              // ),
               Consumer<ProviderServices>(
                 builder: (_, provider, __) {
                   return SingleChildScrollView(
@@ -91,7 +91,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 ...provider.productCategory!.data!
                                     .map((e) => contentContainer(
                                         id:e.id.toString(),
-                                        text: e.categoryName,
+                                        text: e.productTitle,
                                         image: e.productImage))
                                     .toList()
                             ],
