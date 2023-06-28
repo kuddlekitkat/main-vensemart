@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:readmore/readmore.dart';
 import '../provider/provider_services.dart';
 
 class AboutUsScreen extends StatefulWidget {
@@ -26,7 +27,12 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
     var screenheight = MediaQuery.of(context).size.height;
     var screenwidth = MediaQuery.of(context).size.width;
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        // Add your custom logic here
+        Navigator.pop(
+            context); // This line allows the back button to work as expected
+        return false; // This line prevents the default behavior of the back button
+      },
       child: Scaffold(
         backgroundColor: Color.fromRGBO(234, 234, 234, 3),
         appBar: AppBar(
@@ -70,37 +76,64 @@ class _AboutUsScreenState extends State<AboutUsScreen> {
                       child: SingleChildScrollView(
                         child: SingleChildScrollView(
                           child: Column(children: const [
-                            Text('About Us'),
+                            AutoSizeText('About Us'),
                             SizedBox(
                               height: 12.0,
                             ),
 
-                            SizedBox(
-                              height: 20.0,
-                            ),
-                            Text(
-                                "Vensemart is a bespoke user friendly vendor and service providers platform, designed to easily connect tested, trusted, verified and certified professional service providers with customers.",
-                                style: TextStyle(
-                                    fontSize: 13, fontWeight: FontWeight.w300)),
-                            SizedBox(
-                              height: 20.0,
+                            ReadMoreText(
+                              'Vensemart is a bespoke user friendly vendor and service providers platform, '
+                              'designed to easily connect tested, trusted, '
+                              'verified and certified professional service providers with customers.'
+                              'We provide a swift interface for freelancers, sme\'s and corporate companies to  attend to all kinds of customer needs from'
+                              ' personal grooming (barbing/hairdo, makeup, massage and dressing), electrical '
+                              'repaires, mechanical repairs, mechanical repairs and more.'
+                              'Our goal is to enable end users to access the closest, skilled and '
+                              'experienced professional service within 3 minutes of location proximity.'
+                              ' Once on the platform you can book and manage appointments at convenience and '
+                              'avoid queuing at public outlet for '
+                              'service needs with a relaxed and first class user experience.',
+                              trimLines: 15,
+                              colorClickableText: Colors.pink,
+                              trimMode: TrimMode.Line,
+                              trimCollapsedText: 'Read more',
+                              trimExpandedText: 'Read less',
+                              moreStyle: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
+                              lessStyle: TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blue),
                             ),
 
-                            Text(
-                                " We provide a swift interface for freelancers, sme's and corporate companies to  attend to all kinds of customer needs from personal grooming (barbing/hairdo, makeup, massage and dressing), eletrical repaires, mechanical repairs, mechanical repairs and more.",
-                                style: TextStyle(
-                                    fontSize: 13, fontWeight: FontWeight.w300)),
-                            SizedBox(
-                              height: 20.0,
-                            ),
-                            Text(
-                                "Our goal is to enable end users to access the closest, skilled and experienced professional service within 3 minutes of location proximity. Once on the platform you can book and manage appointments at convenience and avoid queuing at public outlet for service needs with a relaxed and first class user experience.",
-                                style: TextStyle(
-                                    fontSize: 13, fontWeight: FontWeight.w300)),
+                            // SizedBox(
+                            //   height: 20.0,
+                            // ),
+                            // Text(
+                            //     "Vensemart is a bespoke user friendly vendor and service providers platform, designed to easily connect tested, trusted, verified and certified professional service providers with customers.",
+                            //     style: TextStyle(
+                            //         fontSize: 13, fontWeight: FontWeight.w300)),
+                            // SizedBox(
+                            //   height: 20.0,
+                            // ),
 
-                            SizedBox(
-                              height: 20.0,
-                            ),
+                            // Text(
+                            //     " We provide a swift interface for freelancers, sme's and corporate companies to  attend to all kinds of customer needs from personal grooming (barbing/hairdo, makeup, massage and dressing), eletrical repaires, mechanical repairs, mechanical repairs and more.",
+                            //     style: TextStyle(
+                            //         fontSize: 13, fontWeight: FontWeight.w300)),
+                            // SizedBox(
+                            //   height: 20.0,
+                            // ),
+                            // Text(
+                            //     "Our goal is to enable end users to access the closest, skilled and experienced professional service within 3 minutes of location proximity. Once on the platform you can book and manage appointments at convenience and avoid queuing at public outlet for service needs with a relaxed and first class user experience.",
+                            //     style: TextStyle(
+                            //         fontSize: 13, fontWeight: FontWeight.w300)),
+
+                            // SizedBox(
+                            //   height: 20.0,
+                            // ),
                             // Text( "It enables the end users to access closest and "
                             //     "reliable services within 3 minutes of location proximity,"
                             //     " book and manage appointments at convenience and avoid "

@@ -10,6 +10,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'LoginScreen.dart';
 import 'TermsScreen.dart';
 import 'dart:io';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -157,7 +158,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height / 1.8,
+                height: MediaQuery.of(context).size.height / 1.9,
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -393,7 +394,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text('Already have an account?',
+                          const AutoSizeText('Already have an account?',
                               style: TextStyle(
                                   fontWeight: FontWeight.normal,
                                   fontSize: 20.0)),

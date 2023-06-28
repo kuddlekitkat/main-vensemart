@@ -13,7 +13,8 @@ class SatisfactionServicesList extends StatefulWidget {
   const SatisfactionServicesList({Key? key}) : super(key: key);
 
   @override
-  State<SatisfactionServicesList> createState() => _SatisfactionServicesListState();
+  State<SatisfactionServicesList> createState() =>
+      _SatisfactionServicesListState();
 }
 
 class _SatisfactionServicesListState extends State<SatisfactionServicesList> {
@@ -28,42 +29,39 @@ class _SatisfactionServicesListState extends State<SatisfactionServicesList> {
     super.initState();
   }
 
-
-
-
   // Widget Container(){
   //
   //   return Row(
   //     children: [
   //       Container(
-        //   height: 100,
-        //   width: 40,
-        //   decoration: const BoxDecoration(
-        //       image: DecorationImage(
-        //           image: AssetImage(
-        //               'assets/images/servicescheckmark.png'))),
-        // ),
-        // Column(
-        //   mainAxisAlignment: MainAxisAlignment.center,
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     Text(
-        //       'Your Satisfaction is guaranteed',
-        //       style: TextStyle(
-        //           fontSize: 16.0,
-        //           color: Colors.white,
-        //           fontWeight: FontWeight.bold),
-        //     ),
-        //     Container(
-        //         margin:EdgeInsets.only(right: 10),
-        //         width: 200,
-        //         child: Text(
-        //           'Our Service providers are trained professionals that are well vetted and verified by our team of excellent service and sector leaders',
-        //           maxLines: 5, style: TextStyle(
-        //           fontSize: 10.0, color: Colors.white, ),
-        //         )),
-        //   ],
-        // ),
+  //   height: 100,
+  //   width: 40,
+  //   decoration: const BoxDecoration(
+  //       image: DecorationImage(
+  //           image: AssetImage(
+  //               'assets/images/servicescheckmark.png'))),
+  // ),
+  // Column(
+  //   mainAxisAlignment: MainAxisAlignment.center,
+  //   crossAxisAlignment: CrossAxisAlignment.start,
+  //   children: [
+  //     Text(
+  //       'Your Satisfaction is guaranteed',
+  //       style: TextStyle(
+  //           fontSize: 16.0,
+  //           color: Colors.white,
+  //           fontWeight: FontWeight.bold),
+  //     ),
+  //     Container(
+  //         margin:EdgeInsets.only(right: 10),
+  //         width: 200,
+  //         child: Text(
+  //           'Our Service providers are trained professionals that are well vetted and verified by our team of excellent service and sector leaders',
+  //           maxLines: 5, style: TextStyle(
+  //           fontSize: 10.0, color: Colors.white, ),
+  //         )),
+  //   ],
+  // ),
   //     ],
   //   );
   // }
@@ -74,7 +72,6 @@ class _SatisfactionServicesListState extends State<SatisfactionServicesList> {
     'assets/images/2.png',
     'assets/images/3.png',
     'assets/images/4.png'
-
   ];
 
   @override
@@ -93,148 +90,132 @@ class _SatisfactionServicesListState extends State<SatisfactionServicesList> {
               setState(() {
                 _current = index;
               });
-            }
-
-        ),
+            }),
         items: images.map((i) {
           return Builder(
             builder: (BuildContext context) {
-              return  Container(
+              return Container(
                 width: 1000,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  image: DecorationImage(image: AssetImage(
-                    i
-
-                  ),
-                    fit: BoxFit.cover,
-
-                  )
-                ),
-                );
+                    borderRadius: BorderRadius.circular(10.0),
+                    image: DecorationImage(
+                      image: AssetImage(i),
+                      fit: BoxFit.cover,
+                    )),
+              );
             },
           );
         }).toList(),
       ),
+    );
 
-
-         );
-
-
-
-
-
-
-          //  ListView(
-          //   // This next line does the trick.
-          //   scrollDirection: Axis.horizontal,
-          //   children: <Widget>[
-          //     ...provider.trendingserviceModel!.data!
-          //         .map((e) => listWidget(imageUrl: e.categoryIcon))
-          //         .toList()
-          //     // SizedBox(
-          //     //   width: 25.0,
-          //     // ),
-          //     // InkWell(
-          //     //   onTap: () {
-          //     //     Navigator.push(
-          //     //       context,
-          //     //       new MaterialPageRoute(
-          //     //         builder: (context) => AvailableServicesListScreen(),
-          //     //       ),
-          //     //     );
-          //     //   },
-          //     //   child: Container(
-          //     //     height: 120.0,
-          //     //     width: 90.0,
-          //     //     decoration: BoxDecoration(
-          //     //         image: const DecorationImage(
-          //     //           image: AssetImage('assets/images/Trendingservices1.png'),
-          //     //           fit: BoxFit.fill,
-          //     //         ),
-          //     //         borderRadius: BorderRadius.circular(12.0)),
-          //     //   ),
-          //     // ),
-          //     // SizedBox(
-          //     //   width: 25.0,
-          //     // ),
-          //     // InkWell(
-          //     //   onTap: () {
-          //     //     Navigator.push(
-          //     //       context,
-          //     //       new MaterialPageRoute(
-          //     //         builder: (context) => AvailableServicesListScreen(),
-          //     //       ),
-          //     //     );
-          //     //   },
-          //     //   child: Container(
-          //     //     height: 120.0,
-          //     //     width: 90.0,
-          //     //     decoration: BoxDecoration(
-          //     //         image: const DecorationImage(
-          //     //           image: AssetImage('assets/images/Trendingservices2.png'),
-          //     //           fit: BoxFit.fill,
-          //     //         ),
-          //     //         borderRadius: BorderRadius.circular(12.0)),
-          //     //   ),
-          //     // ),
-          //     // SizedBox(
-          //     //   width: 25.0,
-          //     // ),
-          //     // InkWell(
-          //     //   onTap: () {
-          //     //     Navigator.push(
-          //     //       context,
-          //     //       new MaterialPageRoute(
-          //     //         builder: (context) => AvailableServicesListScreen(),
-          //     //       ),
-          //     //     );
-          //     //   },
-          //     //   child: Container(
-          //     //     height: 120.0,
-          //     //     width: 90.0,
-          //     //     decoration: BoxDecoration(
-          //     //         image: const DecorationImage(
-          //     //           image: AssetImage('assets/images/Trendingservices3.png'),
-          //     //           fit: BoxFit.fill,
-          //     //         ),
-          //     //         borderRadius: BorderRadius.circular(12.0)),
-          //     //   ),
-          //     // ),
-          //     // SizedBox(
-          //     //   width: 25.0,
-          //     // ),
-          //     // InkWell(
-          //     //   onTap: () {
-          //     //     Navigator.push(
-          //     //       context,
-          //     //       new MaterialPageRoute(
-          //     //         builder: (context) => AvailableServicesListScreen(),
-          //     //       ),
-          //     //     );
-          //     //   },
-          //     //   child: Container(
-          //     //     height: 40.0,
-          //     //     width: 80.0,
-          //     //     decoration: BoxDecoration(
-          //     //         image: const DecorationImage(
-          //     //           image: AssetImage('assets/images/Trendingservices4.png'),
-          //     //           fit: BoxFit.fill,
-          //     //         ),
-          //     //         borderRadius: BorderRadius.circular(12.0)),
-          //     //   ),
-          //     // ),
-          //     // SizedBox(
-          //     //   width: 12.0,
-          //     // ),
-          //   ],
-          // );
-
-
-
+    //  ListView(
+    //   // This next line does the trick.
+    //   scrollDirection: Axis.horizontal,
+    //   children: <Widget>[
+    //     ...provider.trendingserviceModel!.data!
+    //         .map((e) => listWidget(imageUrl: e.categoryIcon))
+    //         .toList()
+    //     // SizedBox(
+    //     //   width: 25.0,
+    //     // ),
+    //     // InkWell(
+    //     //   onTap: () {
+    //     //     Navigator.push(
+    //     //       context,
+    //     //       new MaterialPageRoute(
+    //     //         builder: (context) => AvailableServicesListScreen(),
+    //     //       ),
+    //     //     );
+    //     //   },
+    //     //   child: Container(
+    //     //     height: 120.0,
+    //     //     width: 90.0,
+    //     //     decoration: BoxDecoration(
+    //     //         image: const DecorationImage(
+    //     //           image: AssetImage('assets/images/Trendingservices1.png'),
+    //     //           fit: BoxFit.fill,
+    //     //         ),
+    //     //         borderRadius: BorderRadius.circular(12.0)),
+    //     //   ),
+    //     // ),
+    //     // SizedBox(
+    //     //   width: 25.0,
+    //     // ),
+    //     // InkWell(
+    //     //   onTap: () {
+    //     //     Navigator.push(
+    //     //       context,
+    //     //       new MaterialPageRoute(
+    //     //         builder: (context) => AvailableServicesListScreen(),
+    //     //       ),
+    //     //     );
+    //     //   },
+    //     //   child: Container(
+    //     //     height: 120.0,
+    //     //     width: 90.0,
+    //     //     decoration: BoxDecoration(
+    //     //         image: const DecorationImage(
+    //     //           image: AssetImage('assets/images/Trendingservices2.png'),
+    //     //           fit: BoxFit.fill,
+    //     //         ),
+    //     //         borderRadius: BorderRadius.circular(12.0)),
+    //     //   ),
+    //     // ),
+    //     // SizedBox(
+    //     //   width: 25.0,
+    //     // ),
+    //     // InkWell(
+    //     //   onTap: () {
+    //     //     Navigator.push(
+    //     //       context,
+    //     //       new MaterialPageRoute(
+    //     //         builder: (context) => AvailableServicesListScreen(),
+    //     //       ),
+    //     //     );
+    //     //   },
+    //     //   child: Container(
+    //     //     height: 120.0,
+    //     //     width: 90.0,
+    //     //     decoration: BoxDecoration(
+    //     //         image: const DecorationImage(
+    //     //           image: AssetImage('assets/images/Trendingservices3.png'),
+    //     //           fit: BoxFit.fill,
+    //     //         ),
+    //     //         borderRadius: BorderRadius.circular(12.0)),
+    //     //   ),
+    //     // ),
+    //     // SizedBox(
+    //     //   width: 25.0,
+    //     // ),
+    //     // InkWell(
+    //     //   onTap: () {
+    //     //     Navigator.push(
+    //     //       context,
+    //     //       new MaterialPageRoute(
+    //     //         builder: (context) => AvailableServicesListScreen(),
+    //     //       ),
+    //     //     );
+    //     //   },
+    //     //   child: Container(
+    //     //     height: 40.0,
+    //     //     width: 80.0,
+    //     //     decoration: BoxDecoration(
+    //     //         image: const DecorationImage(
+    //     //           image: AssetImage('assets/images/Trendingservices4.png'),
+    //     //           fit: BoxFit.fill,
+    //     //         ),
+    //     //         borderRadius: BorderRadius.circular(12.0)),
+    //     //   ),
+    //     // ),
+    //     // SizedBox(
+    //     //   width: 12.0,
+    //     // ),
+    //   ],
+    // );
   }
 
-  listWidget({imageUrl, text,id}) {
+  listWidget({imageUrl, text, id}) {
     return Card(
       child: Container(
         padding: EdgeInsets.all(6.0),
@@ -265,16 +246,16 @@ class _SatisfactionServicesListState extends State<SatisfactionServicesList> {
                         imageUrl: imageUrl,
                         fit: BoxFit.cover,
                         placeholder: (
-                            context,
-                            url,
-                            ) =>
+                          context,
+                          url,
+                        ) =>
                             Container(
                                 margin: const EdgeInsets.all(10),
                                 child: const SpinKitCircle(
                                   color: Colors.grey,
                                 )),
                         errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                            Image.asset('assets/images/worker-image.jpeg'),
                       ),
                     ),
                   ),

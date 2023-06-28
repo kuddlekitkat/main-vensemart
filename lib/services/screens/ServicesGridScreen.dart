@@ -179,7 +179,8 @@ class _ServicesGridScreenState extends State<ServicesGridScreen> {
                       child: const SpinKitCircle(
                         color: Colors.grey,
                       )),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+              errorWidget: (context, url, error) =>
+                  Image.asset('assets/images/worker-image.jpeg'),
             ),
           ),
         ),

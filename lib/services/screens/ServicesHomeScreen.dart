@@ -40,7 +40,6 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
-  
   static const List<Widget> _widgetOptions = <Widget>[
     ServiceHome(),
     ServicesAppointmentScreen(),
@@ -67,6 +66,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
       _selectedIndex = index;
     });
   }
+
   var presscount = 0;
   @override
   Widget build(BuildContext context) {
@@ -77,11 +77,15 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
         if (presscount == 3) {
           exit(0);
         } else {
-          var snackBar =
-          const SnackBar(content: Text(
-            'Press again to exit app',style: TextStyle(
-            fontSize: 20.0, fontWeight: FontWeight.w400,
-          ),),);
+          var snackBar = const SnackBar(
+            content: Text(
+              'Press again to exit app',
+              style: TextStyle(
+                fontSize: 20.0,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          );
           ScaffoldMessenger.of(context).showSnackBar(snackBar);
           return false;
         }
@@ -112,7 +116,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               label: 'Offers',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person),
+              icon: Icon(Icons.person,),
               label: 'Profile',
             ),
           ],

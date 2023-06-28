@@ -15,8 +15,7 @@ class TrendingServicesImage extends StatelessWidget {
             image: AssetImage(image),
             fit: BoxFit.fill,
           ),
-          borderRadius: BorderRadius.circular(12.0)
-      ),
+          borderRadius: BorderRadius.circular(12.0)),
     );
   }
 }

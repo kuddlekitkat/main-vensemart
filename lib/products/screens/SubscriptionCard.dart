@@ -7,9 +7,14 @@ import '../../models/login_model.dart' as login;
 import '../../models/user_details.dart' as userdetail;
 import '../../models/cart_model.dart';
 import '../../services/provider/provider_services.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class SubscriptionCard extends StatefulWidget {
-  SubscriptionCard({Key? key, required this.cartlist, this.loginModel,this.userDetailsModel})
+  SubscriptionCard(
+      {Key? key,
+      required this.cartlist,
+      this.loginModel,
+      this.userDetailsModel})
       : super(key: key);
   CartList cartlist;
   login.LoginModel? loginModel;
@@ -27,15 +32,14 @@ class _SubscriptionCardState extends State<SubscriptionCard> {
     await dotenv.load(fileName: '.env');
     String? publicKey = dotenv.env['PUBLIC_KEY'];
     payStackClient.initialize(publicKey: publicKey!);
-
   }
 
   final snackBarSuccess = const SnackBar(
-    content: Text('Payment Successful, Thanks for your patronage !'),
+    content: AutoSizeText('Payment Successful, Thanks for your patronage !'),
   );
 
   final snackBarFailure = const SnackBar(
-    content: Text('Payment Unsuccessful, Please Try Again.'),
+    content: AutoSizeText('Payment Unsuccessful, Please Try Again.'),
   );
 
   final String reference =
@@ -55,21 +59,16 @@ class _SubscriptionCardState extends State<SubscriptionCard> {
     if (response.status && response.reference == reference) {
       ScaffoldMessenger.of(context).showSnackBar(snackBarSuccess);
       print('object....$response');
-
     } else {
       ScaffoldMessenger.of(context).showSnackBar(snackBarFailure);
     }
   }
 
-
   void reduceQuantity(id) async {
     setState(() {});
     providerServices?.reduceQuantity(map: {
-      "product_id" : widget.cartlist.productId,
-
+      "product_id": widget.cartlist.productId,
     });
-
-
 
     // Navigator.push(
     //   context,
@@ -79,14 +78,13 @@ class _SubscriptionCardState extends State<SubscriptionCard> {
     // );
   }
 
-
   void addToCart(context) async {
     setState(() {});
     providerServices?.addProductToCart(map: {
-      "product_id" : widget.cartlist.productId,
-      "cat_id" : 1.toString(),
-      "qty" : 1.toString(),
-      "uom_id" : 3.toString(),
+      "product_id": widget.cartlist.productId,
+      "cat_id": 1.toString(),
+      "qty": 1.toString(),
+      "uom_id": 3.toString(),
       "net_amount": 100.toString(),
       "discount": 1.toString()
     }, context: context);
@@ -106,7 +104,7 @@ class _SubscriptionCardState extends State<SubscriptionCard> {
     return GestureDetector(
       onTap: () =>
           // _makePayment(int.parse(widget.cartlist.netAmount.toString())),
-      addToCart(context),
+          addToCart(context),
       child: Container(
         height: screenheight / 4.7,
         decoration: BoxDecoration(

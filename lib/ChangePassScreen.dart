@@ -5,19 +5,17 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ChangePassScreen extends StatefulWidget {
   String userPhone;
-   ChangePassScreen({required this.userPhone});
+  ChangePassScreen({required this.userPhone});
 
   @override
   State<ChangePassScreen> createState() => _ChangePassScreenState();
 }
 
 class _ChangePassScreenState extends State<ChangePassScreen> {
-
-
   TextEditingController controller1 = TextEditingController();
 
   TextEditingController controller2 = TextEditingController();
@@ -45,7 +43,6 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
 
   void changePassword(context) async {
     if (_globalFormKey.currentState!.validate()) {
-
       setState(() {});
       providerServices?.changePassword(map: {
         "phone_number": widget.userPhone,
@@ -53,7 +50,6 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
         "password": controller3.text.trim(),
         "confirm_password": controller4.text.trim(),
       }, context: context);
-
     }
   }
 
@@ -67,7 +63,6 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
     super.initState();
   }
 
-
   @override
   void dispose() {
     errorController!.close();
@@ -77,15 +72,22 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
+    double multiplier = 25.0;
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        // Add your custom logic here
+        Navigator.pop(
+            context); // This line allows the back button to work as expected
+        return false; // This line prevents the default behavior of the back button
+      },
       child: Scaffold(
         backgroundColor: Color.fromRGBO(234, 234, 234, 1),
         appBar: AppBar(
           backgroundColor: Color(0xff1456f1),
-          title:  Text("Change Password"),
-          leading:  IconButton(
-            icon:  CircleAvatar(
+          title: Text("Change Password"),
+          leading: IconButton(
+            icon: CircleAvatar(
               radius: 20,
               backgroundColor: Colors.white,
               child: Center(
@@ -106,20 +108,16 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Form(
-              key: _globalFormKey,
+            key: _globalFormKey,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
-
-
                   SizedBox(height: 14.0),
-                  Text('OTP'),
+                  AutoSizeText('OTP'),
                   SizedBox(height: 8.0),
                   PinCodeTextField(
-
                     appContext: context,
                     pastedTextStyle: TextStyle(
                       color: Colors.green.shade600,
@@ -182,7 +180,7 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                     },
                   ),
                   SizedBox(height: 14.0),
-                  Text('new password'),
+                  AutoSizeText('new password'),
                   SizedBox(height: 4.0),
                   TextFormField(
                     controller: controller3,
@@ -198,21 +196,23 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                           ),
                         ),
                         filled: true,
-                        suffixIcon:  IconButton(
+                        suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
                               _passwordVisible = !_passwordVisible;
                             });
-                          }, icon: Icon(_passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                            color: Theme.of(context).primaryColorDark),),
+                          },
+                          icon: Icon(
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Theme.of(context).primaryColorDark),
+                        ),
                         hintStyle: new TextStyle(color: Colors.grey[600]),
                         fillColor: Colors.white),
-
                   ),
                   SizedBox(height: 14.0),
-                  Text('confirm password'),
+                  AutoSizeText('confirm password'),
                   SizedBox(height: 4.0),
                   TextFormField(
                     controller: controller4,
@@ -228,27 +228,24 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                           ),
                         ),
                         filled: true,
-                        suffixIcon:  IconButton(
+                        suffixIcon: IconButton(
                           onPressed: () {
                             setState(() {
                               _passwordVisible1 = !_passwordVisible1;
                             });
-                          }, icon: Icon(_passwordVisible1
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                            color: Theme.of(context).primaryColorDark),),
+                          },
+                          icon: Icon(
+                              _passwordVisible1
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Theme.of(context).primaryColorDark),
+                        ),
                         hintStyle: new TextStyle(color: Colors.grey[600]),
                         fillColor: Colors.white),
-
                   ),
-
-
-
-
-                  SizedBox(height: 40.0,),
-
-
-
+                  SizedBox(
+                    height: 40.0,
+                  ),
                   GestureDetector(
                     onTap: () => changePassword(context),
                     child: Consumer<ProviderServices>(
@@ -262,24 +259,26 @@ class _ChangePassScreenState extends State<ChangePassScreen> {
                           ),
                           child: value.isLoading == true
                               ? const SpinKitCircle(
-                            color: Colors.white,
-                          )
-                              : const Center(
-                            child: Text(
-                              'Change Password',
-                              style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
+                                )
+                              : Center(
+                                  child: AutoSizeText(
+                                    'Change Password',
+                                    textScaleFactor:
+                                        MediaQuery.textScaleFactorOf(context),
+                                    style: TextStyle(
+                                        fontSize: 1.5 *
+                                            MediaQuery.of(context).size.height *
+                                            0.01,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                         ),
                       ),
                     ),
                   ),
                 ],
-
-
               ),
             ),
           ),

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -68,7 +69,7 @@ class CompletedAppointmentCard extends StatelessWidget {
                                 color: Colors.grey,
                               )),
                       errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                          Image.asset('assets/images/worker-image.jpeg'),
                     ),
                   ),
                 ),
@@ -81,18 +82,21 @@ class CompletedAppointmentCard extends StatelessWidget {
                   children: [
                     Container(
                       width: MediaQuery.of(context).size.width / 2.5,
-                      child: Text(
+                      child: AutoSizeText(
                         completedBooking?.name ?? '',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18.0),
+                          fontWeight: FontWeight.bold,
+                          fontSize:
+                              1.0 * MediaQuery.of(context).size.height * 0.01,
+                        ),
                       ),
-                      margin: EdgeInsets.symmetric(vertical: 12.0),
+                      margin: EdgeInsets.symmetric(vertical: 5.0),
                     ),
                     Text(occupation),
                   ],
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width / 3.6,
+                  width: MediaQuery.of(context).size.width / 10,
                 ),
                 TextButton(
                   style: const ButtonStyle(

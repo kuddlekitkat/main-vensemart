@@ -22,7 +22,7 @@ class OnboardingScreen extends StatelessWidget {
                   topLeft: Radius.circular(20.0),
                 ),
                 image: DecorationImage(
-                    image: AssetImage('assets/images/Onboarding.png'),
+                    image: AssetImage('assets/images/onb.png'),
                     fit: BoxFit.cover)),
           ),
         ),
@@ -41,10 +41,10 @@ class OnboardingScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                const Text(
+                Text(
                   'Welcome to Vensemart',
                   style: TextStyle(
-                      fontSize: 22.0,
+                      fontSize: 1.5 * MediaQuery.of(context).size.height * 0.01,
                       color: Color(0xff1456f1),
                       fontWeight: FontWeight.bold),
                 ),
@@ -65,7 +65,7 @@ class OnboardingScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(40.0)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         SizedBox(
                           width: 12.0,
                         ),
@@ -78,7 +78,9 @@ class OnboardingScreen extends StatelessWidget {
                           'Sign in with email',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18.0,
+                              fontSize: 1.5 *
+                                  MediaQuery.of(context).size.height *
+                                  0.01,
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(
@@ -111,7 +113,7 @@ class OnboardingScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(40.0)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: const [
+                      children: [
                         SizedBox(
                           width: 12.0,
                         ),
@@ -124,7 +126,9 @@ class OnboardingScreen extends StatelessWidget {
                           'Sign up as a new user',
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 18.0,
+                              fontSize: 1.5 *
+                                  MediaQuery.of(context).size.height *
+                                  0.01,
                               fontWeight: FontWeight.bold),
                         ),
                         SizedBox(

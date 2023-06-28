@@ -37,7 +37,7 @@ class _CartCardState extends State<CartCard> {
   void addToCart(context) async {
     setState(() {});
     _providerServices?.addProductToCart(map: {
-      "product_id": 296.toString(),
+      "product_id": widget.id.toString(),
       "cat_id": 1.toString(),
       "qty": 1.toString(),
       "uom_id": 3.toString(),
@@ -137,7 +137,8 @@ class _CartCardState extends State<CartCard> {
                       Text(
                         "${widget.name}",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize:
+                              1.0 * MediaQuery.of(context).size.height * 0.01,
                           color: Colors.black,
                         ),
                       ),

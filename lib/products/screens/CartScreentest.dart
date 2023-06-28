@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +9,7 @@ import 'package:vensemart/services/provider/provider_services.dart';
 import '../../services/provider/provider_services.dart';
 
 class CarttestScreen extends StatefulWidget {
-   CarttestScreen({Key? key}) : super(key: key);
+  CarttestScreen({Key? key}) : super(key: key);
 
   @override
   State<CarttestScreen> createState() => _CarttestScreenState();
@@ -16,10 +17,6 @@ class CarttestScreen extends StatefulWidget {
 
 class _CarttestScreenState extends State<CarttestScreen> {
   ProviderServices? providerServices;
-
-
-
-
 
   @override
   void initState() {
@@ -35,8 +32,8 @@ class _CarttestScreenState extends State<CarttestScreen> {
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(247, 248, 254, 5),
         elevation: 0.00,
-        title:
-        Center(child: Text('Cart', style: TextStyle(color: Colors.black))),
+        title: Center(
+            child: AutoSizeText('Cart', style: TextStyle(color: Colors.black))),
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
@@ -73,19 +70,26 @@ class _CarttestScreenState extends State<CarttestScreen> {
               builder: (_, provider, __) {
                 print('object ${provider.cartModel?.data}');
                 if (provider.cartModel?.data == null) {
-                  return Center(child: SpinKitCircle(color: Colors.blue,));
+                  return Center(
+                      child: SpinKitCircle(
+                    color: Colors.blue,
+                  ));
                 } else {
-                  return   Container(
+                  return Container(
                     height: MediaQuery.of(context).size.height / 1.2,
                     child: ListView.builder(
                         itemCount: provider.cartModel!.data!.cartList!.length,
                         itemBuilder: ((context, index) {
                           return CartCard(
-                            id :  provider.cartModel?.data?.cartList?[index].id,
-                            image: '${provider.cartModel?.data?.cartList?[index].productImage}',
-                            name: '${provider.cartModel?.data?.cartList?[index].productName}',
-                            amount: '${provider.cartModel?.data?.cartList?[index].netAmount}',
-                            quantity: '${provider.cartModel?.data?.cartList?[index].quantity}',
+                            id: provider.cartModel?.data?.cartList?[index].id,
+                            image:
+                                '${provider.cartModel?.data?.cartList?[index].productImage}',
+                            name:
+                                '${provider.cartModel?.data?.cartList?[index].productName}',
+                            amount:
+                                '${provider.cartModel?.data?.cartList?[index].netAmount}',
+                            quantity:
+                                '${provider.cartModel?.data?.cartList?[index].quantity}',
                           );
                         })),
                   );

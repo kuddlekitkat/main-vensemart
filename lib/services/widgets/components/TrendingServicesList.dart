@@ -43,10 +43,9 @@ class _TrendingServicesListState extends State<TrendingServicesList> {
                   children: [
                     listWidget(
                         id: provider.trendingserviceModel?.data?[index].id,
-                        imageUrl: provider
-                            .trendingserviceModel?.data?[index].profile,
-                        text: provider
-                            .trendingserviceModel?.data?[index].name),
+                        imageUrl:
+                            provider.trendingserviceModel?.data?[index].profile,
+                        text: provider.trendingserviceModel?.data?[index].name),
                   ],
                 );
               }));
@@ -54,7 +53,7 @@ class _TrendingServicesListState extends State<TrendingServicesList> {
           //  ListView(
           //   // This next line does the trick.
           //   scrollDirection: Axis.horizontal,
-          //   children: <Widget>[
+          //   children: <Widget>
           //     ...provider.trendingserviceModel!.data!
           //         .map((e) => listWidget(imageUrl: e.categoryIcon))
           //         .toList()
@@ -166,7 +165,7 @@ class _TrendingServicesListState extends State<TrendingServicesList> {
     );
   }
 
-  listWidget({imageUrl, text,id}) {
+  listWidget({imageUrl, text, id}) {
     return Card(
       child: Container(
         padding: EdgeInsets.all(6.0),
@@ -197,23 +196,28 @@ class _TrendingServicesListState extends State<TrendingServicesList> {
                         imageUrl: imageUrl,
                         fit: BoxFit.cover,
                         placeholder: (
-                            context,
-                            url,
-                            ) =>
+                          context,
+                          url,
+                        ) =>
                             Container(
                                 margin: const EdgeInsets.all(10),
                                 child: const SpinKitCircle(
                                   color: Colors.grey,
                                 )),
                         errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                            Image.asset('assets/images/worker-image.jpeg'),
                       ),
                     ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  Text(text)
+                  Text(
+                    text,
+                    style: TextStyle(
+                        fontSize:
+                            1.0 * MediaQuery.of(context).size.height * 0.01),
+                  )
                 ],
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/models/cart_model.dart';
@@ -32,18 +33,62 @@ class _CardCState extends State<CardC> {
   void initState() {
     _providerServices = Provider.of<ProviderServices>(context, listen: false);
     _providerServices?.cartlist();
+
     super.initState();
   }
 
   void _addQuantity(context) async {
+    setState(() {});
     print('addition working ${widget.id}');
     _providerServices?.addQuantity(map: {
       "product_id": widget.id.toString(),
     }, context: context);
+    setState(() {});
 
-    _providerServices?.addQuantity(map: {
-      "product_id": widget.id,
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+
+    ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+      content: AutoSizeText('Increasing item quantity..please wait'),
+      duration: const Duration(seconds: 10),
+      action: SnackBarAction(
+        label: 'ACTION',
+        onPressed: () {},
+      ),
+    ));
+
+    _providerServices?.cartlist();
+    // _providerServices?.addQuantity(map: {
+    //   "product_id": widget.id,
+    // }, context: context);
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => CartScreen(),
+    //   ),
+    // );
+  }
+
+  void _removeProduct(context) async {
+    setState(() {});
+    print('addition working ${widget.id}');
+    _providerServices?.removeProductToCart(map: {
+      "product_id": widget.id.toString(),
     }, context: context);
+    setState(() {});
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+      content: AutoSizeText('Removing Product,please wait'),
+      duration: const Duration(seconds: 10),
+      action: SnackBarAction(
+        label: 'ACTION',
+        onPressed: () {},
+      ),
+    ));
+
+    _providerServices?.cartlist();
+    // _providerServices?.addQuantity(map: {
+    //   "product_id": widget.id,
+    // }, context: context);
     // Navigator.push(
     //   context,
     //   MaterialPageRoute(
@@ -57,6 +102,17 @@ class _CardCState extends State<CardC> {
     _providerServices?.reduceQuantity(map: {
       "product_id": widget.id.toString(),
     });
+    setState(() {});
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+      content: AutoSizeText('reducing item quantity..please wait'),
+      duration: const Duration(seconds: 10),
+      action: SnackBarAction(
+        label: 'ACTION',
+        onPressed: () {},
+      ),
+    ));
+    _providerServices?.cartlist();
     //
     // print('reduction working');
     // _providerServices?.reduceQuantity(map: {
@@ -128,7 +184,8 @@ class _CardCState extends State<CardC> {
                       Text(
                         "${widget.name}",
                         style: TextStyle(
-                          fontSize: 18,
+                          fontSize:
+                              1.0 * MediaQuery.of(context).size.height * 0.01,
                           color: Colors.black,
                         ),
                       ),
@@ -141,7 +198,7 @@ class _CardCState extends State<CardC> {
                         style: TextStyle(fontSize: 15, color: Colors.black),
                       ),
                       Text(
-                        "${widget.amount}",
+                        "NGN ${widget.amount}",
                         style: TextStyle(
                             fontSize: 20,
                             color: Colors.black,
@@ -157,8 +214,7 @@ class _CardCState extends State<CardC> {
                     Padding(
                       padding: EdgeInsets.only(top: 11.0),
                       child: InkWell(
-                        onTap: () => printSomething(
-                            widget.cardList.id.toString(), context),
+                        onTap: () => _removeProduct(context),
                         child: Container(
                           width: MediaQuery.of(context).size.width / 4.5,
                           height: MediaQuery.of(context).size.height / 24,

@@ -7,6 +7,7 @@ import 'package:vensemart/ForgotPasswordScreen.dart';
 import 'package:vensemart/apiservices/validator.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
 import 'dart:io';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'RegisterScreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -106,22 +107,22 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(left: 12.0, bottom: 4.0),
-                child: const Text(
+                child: Text(
                   'Welcome',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 25,
+                      fontSize: 3 * MediaQuery.of(context).size.height * 0.01,
                       color: Colors.white),
                 ),
               ),
               Container(
                 alignment: Alignment.centerLeft,
                 margin: const EdgeInsets.only(left: 12.0, bottom: 4.0),
-                child: const Text(
+                child: Text(
                   'Back',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 25,
+                      fontSize: 3 * MediaQuery.of(context).size.height * 0.01,
                       color: Colors.white),
                 ),
               ),
@@ -139,14 +140,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(
-                      height:15.0,
+                      height: 15.0,
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 22.0),
-                      child: Text('Email'),
+                      child: AutoSizeText('Email'),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height/9,
+                      height: MediaQuery.of(context).size.height / 9,
                       child: Container(
                         margin: const EdgeInsets.all(12.0),
                         child: TextFormField(
@@ -166,16 +167,17 @@ class _LoginScreenState extends State<LoginScreen> {
                               hintText: 'email',
                               prefixIcon: const Icon(Icons.email_rounded),
                               hintStyle: TextStyle(color: Colors.grey[600]),
-                              fillColor: const Color.fromRGBO(250, 250, 254, 1)),
+                              fillColor:
+                                  const Color.fromRGBO(250, 250, 254, 1)),
                         ),
                       ),
                     ),
                     const Padding(
                       padding: EdgeInsets.symmetric(horizontal: 22.0),
-                      child: Text('password'),
+                      child: AutoSizeText('password'),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height/9,
+                      height: MediaQuery.of(context).size.height / 9,
                       child: Container(
                         margin: const EdgeInsets.all(12.0),
                         child: TextFormField(
@@ -195,39 +197,45 @@ class _LoginScreenState extends State<LoginScreen> {
                               filled: true,
                               hintText: 'password',
                               prefixIcon: const Icon(Icons.lock),
-                              suffixIcon:IconButton(
+                              suffixIcon: IconButton(
                                 onPressed: () {
                                   setState(() {
                                     _passwordVisible = !_passwordVisible;
                                   });
-                                }, icon: Icon(_passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                                  color: Theme.of(context).primaryColorDark),),
+                                },
+                                icon: Icon(
+                                    _passwordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: Theme.of(context).primaryColorDark),
+                              ),
                               hintStyle: TextStyle(color: Colors.grey[600]),
-                              fillColor: const Color.fromRGBO(250, 250, 254, 1)),
+                              fillColor:
+                                  const Color.fromRGBO(250, 250, 254, 1)),
                         ),
                       ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
-                      children:  [
+                      children: [
                         Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 25.0, vertical: 2.0),
                           child: TextButton(
-                            onPressed: (){
+                            onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) =>  ForgotPasswordScreen(),
+                                  builder: (context) => ForgotPasswordScreen(),
                                 ),
                               );
                             },
-                            child: const Text(
+                            child: Text(
                               'Forgot password?',
                               style: TextStyle(
-                                  fontSize: 18.0,
+                                  fontSize: 1.5 *
+                                      MediaQuery.of(context).size.height *
+                                      0.01,
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xff1456f1)),
                             ),
@@ -248,17 +256,17 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             child: value.isLoading == true
                                 ? const SpinKitCircle(
-                              color: Colors.white,
-                            )
-                                : const Center(
-                              child: Text(
-                                'Sign in',
-                                style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ),
+                                  )
+                                : const Center(
+                                    child: Text(
+                                      'Sign in',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
                           ),
                         ),
                       ),
@@ -269,7 +277,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text('Don\'t have an account? ',
+                        const AutoSizeText('Don\'t have an account? ',
                             style: TextStyle(
                                 fontWeight: FontWeight.normal, fontSize: 20.0)),
                         GestureDetector(

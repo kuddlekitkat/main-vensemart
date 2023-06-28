@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 enum ProfileOptionAction {
   viewImage,
@@ -41,7 +42,7 @@ class ImagePickerHandler {
                       const Divider(),
                       ListTile(
                           title: const Center(
-                            child: Text('Take a photo'),
+                            child: AutoSizeText('Take a photo'),
                           ),
                           onTap: () => Navigator.pop(
                               context, ProfileOptionAction.profileCamera)),
@@ -53,7 +54,7 @@ class ImagePickerHandler {
                           padding: const EdgeInsets.all(12.0),
                           color: Colors.grey[200],
                           child: const Center(
-                            child: Text('Cancel'),
+                            child: AutoSizeText('Cancel'),
                           ),
                         ),
                       ),
@@ -66,16 +67,16 @@ class ImagePickerHandler {
           builder: (context) => CupertinoActionSheet(
                   actions: <Widget>[
                     CupertinoButton(
-                        child: const Text('Pick from library'),
+                        child: const AutoSizeText('Pick from library'),
                         onPressed: () => Navigator.pop(
                             context, ProfileOptionAction.library)),
                     CupertinoButton(
-                        child: const Text('Take a photo'),
+                        child: const AutoSizeText('Take a photo'),
                         onPressed: () => Navigator.pop(
                             context, ProfileOptionAction.profileCamera)),
                   ],
                   cancelButton: CupertinoButton(
-                      child: const Text('Cancel'),
+                      child: const AutoSizeText('Cancel'),
                       onPressed: () => Navigator.pop(context))));
     }
 

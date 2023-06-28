@@ -64,7 +64,12 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        // Add your custom logic here
+        Navigator.pop(
+            context); // This line allows the back button to work as expected
+        return false; // This line prevents the default behavior of the back button
+      },
       child: Scaffold(
         backgroundColor: Color.fromRGBO(234, 234, 234, 1),
         appBar: AppBar(
@@ -100,22 +105,24 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.only(left: 12.0, bottom: 4.0),
-                  child: const Text(
+                  child: Text(
                     'Forgot',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 40,
+                        fontSize:
+                            2.5 * MediaQuery.of(context).size.height * 0.01,
                         color: Color(0xff1456f1)),
                   ),
                 ),
                 Container(
                   alignment: Alignment.centerLeft,
                   margin: const EdgeInsets.only(left: 12.0, bottom: 4.0),
-                  child: const Text(
+                  child: Text(
                     'Password ?',
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 40,
+                        fontSize:
+                            2.5 * MediaQuery.of(context).size.height * 0.01,
                         color: Color(0xff1456f1)),
                   ),
                 ),
@@ -170,9 +177,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ? const SpinKitCircle(
                                 color: Colors.white,
                               )
-                            : const Center(
+                            : Center(
                                 child: Text(
                                   'Change Password',
+                                  textScaleFactor:
+                                      MediaQuery.textScaleFactorOf(context),
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.0,

@@ -3,9 +3,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import '../provider/provider_services.dart';
-
 
 class RateScreen extends StatefulWidget {
   final String bookingId;
@@ -16,7 +15,6 @@ class RateScreen extends StatefulWidget {
 }
 
 class _RateScreenState extends State<RateScreen> {
-
   ProviderServices? providerServices;
   var rating;
 
@@ -25,7 +23,6 @@ class _RateScreenState extends State<RateScreen> {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
     super.initState();
   }
-
 
   void rateCustomer(context) async {
     if (true) {
@@ -37,7 +34,6 @@ class _RateScreenState extends State<RateScreen> {
       Navigator.of(context).popUntil((route) => route.isFirst);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,67 +62,66 @@ class _RateScreenState extends State<RateScreen> {
       // ),
       body: Container(
         color: Colors.white,
-        child: Column(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          AutoSizeText(
+            'Rate your experience',
+            style: TextStyle(
+                fontSize: 20.0,
+                decoration: TextDecoration.none,
+                color: Colors.black),
+          ),
+          SizedBox(height: 10),
+          RatingBar.builder(
+            initialRating: 3,
+            minRating: 1,
+            direction: Axis.horizontal,
+            allowHalfRating: true,
+            itemCount: 5,
+            itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+            itemBuilder: (context, _) => const Icon(
+              Icons.star,
+              color: Colors.amber,
+            ),
+            onRatingUpdate: (rating) {
+              rating = rating;
+              print(rating);
+            },
+          ),
+          SizedBox(height: 20),
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Rate your experience',style: TextStyle(fontSize: 20.0,decoration: TextDecoration.none,color: Colors.black),),
-              SizedBox(height: 10),
-              RatingBar.builder(
-                initialRating: 3,
-                minRating: 1,
-                direction: Axis.horizontal,
-                allowHalfRating: true,
-                itemCount: 5,
-                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
-                itemBuilder: (context, _) => const Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                ),
-                onRatingUpdate: (rating) {
-                  rating = rating;
-                  print(rating);
-                },
-              ),
-
-              SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () => rateCustomer(context),
-                    child: Consumer<ProviderServices>(
-                      builder: (_, value, __) => Center(
-                        child: Container(
-                          height: MediaQuery.of(context).size.height / 14,
-                          width: MediaQuery.of(context).size.width / 1.10,
-                          decoration: BoxDecoration(
-                            color: const Color(0xff1456f1),
-                            borderRadius: BorderRadius.circular(90.0),
-                          ),
-                          child: value.isLoading == true
-                              ? const SpinKitCircle(
-                            color: Colors.white,
-                          )
-                              : const Center(
-                            child: Text(
-                              'Rate Experience',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 20.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
+              GestureDetector(
+                onTap: () => rateCustomer(context),
+                child: Consumer<ProviderServices>(
+                  builder: (_, value, __) => Center(
+                    child: Container(
+                      height: MediaQuery.of(context).size.height / 14,
+                      width: MediaQuery.of(context).size.width / 1.10,
+                      decoration: BoxDecoration(
+                        color: const Color(0xff1456f1),
+                        borderRadius: BorderRadius.circular(90.0),
                       ),
+                      child: value.isLoading == true
+                          ? const SpinKitCircle(
+                              color: Colors.white,
+                            )
+                          : const Center(
+                              child: Text(
+                                'Rate Experience',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
                     ),
                   ),
-                ],
-              )
-
-
-            ]
-
-        ),
+                ),
+              ),
+            ],
+          )
+        ]),
       ),
     );
   }

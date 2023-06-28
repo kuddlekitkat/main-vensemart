@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:vensemart/models/upcoming_bookings.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class AppointmentCard extends StatelessWidget {
   final String image;
@@ -65,7 +66,7 @@ class AppointmentCard extends StatelessWidget {
                                 color: Colors.grey,
                               )),
                       errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                          Image.asset('assets/images/worker-image.jpeg'),
                     ),
                   ),
                 ),
@@ -80,11 +81,15 @@ class AppointmentCard extends StatelessWidget {
                       child: Text(
                         '${upcomingBooking?.name ?? 'James'}',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18.0),
+                          fontWeight: FontWeight.bold,
+                          fontSize:
+                              1.0 * MediaQuery.of(context).size.height * 0.01,
+                        ),
                       ),
                       margin: EdgeInsets.symmetric(vertical: 12.0),
                     ),
-                    Text('${upcomingBooking?.categoryName ?? 'Barbing'}'),
+                    AutoSizeText(
+                        '${upcomingBooking?.categoryName ?? 'Barbing'}'),
                     TextButton(
                         onPressed: () {
                           FlutterPhoneDirectCaller.callNumber(

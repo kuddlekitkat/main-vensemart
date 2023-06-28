@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 
 class RoughLoginScreen extends StatefulWidget {
   static var routeName = '/login';
@@ -11,7 +11,6 @@ class RoughLoginScreen extends StatefulWidget {
 }
 
 class _RoughLoginScreenState extends State<RoughLoginScreen> {
-
   @override
   Widget build(BuildContext context) {
     var isChecked = false;
@@ -38,27 +37,41 @@ class _RoughLoginScreenState extends State<RoughLoginScreen> {
           children: [
             Container(
               alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(left: 12.0,bottom: 4.0),
-              child: Text('Welcome',style: TextStyle(fontWeight:FontWeight.bold,fontSize: 40,color: Colors.white),),
+              margin: EdgeInsets.only(left: 12.0, bottom: 4.0),
+              child: AutoSizeText(
+                'Welcome',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 2.5 * MediaQuery.of(context).size.height * 0.01,
+                    color: Colors.white),
+              ),
             ),
-
             Container(
               alignment: Alignment.centerLeft,
-              margin: EdgeInsets.only(left: 12.0,bottom: 4.0),
-              child: Text('Back',style: TextStyle(fontWeight:FontWeight.bold,fontSize: 40,color: Colors.white),),
+              margin: EdgeInsets.only(left: 12.0, bottom: 4.0),
+              child: AutoSizeText(
+                'Back',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 2.5 * MediaQuery.of(context).size.height * 0.01,
+                    color: Colors.white),
+              ),
             ),
-
             Container(
-              height: MediaQuery.of(context).size.height/1.8,
+              height: MediaQuery.of(context).size.height / 1.8,
               width: double.infinity,
               decoration: const BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0),
-                  topRight: Radius.circular(40.0),),),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40.0),
+                  topRight: Radius.circular(40.0),
+                ),
+              ),
               child: Column(
                 children: [
-                  SizedBox(height: 25.0,),
-
+                  SizedBox(
+                    height: 25.0,
+                  ),
                   Container(
                     margin: EdgeInsets.all(12.0),
                     child: TextFormField(
@@ -70,12 +83,9 @@ class _RoughLoginScreenState extends State<RoughLoginScreen> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                             borderSide: BorderSide(width: 0.8),
-                          )
-                      ),
+                          )),
                     ),
                   ),
-
-
                   Container(
                     margin: EdgeInsets.all(12.0),
                     child: TextFormField(
@@ -87,53 +97,41 @@ class _RoughLoginScreenState extends State<RoughLoginScreen> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12.0),
                             borderSide: BorderSide(width: 0.8),
-                          )
-                      ),
+                          )),
                     ),
                   ),
-
-
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-
                       Padding(
                         padding: const EdgeInsets.all(10.0),
-                        child: Text('Forgot password'),
+                        child: AutoSizeText('Forgot password'),
                       ),
-
                     ],
                   ),
-
-
                   Container(
-                    height: screenHeight/11,
-                    width: screenWidth/1.02,
+                    height: screenHeight / 11,
+                    width: screenWidth / 1.02,
                     decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(40.0),
-
                     ),
-                    child: Center(child: Text('Welcome')),
+                    child: Center(child: AutoSizeText('Welcome')),
                   ),
-
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('don\'t have an account?'),
-                      TextButton(onPressed: (){},child: Text('signup'),)
+                      AutoSizeText('don\'t have an account?'),
+                      TextButton(
+                        onPressed: () {},
+                        child: AutoSizeText('signup'),
+                      )
                     ],
                   ),
                 ],
               ),
             ),
-
           ],
-        )
-
-    );
+        ));
   }
 }
-

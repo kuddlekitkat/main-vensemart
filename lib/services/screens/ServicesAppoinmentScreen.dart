@@ -69,7 +69,8 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
                         height: 12.0,
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 13.0),
+                        padding:
+                            const EdgeInsets.only(bottom: 13.0, left: 12.0),
                         child: Center(
                           child: AdvancedSegment(
                             controller: _selectedSegment_05,
@@ -79,13 +80,17 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
                               'cancelled': 'Cancelled',
                             },
                             backgroundColor: Colors.white10,
-                            activeStyle: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                            inactiveStyle: const TextStyle(
-                              color: Colors.grey,
-                            ),
+                            activeStyle: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w400,
+                                fontSize: 1 *
+                                    MediaQuery.of(context).size.height *
+                                    0.01),
+                            inactiveStyle: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 1 *
+                                    MediaQuery.of(context).size.height *
+                                    0.01),
                             sliderColor: Colors.blueAccent,
                           ),
                         ),
@@ -132,13 +137,13 @@ class _ServicesAppointmentScreenState extends State<ServicesAppointmentScreen> {
           )),
           Padding(
             padding: const EdgeInsets.symmetric(
-              horizontal: 10,
+              horizontal: 15,
             ),
             child: Text(
               label,
               style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+                fontSize: 10,
+                fontWeight: FontWeight.w200,
                 color: color,
               ),
             ),

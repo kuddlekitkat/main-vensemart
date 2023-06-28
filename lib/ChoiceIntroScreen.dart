@@ -37,7 +37,7 @@ class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
             'Choose your shopping style',
             style: TextStyle(
                 color: Colors.black,
-                fontSize: 16,
+                fontSize: 1.5 * MediaQuery.of(context).size.height * 0.01,
                 decoration: TextDecoration.none),
           ),
           SizedBox(
@@ -59,7 +59,7 @@ class _ChoiceIntroScreenState extends State<ChoiceIntroScreen> {
                       Navigator.push(
                         context,
                         new MaterialPageRoute(
-                          builder: (context) => ProductComingSoonScreen(),
+                          builder: (context) =>  ProductsHomeScreen(),
                         ),
                       );
                     },

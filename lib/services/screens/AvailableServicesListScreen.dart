@@ -8,8 +8,10 @@ import 'package:provider/provider.dart';
 import 'package:vensemart/services/widgets/components/AvailableServicesBottomListView.dart';
 import 'package:vensemart/services/widgets/components/ServiceCard.dart';
 import 'package:intl/intl.dart';
+import '../../theme/app_style.dart';
 import '../provider/provider_services.dart';
 import 'ServiceDeliveryDetailScreen.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class AvailableServicesListScreen extends StatefulWidget {
   static const routeName = '/available-services';
@@ -49,10 +51,10 @@ class _AvailableServicesListScreenState
     BottomPicker.date(
       title: 'Set your Date',
       dateOrder: DatePickerDateOrder.dmy,
-      pickerTextStyle: const TextStyle(
+      pickerTextStyle: TextStyle(
         color: Colors.blue,
         fontWeight: FontWeight.bold,
-        fontSize: 12,
+        fontSize: 1.5 * MediaQuery.of(context).size.height * 0.01,
       ),
       titleStyle: const TextStyle(
         fontWeight: FontWeight.bold,
@@ -97,7 +99,12 @@ class _AvailableServicesListScreenState
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        // Add your custom logic here
+        Navigator.pop(
+            context); // This line allows the back button to work as expected
+        return false; // This line prevents the default behavior of the back button
+      },
       child: MaterialApp(
         home: Scaffold(
           backgroundColor: Color.fromRGBO(234, 234, 234, 3),
@@ -232,7 +239,8 @@ class _AvailableServicesListScreenState
                         child: const SpinKitCircle(
                           color: Colors.grey,
                         )),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                errorWidget: (context, url, error) =>
+                    Image.asset('assets/images/worker-image.jpeg'),
               ),
             ),
             Container(
@@ -261,7 +269,9 @@ class _AvailableServicesListScreenState
                           Text(
                             "Amarachi",
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 1.5 *
+                                    MediaQuery.of(context).size.height *
+                                    0.01,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold),
                           ),
@@ -288,7 +298,10 @@ class _AvailableServicesListScreenState
                               Text(
                                 'hello',
                                 style: TextStyle(
-                                    fontSize: 12, color: Colors.grey[700]),
+                                    fontSize: 1.5 *
+                                        MediaQuery.of(context).size.height *
+                                        0.01,
+                                    color: Colors.grey[700]),
                               ),
                             ],
                           ),
@@ -338,7 +351,9 @@ class _AvailableServicesListScreenState
                               SizedBox(
                                 height: 40,
                               ),
-                              // Text(name.toString(),style: TextStyle(fontSize: 18,color: Colors.black,fontWeight: FontWeight.bold),),
+                              // Text(name.toString(),style: TextStyle( fontSize: 1.5 *
+                              // MediaQuery.of(context).size.height *
+                              // 0.01,color: Colors.black,fontWeight: FontWeight.bold),),
                             ],
                           ),
                         ),
@@ -438,7 +453,7 @@ class _AvailableServicesListScreenState
                                                   ),
                                                 ),
                                                 filled: true,
-                                                prefixIcon: Text(' '),
+                                                prefixIcon: AutoSizeText(' '),
                                                 hintText: ' DD-MM-YY',
                                                 suffixIcon: GestureDetector(
                                                     onTap: () =>
@@ -463,7 +478,8 @@ class _AvailableServicesListScreenState
                                           children: [
                                             _DatePickerItem(
                                               children: <Widget>[
-                                                const Text('Time Entry'),
+                                                const AutoSizeText(
+                                                    'Time Entry'),
                                                 CupertinoButton(
                                                   // Display a CupertinoDatePicker in time picker mode.
                                                   onPressed: () =>
@@ -605,13 +621,10 @@ class _AvailableServicesListScreenState
                           decoration: BoxDecoration(
                               color: Colors.blueAccent,
                               borderRadius: BorderRadius.circular(40.0)),
-                          child: const Center(
+                          child: Center(
                               child: Text(
                             'Book now',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
+                            style: AppStyle.txtRubikRomanMedium12,
                           )),
                         ),
                       ),

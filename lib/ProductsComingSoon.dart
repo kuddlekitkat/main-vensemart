@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class ProductComingSoonScreen extends StatelessWidget {
   const ProductComingSoonScreen({Key? key}) : super(key: key);
@@ -6,7 +7,12 @@ class ProductComingSoonScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        // Add your custom logic here
+        Navigator.pop(
+            context); // This line allows the back button to work as expected
+        return false; // This line prevents the default behavior of the back button
+      },
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(234, 234, 234, 1),
         appBar: AppBar(
@@ -31,8 +37,8 @@ class ProductComingSoonScreen extends StatelessWidget {
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
-       body: Center(child: Text('Products Coming Soon')),
-    ),
+        body: Center(child: AutoSizeText('Products Coming Soon')),
+      ),
     );
   }
 }

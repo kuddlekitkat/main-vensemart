@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class TermsScreen extends StatelessWidget {
   const TermsScreen({Key? key}) : super(key: key);
@@ -8,7 +9,12 @@ class TermsScreen extends StatelessWidget {
     var screenheight = MediaQuery.of(context).size.height;
     var screenwidth = MediaQuery.of(context).size.width;
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        // Add your custom logic here
+        Navigator.pop(
+            context); // This line allows the back button to work as expected
+        return false; // This line prevents the default behavior of the back button
+      },
       child: Scaffold(
         backgroundColor: Color.fromRGBO(234, 234, 234, 3),
         appBar: AppBar(
@@ -53,7 +59,7 @@ class TermsScreen extends StatelessWidget {
                           margin: EdgeInsets.all(12.0),
                           color: Colors.white,
                           child: Column(children: const [
-                            Text('User Terms and Conditions'),
+                            AutoSizeText('User Terms and Conditions'),
 
                             SizedBox(
                               height: 12.0,
@@ -72,12 +78,12 @@ class TermsScreen extends StatelessWidget {
                             SizedBox(
                               height: 30.0,
                             ),
-                            // Text('Summary of Service'),
+                            // AutoSizeText('Summary of Service'),
                             //
                             // SizedBox(height: 12.0,),
-                            // Text('The Vensemart is a platform that connects the various users to another for the purpose of supplies, distribution, service provision, repairs, installations, fittings and other ancillary purposes. The services to be provided includes: Solar and Inverter Installations, Electronic and Electrical Repairs, Electrical materials, Spare parts, Mechanical know-how, Plumbing work, '
+                            // AutoSizeText('The Vensemart is a platform that connects the various users to another for the purpose of supplies, distribution, service provision, repairs, installations, fittings and other ancillary purposes. The services to be provided includes: Solar and Inverter Installations, Electronic and Electrical Repairs, Electrical materials, Spare parts, Mechanical know-how, Plumbing work, '
                             //     'Plumbing materials, Carpentry and materials, Building materials, CCTV Installation and others.',style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300)),
-                            Text('Acceptance of Terms'),
+                            AutoSizeText('Acceptance of Terms'),
                             SizedBox(
                               height: 12.0,
                             ),

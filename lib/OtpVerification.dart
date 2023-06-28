@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'services/provider/provider_services.dart';
 
 class OtpVerification extends StatefulWidget {
@@ -51,7 +51,7 @@ class _OtpVerificationState extends State<OtpVerification> {
 
     providerServices?.sendOTP(context);
     ScaffoldMessenger.of(context!).showSnackBar(const SnackBar(
-      content: Text('OTP Resent'),
+      content: AutoSizeText('OTP Resent'),
       duration: Duration(seconds: 10),
     ));
   }
@@ -202,9 +202,9 @@ class _OtpVerificationState extends State<OtpVerification> {
                 padding: const EdgeInsets.symmetric(horizontal: 30.0),
                 child: Text(
                   hasError ? "*Please fill up all the cells properly" : "",
-                  style: const TextStyle(
+                  style: TextStyle(
                       color: Colors.white,
-                      fontSize: 12,
+                      fontSize: 1.5 * MediaQuery.of(context).size.height * 0.01,
                       fontWeight: FontWeight.w400),
                 ),
               ),
@@ -248,7 +248,7 @@ class _OtpVerificationState extends State<OtpVerification> {
                                 color: Colors.white,
                               )
                             : const Center(
-                                child: Text('Verify Token',
+                                child: AutoSizeText('Verify Token',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 20,

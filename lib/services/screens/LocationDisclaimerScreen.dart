@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import '../provider/provider_services.dart';
 
 class LocationDisclaimerScreen extends StatefulWidget {
@@ -27,7 +27,12 @@ class _LocationDisclaimerScreenState extends State<LocationDisclaimerScreen> {
     var screenheight = MediaQuery.of(context).size.height;
     var screenwidth = MediaQuery.of(context).size.width;
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        // Add your custom logic here
+        Navigator.pop(
+            context); // This line allows the back button to work as expected
+        return false; // This line prevents the default behavior of the back button
+      },
       child: Scaffold(
         backgroundColor: Color.fromRGBO(234, 234, 234, 3),
         appBar: AppBar(
@@ -71,7 +76,7 @@ class _LocationDisclaimerScreenState extends State<LocationDisclaimerScreen> {
                       child: SingleChildScrollView(
                         child: SingleChildScrollView(
                           child: Column(children: const [
-                            Text('Location Disclaimer'),
+                            AutoSizeText('Location Disclaimer'),
                             SizedBox(
                               height: 12.0,
                             ),

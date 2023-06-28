@@ -17,6 +17,7 @@ import 'package:vensemart/models/terms_and_condition_model.dart';
 import 'package:vensemart/services/screens/ConfirmAddressScreen.dart';
 import '../../ChangePassScreen.dart';
 import '../../ChoiceIntroScreen.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import '../../OtpVerification.dart';
 import '../../apiservices/auth_repo.dart';
 import '../../models/canceled_bookings.dart';
@@ -27,6 +28,8 @@ import '../../models/featured_shop_model.dart';
 import '../../models/get_all_services_model.dart';
 import '../../models/get_all_trending_services_model.dart';
 import '../../models/location_model.dart';
+import '../../models/order.dart';
+import '../../models/product_category.dart';
 import '../../models/product_category_model.dart';
 import '../../models/product_id_model.dart';
 import '../../models/service_id_model.dart';
@@ -34,6 +37,8 @@ import '../../models/service_provider_id_model.dart';
 import '../../models/upcoming_bookings.dart';
 import '../../models/update_profile_model.dart';
 import '../../models/user_details.dart';
+import '../../products/screens/CartScreen.dart';
+import '../screens/ContactScreen.dart';
 
 class ProviderServices extends ChangeNotifier {
   AuthRepo authRepo = AuthRepo();
@@ -53,6 +58,9 @@ class ProviderServices extends ChangeNotifier {
   CartModel? get cartModel => _cartModel;
   CartModel? _cartModel;
 
+  OrderModel? get orderModel => _orderModel;
+  OrderModel? _orderModel;
+
   TrendingServiceModel? get trendingserviceModel => _trendingserviceModel;
   TrendingServiceModel? _trendingserviceModel;
 
@@ -67,7 +75,11 @@ class ProviderServices extends ChangeNotifier {
 
   CustomerHomeModel? get customerHomeModel => _customerHomeModel;
   CustomerHomeModel? _customerHomeModel;
-  ProductCategoryModel? get productCategory => _productCategoryModel;
+
+  ProductCategory? get productCategory => _productCategory;
+  ProductCategory? _productCategory;
+
+  ProductCategoryModel? get productCategoryModel => _productCategoryModel;
   ProductCategoryModel? _productCategoryModel;
 
   FeaturedShopModel? get featuredShopModel => _featuredShopModel;
@@ -136,12 +148,8 @@ class ProviderServices extends ChangeNotifier {
         _loginModel = LoginModel.fromJson(response.data);
         print(_loginModel?.data?.apiToken);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('${_loginModel?.message}'),
+          content: AutoSizeText('${_loginModel?.message}'),
           duration: const Duration(seconds: 10),
-          action: SnackBarAction(
-            label: 'ACTION',
-            onPressed: () {},
-          ),
         ));
         SessionManager.instance.authToken = _loginModel!.data!.apiToken!;
         Navigator.pushReplacement(
@@ -158,7 +166,7 @@ class ProviderServices extends ChangeNotifier {
       notifyListeners();
     } catch (e, str) {
       ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-        content: Text('${_loginModel?.message}'),
+        content: AutoSizeText('${_loginModel?.message}'),
         duration: const Duration(seconds: 10),
         action: SnackBarAction(
           label: 'ACTION',
@@ -192,7 +200,7 @@ class ProviderServices extends ChangeNotifier {
         _registerModel = RegisterModel.fromJson(response.data);
         print(_registerModel!.data!.email!);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('${_registerModel?.message}'),
+          content: AutoSizeText('${_registerModel?.message}'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
@@ -213,7 +221,7 @@ class ProviderServices extends ChangeNotifier {
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('${_registerModel?.message}'),
+          content: AutoSizeText('${_registerModel?.message}'),
           duration: const Duration(seconds: 10),
         ));
 
@@ -223,7 +231,7 @@ class ProviderServices extends ChangeNotifier {
       notifyListeners();
     } catch (e, str) {
       ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-        content: Text('${_registerModel?.message}'),
+        content: AutoSizeText('${_registerModel?.message}'),
         duration: const Duration(seconds: 10),
         action: SnackBarAction(
           label: 'ACTION',
@@ -255,7 +263,7 @@ class ProviderServices extends ChangeNotifier {
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('make sure you have registered first'),
+          content: AutoSizeText('make sure you have registered first'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
@@ -285,7 +293,7 @@ class ProviderServices extends ChangeNotifier {
         Navigator.push(
           context!,
           MaterialPageRoute(
-            builder: (context) => ConfirmAddressScreen(),
+            builder: (context) => ContactScreen(),
           ),
         );
         notifyListeners();
@@ -293,7 +301,7 @@ class ProviderServices extends ChangeNotifier {
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: const Text('make sure you have registered first'),
+          content: const AutoSizeText('make sure you have registered first'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
@@ -320,7 +328,7 @@ class ProviderServices extends ChangeNotifier {
         _isLoading = false;
 
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: const Text('Update successful'),
+          content: const AutoSizeText('Update successful'),
           duration: const Duration(seconds: 10),
         ));
         // Navigator.push(
@@ -348,7 +356,7 @@ class ProviderServices extends ChangeNotifier {
       if (response != null && response.statusCode == 200) {
         _userLocationModel = UserLocationModel.fromJson(response.data);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('${_userLocationModel?.message}'),
+          content: AutoSizeText('${_userLocationModel?.message}'),
           duration: const Duration(seconds: 5),
           // action: SnackBarAction(
           //   label: 'ACTION',
@@ -361,7 +369,8 @@ class ProviderServices extends ChangeNotifier {
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('Please make sure to enter the correct location'),
+          content:
+              AutoSizeText('Please make sure to enter the correct location'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
@@ -389,7 +398,7 @@ class ProviderServices extends ChangeNotifier {
       if (response != null && response.statusCode == 200) {
         // _userLocationModel = UserLocationModel.fromJson(response.data);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: const Text('message sent successfully'),
+          content: const AutoSizeText('message sent successfully'),
           duration: const Duration(seconds: 5),
           // action: SnackBarAction(
           //   label: 'ACTION',
@@ -402,7 +411,8 @@ class ProviderServices extends ChangeNotifier {
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('Please make sure to enter email, support and message'),
+          content: AutoSizeText(
+              'Please make sure to enter email, support and message'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
@@ -429,7 +439,7 @@ class ProviderServices extends ChangeNotifier {
       if (response != null && response.statusCode == 200) {
         _userLocationModel = UserLocationModel.fromJson(response.data);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('${_userLocationModel?.message}'),
+          content: AutoSizeText('${_userLocationModel?.message}'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
@@ -442,7 +452,7 @@ class ProviderServices extends ChangeNotifier {
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('Please make sure you have set location first'),
+          content: AutoSizeText('Please make sure you have set location first'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
@@ -473,7 +483,7 @@ class ProviderServices extends ChangeNotifier {
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('Please make sure you have set location first'),
+          content: AutoSizeText('Please make sure you have set location first'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
@@ -498,18 +508,59 @@ class ProviderServices extends ChangeNotifier {
       Response? response = await authRepo.addProductToCart(map!);
       if (response != null && response.statusCode == 200) {
         _addProductToCartModel = AddProductToCartModel.fromJson(response.data);
+
         _isLoading = false;
+        cartlist();
+        notifyListeners();
+      }
+
+      if (response != null && response.statusCode != 200) {
+        // ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+        //   content: AutoSizeText('Failed to add Product to Cart'),
+        //   duration: const Duration(seconds: 10),
+        //   action: SnackBarAction(
+        //     label: 'ACTION',
+        //     onPressed: () {},
+        //   ),
+        // ));
+
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+  void addOrder({Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.addOrder(map!);
+      if (response != null && response.statusCode == 200) {
+        // _addProductToCartModel = AddProductToCartModel.fromJson(response.data);
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: AutoSizeText('Order Created Successfully'),
+          duration: const Duration(seconds: 10),
+          // action: SnackBarAction(
+          //   label: 'ACTION',
+          //   onPressed: () {},
+          // ),
+        ));
+        _isLoading = false;
+        cartlist();
         notifyListeners();
       }
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('Failed to add Product to Cart'),
+          content: AutoSizeText('Failed to add Order, please make payment'),
           duration: const Duration(seconds: 10),
-          action: SnackBarAction(
-            label: 'ACTION',
-            onPressed: () {},
-          ),
+          // action: SnackBarAction(
+          //   label: 'ACTION',
+          //   onPressed: () {},
+          // ),
         ));
 
         _isLoading = false;
@@ -525,17 +576,35 @@ class ProviderServices extends ChangeNotifier {
       {Map<String, String>? map, BuildContext? context}) async {
     try {
       _isLoading = true;
-      notifyListeners();
+
       Response? response = await authRepo.removeProduct(map!);
       if (response != null && response.statusCode == 200) {
+        notifyListeners();
+
+        // ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+        //   content: AutoSizeText('Removing Product from Cart'),
+        //   duration: const Duration(seconds: 10),
+        //   action: SnackBarAction(
+        //     label: 'ACTION',
+        //     onPressed: () {},
+        //   ),
+        // ));
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => CartScreen(),
+        //   ),
+        // );
+
         // _addProductToCartModel = AddProductToCartModel.fromJson(response.data);
         _isLoading = false;
+        cartlist();
         notifyListeners();
       }
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('Failed to remove Product to Cart'),
+          content: AutoSizeText('Failed to remove Product to Cart'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
@@ -555,17 +624,34 @@ class ProviderServices extends ChangeNotifier {
   void reduceQuantity({Map<String, String>? map, BuildContext? context}) async {
     try {
       _isLoading = true;
-      notifyListeners();
       Response? response = await authRepo.reduceQuantity(map!);
       if (response != null && response.statusCode == 200) {
-        // _addProductToCartModel = AddProductToCartModel.fromJson(response.data);
+        cartlist();
+        notifyListeners();
+        // ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+        //   content: AutoSizeText('reducing item quantity'),
+        //   duration: const Duration(seconds: 10),
+        //   action: SnackBarAction(
+        //     label: 'ACTION',
+        //     onPressed: () {},
+        //   ),
+        // ));
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //     builder: (context) => CartScreen(),
+        //   ),
+        // );
+
+        notifyListeners();
         _isLoading = false;
         notifyListeners();
       }
 
       if (response != null && response.statusCode != 200) {
+        notifyListeners();
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('Failed to reduce product quantity'),
+          content: AutoSizeText('Failed to reduce product quantity'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
@@ -587,8 +673,11 @@ class ProviderServices extends ChangeNotifier {
       _isLoading = true;
       // notifyListeners();
       Response? response = await authRepo.addQuantity(map!);
+
       print(response);
       if (response != null && response.statusCode == 200) {
+        cartlist();
+
         // _addProductToCartModel = AddProductToCartModel.fromJson(response.data);
         _isLoading = false;
 
@@ -597,7 +686,7 @@ class ProviderServices extends ChangeNotifier {
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('Failed to add Quantity'),
+          content: AutoSizeText('Failed to add Quantity'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
@@ -664,7 +753,7 @@ class ProviderServices extends ChangeNotifier {
         // _completedRequestModel = CompletedRequestModel.fromJson(response.data);
         //
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('${response.statusMessage}'),
+          content: AutoSizeText('${response.statusMessage}'),
           duration: const Duration(seconds: 10),
           // action: SnackBarAction(
           //   label: 'ACTION',
@@ -686,7 +775,7 @@ class ProviderServices extends ChangeNotifier {
     } catch (e, str) {
       _isLoading = false;
       ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-        content: Text('$e'),
+        content: AutoSizeText('$e'),
         duration: const Duration(seconds: 10),
         // action: SnackBarAction(
         //   label: 'ACTION',
@@ -794,12 +883,31 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+  void getAllOrders() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.getAllOrders();
+      if (response != null && response.statusCode == 200) {
+        _orderModel = OrderModel.fromJson(response.data);
+        _isLoading = false;
+      }
+
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
   void getAllCategories() async {
     try {
       _isLoading = true;
       Response? response = await authRepo.getAllCategories();
       if (response != null && response.statusCode == 200) {
-        _productCategoryModel = ProductCategoryModel.fromJson(response.data);
+        _productCategory = ProductCategory.fromJson(response.data);
         _isLoading = false;
       }
 
@@ -871,7 +979,7 @@ class ProviderServices extends ChangeNotifier {
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('Please register first'),
+          content: AutoSizeText('Please register first'),
           duration: const Duration(seconds: 10),
           action: SnackBarAction(
             label: 'ACTION',
@@ -898,7 +1006,7 @@ class ProviderServices extends ChangeNotifier {
       if (response != null && response.statusCode == 200) {
         // _registerModel = RegisterModel.fromJson(response.data);
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('${response?.statusMessage}'),
+          content: AutoSizeText('${response?.statusMessage}'),
           duration: const Duration(seconds: 10),
         ));
         _isLoading = false;
@@ -907,7 +1015,7 @@ class ProviderServices extends ChangeNotifier {
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('${response?.statusMessage}'),
+          content: AutoSizeText('${response?.statusMessage}'),
           duration: const Duration(seconds: 10),
           // action: SnackBarAction(
           //   label: 'ACTION',
@@ -922,7 +1030,7 @@ class ProviderServices extends ChangeNotifier {
       _isLoading = false;
       var response;
       ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-        content: Text('${response?.statusMessage}'),
+        content: AutoSizeText('${response?.statusMessage}'),
         duration: const Duration(seconds: 10),
         // action: SnackBarAction(
         //   label: 'ACTION',
@@ -943,7 +1051,7 @@ class ProviderServices extends ChangeNotifier {
       if (response != null && response.statusCode == 200) {
         // _registerModel = RegisterModel.fromJson(response.data);
         ScaffoldMessenger.of(context!).showSnackBar(const SnackBar(
-          content: Text('Account Deleted Successfully'),
+          content: AutoSizeText('Account Deleted Successfully'),
           duration: Duration(seconds: 10),
         ));
         _isLoading = false;
@@ -952,7 +1060,7 @@ class ProviderServices extends ChangeNotifier {
 
       if (response != null && response.statusCode != 200) {
         ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-          content: Text('${response?.statusMessage}'),
+          content: AutoSizeText('${response?.statusMessage}'),
           duration: const Duration(seconds: 10),
           // action: SnackBarAction(
           //   label: 'ACTION',

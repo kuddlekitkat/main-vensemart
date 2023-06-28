@@ -64,7 +64,7 @@ class CancelledAppointmentCard extends StatelessWidget {
                                 color: Colors.grey,
                               )),
                       errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                          Image.asset('assets/images/worker-image.jpeg'),
                     ),
                   ),
                 ),
@@ -80,7 +80,10 @@ class CancelledAppointmentCard extends StatelessWidget {
                       child: Text(
                         cancelledBooking?.name ?? '',
                         style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18.0),
+                          fontWeight: FontWeight.bold,
+                          fontSize:
+                              1.0 * MediaQuery.of(context).size.height * 0.01,
+                        ),
                       ),
                       margin: EdgeInsets.symmetric(vertical: 12.0),
                     ),

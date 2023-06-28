@@ -8,7 +8,12 @@ class ServicesAppointmentAppBar extends StatelessWidget {
     return Container(
       color: Color(0xff1456f1),
       child: WillPopScope(
-        onWillPop: () async => false,
+        onWillPop: () async {
+          // Add your custom logic here
+          Navigator.pop(
+              context); // This line allows the back button to work as expected
+          return false; // This line prevents the default behavior of the back button
+        },
         child: Text(
           '.',
           style: TextStyle(backgroundColor: Colors.blue),

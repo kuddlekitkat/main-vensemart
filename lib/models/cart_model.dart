@@ -24,11 +24,14 @@ class CartModel {
 
 class Data {
   List<CartList>? cartList;
+  CartDetails? cartDetails;
+
+
 
 
   Data(
       {
-        this.cartList,
+        this.cartList,this.cartDetails,
         });
 
   Data.fromJson(Map<String, dynamic> json) {
@@ -38,12 +41,18 @@ class Data {
         cartList!.add(CartList.fromJson(v));
       });
     }
+    cartDetails = json['cart_details'] != null ? CartDetails.fromJson(json['cart_details']) : null;
+
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     if (cartList != null) {
       data['cart_list'] = cartList!.map((v) => v.toJson()).toList();
+    }
+
+    if (cartDetails != null) {
+      data['cart_details'] = this.cartDetails!.toJson();
     }
     return data;
   }
@@ -136,4 +145,38 @@ class CartList {
     return data;
   }
 }
+
+
+class CartDetails {
+
+  dynamic subTotal;
+  dynamic deliveryCharge;
+  dynamic grandTotal;
+
+  CartDetails(
+      {
+        this.subTotal,
+        this.deliveryCharge,
+        this.grandTotal,
+      });
+
+  CartDetails.fromJson(Map<String, dynamic> json) {
+    subTotal = json['subtotal'];
+    deliveryCharge = json['delivery_charge'];
+    grandTotal = json['grand_total'];
+
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['subtotal'] = subTotal;
+    data['delivery_charge'] = deliveryCharge;
+    data['grand_total'] = grandTotal;
+
+    return data;
+  }
+
+}
+
+
 

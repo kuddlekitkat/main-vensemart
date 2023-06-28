@@ -74,7 +74,7 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: const Text("Location Disclaimer"),
+      title: Text("Location Disclaimer"),
       content: Text(
           "Vensemart collects location data to get closest service providers around you and tailor notifications and"
           " advertisements to make your experience on the app better, you can always change your location before booking a service,"
@@ -189,7 +189,7 @@ class _ConfirmAddressScreenState extends State<ConfirmAddressScreen> {
                 'Address Details',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 40,
+                    fontSize: 2.5 * MediaQuery.of(context).size.height * 0.01,
                     color: Colors.white),
               ),
             ),

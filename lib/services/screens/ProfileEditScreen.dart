@@ -7,7 +7,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/apiservices/validator.dart';
 import 'package:vensemart/services/provider/provider_services.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import '../widgets/image_picker_widget.dart';
 
 class ProfileEditScreen extends StatefulWidget {
@@ -89,7 +89,12 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        // Add your custom logic here
+        Navigator.pop(
+            context); // This line allows the back button to work as expected
+        return false; // This line prevents the default behavior of the back button
+      },
       child: Scaffold(
         backgroundColor: const Color.fromRGBO(234, 234, 234, 1),
         appBar: AppBar(
@@ -150,7 +155,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             //                     color: Colors.grey,
                             //                   )),
                             //           errorWidget: (context, url, error) =>
-                            //               const Icon(Icons.error),
+                            //               Image.asset('assets/images/worker-image.jpeg'),
                             //         ),
                             //       ):
                             fileImage != null
@@ -182,13 +187,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                                           ),
                                         ),
                                         errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
+                                            Icon(Icons.person, size: 50),
                                       ),
                                     ),
                                   ),
                       ),
                       const SizedBox(height: 10.0),
-                      const Text('Name'),
+                      const AutoSizeText('Name'),
                       const SizedBox(height: 4.0),
                       TextFormField(
                         controller: nameController,
@@ -210,7 +215,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             fillColor: Colors.white),
                       ),
                       const SizedBox(height: 14.0),
-                      const Text('Email'),
+                      const AutoSizeText('Email'),
                       const SizedBox(height: 4.0),
                       TextFormField(
                         controller: emailController,
@@ -232,7 +237,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             fillColor: Colors.white),
                       ),
                       const SizedBox(height: 14.0),
-                      const Text('Mobile Number'),
+                      const AutoSizeText('Mobile Number'),
                       const SizedBox(height: 4.0),
                       TextFormField(
                         controller: phoneController,
@@ -254,7 +259,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                             fillColor: Colors.white),
                       ),
                       const SizedBox(height: 14.0),
-                      // const Text('Nin'),
+                      // const AutoSizeText('Nin'),
                       // const SizedBox(height: 4.0),
                       // TextFormField(
                       //   controller: ninController,
@@ -274,7 +279,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       //       fillColor: Colors.white),
                       // ),
                       // const SizedBox(height: 14.0),
-                      // const Text('Date of birth'),
+                      // const AutoSizeText('Date of birth'),
                       // const SizedBox(height: 4.0),
                       // TextFormField(
                       //   controller: dobController,
@@ -294,7 +299,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       //       fillColor: Colors.white),
                       // ),
                       // const SizedBox(height: 14.0),
-                      // const Text('Gender'),
+                      // const AutoSizeText('Gender'),
                       // const SizedBox(height: 4.0),
                       // TextFormField(
                       //   controller: genderController,
@@ -314,7 +319,7 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
                       //       fillColor: Colors.white),
                       // ),
                       // const SizedBox(height: 14.0),
-                      // const Text('Address'),
+                      // const AutoSizeText('Address'),
                       // const SizedBox(height: 4.0),
                       // TextFormField(
                       //   controller: addressController,

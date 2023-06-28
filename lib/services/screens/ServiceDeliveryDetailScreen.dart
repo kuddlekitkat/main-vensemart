@@ -5,7 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/services/screens/ServicesSuccessScreen.dart';
 import 'package:vensemart/services/screens/SetAddressScreen.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import '../../ChoiceIntroScreen.dart';
 import '../provider/provider_services.dart';
 
@@ -77,7 +77,7 @@ class _ServiceDeliveryDetailScreenState
           backgroundColor: Color.fromRGBO(247, 248, 254, 5),
           elevation: 0.00,
           title: const Center(
-              child: Text('Delivery details',
+              child: AutoSizeText('Delivery details',
                   style: TextStyle(color: Colors.black))),
           leading: IconButton(
             onPressed: () {
@@ -103,7 +103,7 @@ class _ServiceDeliveryDetailScreenState
           child: Consumer<ProviderServices>(builder: (_, provider, __) {
             print('object ${provider.serviceIdModel?.data}');
             if (provider.serviceIdModel?.data == 'null') {
-              return const Text('No completed Requests');
+              return const AutoSizeText('No completed Requests');
             } else {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -115,12 +115,12 @@ class _ServiceDeliveryDetailScreenState
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Address Details'),
+                            AutoSizeText('Address Details'),
                             TextButton(
                               onPressed: () {
                                 addAddress(context);
                               },
-                              child: Text('CHANGE',
+                              child: AutoSizeText('CHANGE',
                                   style: TextStyle(color: Colors.blueAccent)),
                             ),
                           ],
@@ -153,14 +153,14 @@ class _ServiceDeliveryDetailScreenState
                                           '${provider?.userDetailsModel?.data?.mobile}'),
                                     ],
                                   )
-                                : Text('no address found')),
+                                : AutoSizeText('no address found')),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text('Services Ordered'),
+                            AutoSizeText('Services Ordered'),
                           ],
                         ),
                       ),

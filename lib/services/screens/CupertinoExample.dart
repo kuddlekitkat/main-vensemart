@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 void main() => runApp(const DatePickerApp());
 
@@ -31,27 +32,27 @@ class _DatePickerExampleState extends State<DatePickerExample> {
     showCupertinoModalPopup<void>(
         context: context,
         builder: (BuildContext context) => Container(
-          height: 216,
-          padding: const EdgeInsets.only(top: 6.0),
-          // The Bottom margin is provided to align the popup above the system navigation bar.
-          margin: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-          ),
-          // Provide a background color for the popup.
-          color: CupertinoColors.systemBackground.resolveFrom(context),
-          // Use a SafeArea widget to avoid system overlaps.
-          child: SafeArea(
-            top: false,
-            child: child,
-          ),
-        ));
+              height: 216,
+              padding: const EdgeInsets.only(top: 6.0),
+              // The Bottom margin is provided to align the popup above the system navigation bar.
+              margin: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              // Provide a background color for the popup.
+              color: CupertinoColors.systemBackground.resolveFrom(context),
+              // Use a SafeArea widget to avoid system overlaps.
+              child: SafeArea(
+                top: false,
+                child: child,
+              ),
+            ));
   }
 
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
-        middle: Text('CupertinoDatePicker Sample'),
+        middle: AutoSizeText('CupertinoDatePicker Sample'),
       ),
       child: DefaultTextStyle(
         style: TextStyle(
@@ -64,7 +65,7 @@ class _DatePickerExampleState extends State<DatePickerExample> {
             children: <Widget>[
               _DatePickerItem(
                 children: <Widget>[
-                  const Text('Date'),
+                  const AutoSizeText('Date'),
                   CupertinoButton(
                     // Display a CupertinoDatePicker in date picker mode.
                     onPressed: () => _showDialog(
@@ -91,7 +92,7 @@ class _DatePickerExampleState extends State<DatePickerExample> {
               ),
               _DatePickerItem(
                 children: <Widget>[
-                  const Text('Time'),
+                  const AutoSizeText('Time'),
                   CupertinoButton(
                     // Display a CupertinoDatePicker in time picker mode.
                     onPressed: () => _showDialog(
@@ -118,7 +119,7 @@ class _DatePickerExampleState extends State<DatePickerExample> {
               ),
               _DatePickerItem(
                 children: <Widget>[
-                  const Text('DateTime'),
+                  const AutoSizeText('DateTime'),
                   CupertinoButton(
                     // Display a CupertinoDatePicker in dateTime picker mode.
                     onPressed: () => _showDialog(

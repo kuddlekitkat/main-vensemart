@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({Key? key}) : super(key: key);
@@ -18,12 +19,9 @@ class MyClip extends CustomClipper<Rect> {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -36,98 +34,102 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                 Container(
                   height: 170,
                   width: MediaQuery.of(context).size.width,
-                  decoration: BoxDecoration(
-                    color: Colors.blue
-                  ),
+                  decoration: BoxDecoration(color: Colors.blue),
                 ),
-
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 18.0,vertical: 80.0),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 18.0, vertical: 80.0),
                   child: ClipOval(
                     clipper: MyClip(),
                     child: Image.network(
                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFWYXoT82R6VsoCOXzgGh2IJEMT4Nf6kV62Us8IxJk&s",
-                        fit: BoxFit.fill
-                    ),
+                        fit: BoxFit.fill),
                   ),
                 ),
-
-
                 Positioned(
-                   top: 210,
-                    left: 12,
-                    child: Text('James Thew',style: TextStyle(fontSize: 30.0,fontStyle: FontStyle.normal,),),
+                  top: 210,
+                  left: 12,
+                  child: AutoSizeText(
+                    'James Thew',
+                    style: TextStyle(
+                      fontSize: 30.0,
+                      fontStyle: FontStyle.normal,
+                    ),
+                  ),
                 ),
                 Positioned(
                   top: 260,
                   left: 12,
-                  child: Text('Your Profile',style: TextStyle(fontSize: 25.0,fontStyle: FontStyle.normal,color: Colors.blue),),
+                  child: AutoSizeText(
+                    'Your Profile',
+                    style: TextStyle(
+                        fontSize: 25.0,
+                        fontStyle: FontStyle.normal,
+                        color: Colors.blue),
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0, vertical: 8.0),
                   child: Container(
-                    height: 50.0,
+                      height: 50.0,
                       width: 50.0,
-                      decoration:BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(40.0)
-                      ),
-                      child: Icon(Icons.arrow_back,size: 50.0,color: Colors.black,)),
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(40.0)),
+                      child: Icon(
+                        Icons.arrow_back,
+                        size: 50.0,
+                        color: Colors.black,
+                      )),
                 ),
               ],
             ),
 
-
-
             ListTile(
               leading: Icon(Icons.menu),
-              title: Text('Home'),
+              title: AutoSizeText('Home'),
             ),
             ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Profile'),
+              leading: Image.asset('assets/images/worker-image.jpeg'),
+              title: AutoSizeText('Profile'),
             ),
             ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Booking History'),
+              leading: Image.asset('assets/images/worker-image.jpeg'),
+              title: AutoSizeText('Booking History'),
             ),
             ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Switch to product'),
+              leading: Image.asset('assets/images/worker-image.jpeg'),
+              title: AutoSizeText('Switch to product'),
             ),
             ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Notifications'),
+              leading: Image.asset('assets/images/worker-image.jpeg'),
+              title: AutoSizeText('Notifications'),
             ),
             // ListTile(
-            //   leading: Icon(Icons.person),
-            //   title: Text('contact'),
+            //   leading: Image.asset('assets/images/worker-image.jpeg');
+            //   title: AutoSizeText('contact'),
             // ),
             // ListTile(
-            //   leading: Icon(Icons.person),
-            //   title: Text('About'),
+            //   leading: Image.asset('assets/images/worker-image.jpeg');
+            //   title: AutoSizeText('About'),
             // ),
             //
             // ListTile(
-            //   leading: Icon(Icons.person),
-            //   title: Text('Feedback'),
+            //   leading: Image.asset('assets/images/worker-image.jpeg');
+            //   title: AutoSizeText('Feedback'),
             // ),
             // ListTile(
-            //   leading: Icon(Icons.person),
-            //   title: Text('Rate our app'),
+            //   leading: Image.asset('assets/images/worker-image.jpeg');
+            //   title: AutoSizeText('Rate our app'),
             // ),
             // ListTile(
-            //   leading: Icon(Icons.person),
-            //   title: Text('Logout'),
+            //   leading: Image.asset('assets/images/worker-image.jpeg');
+            //   title: AutoSizeText('Logout'),
             // ),
-
-
-
           ],
         ),
       ),
     );
-
   }
-
 }

@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import '../../services/provider/provider_services.dart';
 import 'SubscriptionCard.dart';
 
-
 class SubscriptionPlanListScreen extends StatefulWidget {
   const SubscriptionPlanListScreen({Key? key}) : super(key: key);
 
@@ -29,7 +28,12 @@ class _SubscriptionPlanListScreenState
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => false,
+      onWillPop: () async {
+        // Add your custom logic here
+        Navigator.pop(
+            context); // This line allows the back button to work as expected
+        return false; // This line prevents the default behavior of the back button
+      },
       child: Scaffold(
         backgroundColor: Color.fromRGBO(234, 234, 234, 2),
         appBar: AppBar(
@@ -62,7 +66,10 @@ class _SubscriptionPlanListScreenState
                 builder: (_, provider, __) {
                   print('object ${provider.cartModel?.data?.cartList}');
                   if (provider.cartModel?.data?.cartList == null) {
-                    return Center(child: SpinKitCircle(color: Colors.blue,));
+                    return Center(
+                        child: SpinKitCircle(
+                      color: Colors.blue,
+                    ));
                   } else {
                     return Column(
                       children: [
@@ -70,9 +77,8 @@ class _SubscriptionPlanListScreenState
                           print('print e for me $e');
                           return SubscriptionCard(
                             cartlist: e,
-                            loginModel : provider.loginModel,
+                            loginModel: provider.loginModel,
                             userDetailsModel: provider.userDetailsModel,
-
                           );
                         }).toList()
                         // ...?provider.serviceProviderPlans?.data!

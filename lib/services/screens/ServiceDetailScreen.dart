@@ -11,10 +11,11 @@ import 'package:vensemart/services/screens/ServiceDeliveryDetailScreen.dart';
 import 'package:bottom_picker/bottom_picker.dart';
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
+import '../../theme/app_style.dart';
 import '../provider/provider_services.dart';
 
 class ServiceDetailScreen extends StatefulWidget {
@@ -102,7 +103,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
   getCurrentLocation() async {
     determinePosition();
     ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
-      content: Text('getting current locaton now, please wait '),
+      content: AutoSizeText('getting current locaton now, please wait '),
       duration: const Duration(seconds: 10),
       action: SnackBarAction(
         label: 'ACTION',
@@ -184,7 +185,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                 color: Colors.grey,
                               )),
                       errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+                          Image.asset('assets/images/worker-image.jpeg'),
                     ),
                   ),
                   Padding(
@@ -353,7 +354,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                                     ),
                                                   ),
                                                   filled: true,
-                                                  prefixIcon: Text(' '),
+                                                  prefixIcon: AutoSizeText(' '),
                                                   hintText: ' DD-MM-YY',
                                                   suffixIcon: GestureDetector(
                                                       onTap: () =>
@@ -381,15 +382,19 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                                   const Text(
                                                       'Time Entry h:m:s'),
                                                   CupertinoButton(
-                                                    // Display a CupertinoDatePicker in time picker mode.
-                                                    onPressed: () => DatePicker
+                                                    // onPressed: (){},
+                                                    // child: Text('Enter Time'),
+                                                  //   // Display a CupertinoDatePicker in time picker mode.
+                                                    onPressed: () =>
+
+                                                        DatePicker
                                                         .showTime12hPicker(
                                                             context,
-                                                            theme:
-                                                                DatePickerTheme(
-                                                              containerHeight:
-                                                                  210.0,
-                                                            ),
+                                                            // theme:
+                                                            //     DatePickerTheme(
+                                                            //   containerHeight:
+                                                            //       210.0,
+                                                            // ),
                                                             showTitleActions:
                                                                 true,
                                                             onConfirm: (time) {
@@ -424,7 +429,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                                                             DateFormat(
                                                                     "hh:mm:ss")
                                                                 .parse(
-                                                                    "$_time"));
+                                                                    _time));
 
                                                         // timeinput.text = _time;
                                                       });
@@ -524,10 +529,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                             child: Center(
                                 child: Text(
                               'Book now',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold),
+                              style: AppStyle.txtRubikRomanMedium12,
                             )),
                           ),
                         ),
@@ -583,9 +585,12 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                         SizedBox(
                           width: 12.0,
                         ),
-                        Text(
-                          '${provider.serviceIdModel?.data?.location}',
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 1.5,
+                          child: Text(
+                            '${provider.serviceIdModel?.data?.location}',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ],
                     ),
@@ -597,7 +602,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                     //   children: [
                     //     FaIcon(FontAwesomeIcons.clock),
                     //     SizedBox(width: 12.0,),
-                    //     Text('Monday to Saturday || 8:00 - 9:00pm,',style: TextStyle(fontWeight: FontWeight.bold),),
+                    //     AutoSizeText('Monday to Saturday || 8:00 - 9:00pm,',style: TextStyle(fontWeight: FontWeight.bold),),
                     //   ],
                     // ),
 
@@ -607,7 +612,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                     //   children: [
                     //     FaIcon(FontAwesomeIcons.circleCheck),
                     //     SizedBox(width: 12.0,),
-                    //     Text('Monday to Saturday || 8:00 - 9:00pm,',style: TextStyle(fontWeight: FontWeight.bold),),
+                    //     AutoSizeText('Monday to Saturday || 8:00 - 9:00pm,',style: TextStyle(fontWeight: FontWeight.bold),),
                     //   ],
                     // ),
                     // SizedBox(height: 16.0,),
@@ -677,7 +682,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                     //     Icon(Icons.chat,),
                     //     SizedBox(width: 12.0,),
                     //
-                    //     Text('chat',style: TextStyle(fontWeight: FontWeight.bold),),
+                    //     AutoSizeText('chat',style: TextStyle(fontWeight: FontWeight.bold),),
                     //
                     //
                     //   ],
@@ -685,7 +690,7 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
                     //
                     // SizedBox(height: 16.0,),
                     //
-                    // Text('Photos',style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+                    // AutoSizeText('Photos',style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
 
                     // Padding(
                     //   padding: const EdgeInsets.only(right: 4.0,top: 4.0),
@@ -752,10 +757,10 @@ class _ServiceDetailScreenState extends State<ServiceDetailScreen> {
     BottomPicker.date(
       title: 'Set your Date',
       dateOrder: DatePickerDateOrder.dmy,
-      pickerTextStyle: const TextStyle(
+      pickerTextStyle: TextStyle(
         color: Colors.blue,
         fontWeight: FontWeight.bold,
-        fontSize: 12,
+        fontSize: 1.5 * MediaQuery.of(context).size.height * 0.01,
       ),
       titleStyle: const TextStyle(
         fontWeight: FontWeight.bold,

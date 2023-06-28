@@ -4,7 +4,15 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/products/screens/ProductDetailScreen.dart';
 import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:vensemart/core/app_export.dart';
+import 'package:vensemart/widgets/app_bar/appbar_iconbutton.dart';
+import 'package:vensemart/widgets/app_bar/custom_app_bar.dart';
+import 'package:vensemart/widgets/custom_search_view.dart';
 
+import '../../presentation/electronics_screen/widgets/electronics_item_widget.dart';
+import '../../presentation/electronics_screen/widgets/sliderrectangletwentysix1_item_widget.dart';
 import '../../services/provider/provider_services.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -17,6 +25,9 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> {
   ProviderServices? providerServices;
+  TextEditingController searchController = TextEditingController();
+
+  int silderIndex = 1;
 
   @override
   void initState() {
@@ -28,83 +39,171 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Products',
-          style: TextStyle(color: Colors.black),
-        ),
-        backgroundColor: Color.fromRGBO(234, 234, 234, 2),
-        elevation: 0.00,
-      ),
       backgroundColor: const Color.fromRGBO(234, 234, 234, 2),
-      body: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                margin: EdgeInsets.all(12.0),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(30.0),
-                      ),
-                      borderSide: BorderSide(
-                        width: 0,
-                        style: BorderStyle.none,
-                      ),
-                    ),
-                    filled: true,
-                    hintText: 'what are you looking for',
-                    prefixIcon: const Icon(Icons.search),
-                    hintStyle: TextStyle(color: Colors.grey[600]),
-                    fillColor: const Color.fromRGBO(250, 250, 254, 1),
-                  ),
-                ),
-              ),
-              // Container(
-              //   height: MediaQuery.of(context).size.height / 5.5,
-              //   width: MediaQuery.of(context).size.width / 1.1,
-              //   decoration: BoxDecoration(
-              //     image: DecorationImage(
-              //       image: AssetImage('assets/images/proj.png'),
-              //     ),
-              //     borderRadius: BorderRadius.circular(40.0),
-              //   ),
-              // ),
-              Consumer<ProviderServices>(
-                builder: (_, provider, __) {
-                  return SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        Container(
-                          height: MediaQuery.of(context).size.height / 1.2,
-                          child: GridView.count(
-                            primary: false,
-                            padding: const EdgeInsets.all(10),
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                            crossAxisCount: 3,
-                            children: <Widget>[
-                              if (provider.isPresent)
-                                ...provider.productCategory!.data!
-                                    .map((e) => contentContainer(
-                                        id:e.id.toString(),
-                                        text: e.productTitle,
-                                        image: e.productImage))
-                                    .toList()
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+      body: Consumer<ProviderServices>(
+        builder: (_, provider, __) {
+          print('object ${provider.productIdModel?.data}');
+          if (provider.productCategoryModel?.data == null) {
+            return Center(
+                child: provider?.productCategoryModel?.message ==
+                        "No Suggested Products Found"
+                    ? Container(
+                        height: getVerticalSize(844.00),
+                        width: size.width,
+                        decoration: AppDecoration.fillGray50,
+                        child: Stack(alignment: Alignment.topRight, children: [
+                          Align(
+                              alignment: Alignment.topCenter,
+                              child: Container(
+                                  width: size.width,
+                                  padding: getPadding(top: 25, bottom: 25),
+                                  decoration: AppDecoration.fillGray50,
+                                  child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        CustomAppBar(
+                                          height: getVerticalSize(34.00),
+                                          leadingWidth: 54,
+                                          leading: AppbarIconbutton(
+                                              svgPath:
+                                                  ImageConstant.imgArrowleft,
+                                              margin: getMargin(left: 20),
+                                              onTap: () =>
+                                                  onTapArrowleft3(context)),
+                                          centerTitle: true,
+                                          title: Text("Products",
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              style:
+                                                  AppStyle.txtSoraSemiBold15),
+                                        ),
+                                        CustomSearchView(
+                                            width: 350,
+                                            focusNode: FocusNode(),
+                                            controller: searchController,
+                                            hintText: "Search ",
+                                            margin: getMargin(top: 33),
+                                            prefix: Container(
+                                                margin: getMargin(
+                                                    left: 20,
+                                                    top: 17,
+                                                    right: 10,
+                                                    bottom: 16),
+                                                child: CustomImageView(
+                                                    svgPath: ImageConstant
+                                                        .imgSearch)),
+                                            prefixConstraints: BoxConstraints(
+                                                maxHeight:
+                                                    getVerticalSize(20.00))),
+                                        Padding(
+                                            padding: getPadding(
+                                                left: 20,
+                                                right: 22,
+                                                bottom: 84),
+                                            child: Text('No products found'))
+                                      ]))),
+                        ]),
+                      )
+                    : SpinKitCircle(
+                        color: Colors.blue,
+                      ));
+          } else {
+            return Container(
+              height: getVerticalSize(844.00),
+              width: size.width,
+              decoration: AppDecoration.fillGray50,
+              child: Stack(alignment: Alignment.topRight, children: [
+                Align(
+                    alignment: Alignment.topCenter,
+                    child: Container(
+                        width: size.width,
+                        padding: getPadding(top: 25, bottom: 25),
+                        decoration: AppDecoration.fillGray50,
+                        child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              CustomAppBar(
+                                height: getVerticalSize(34.00),
+                                leadingWidth: 54,
+                                leading: AppbarIconbutton(
+                                    svgPath: ImageConstant.imgArrowleft,
+                                    margin: getMargin(left: 20),
+                                    onTap: () => onTapArrowleft3(context)),
+                                centerTitle: true,
+                                title: Text("Products",
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: AppStyle.txtSoraSemiBold15),
+                              ),
+                              CustomSearchView(
+                                  width: 350,
+                                  focusNode: FocusNode(),
+                                  controller: searchController,
+                                  hintText: "Search ",
+                                  margin: getMargin(top: 33),
+                                  prefix: Container(
+                                      margin: getMargin(
+                                          left: 20,
+                                          top: 17,
+                                          right: 10,
+                                          bottom: 16),
+                                      child: CustomImageView(
+                                          svgPath: ImageConstant.imgSearch)),
+                                  prefixConstraints: BoxConstraints(
+                                      maxHeight: getVerticalSize(20.00))),
+                              Padding(
+                                  padding: getPadding(
+                                      left: 20, right: 22, bottom: 84),
+                                  child: GridView.builder(
+                                      shrinkWrap: true,
+                                      gridDelegate:
+                                          SliverGridDelegateWithFixedCrossAxisCount(
+                                              mainAxisExtent:
+                                                  getVerticalSize(134.00),
+                                              crossAxisCount: 3,
+                                              mainAxisSpacing:
+                                                  getHorizontalSize(24.00),
+                                              crossAxisSpacing:
+                                                  getHorizontalSize(24.00)),
+                                      physics: BouncingScrollPhysics(),
+                                      itemCount: 2,
+                                      itemBuilder: (context, index) {
+                                        return ElectronicsItemWidget(
+                                          id: '${provider.productCategoryModel?.data?[index].id}',
+                                          imageName:
+                                              '${provider.productCategoryModel?.data?[index].productImage}',
+                                          title:
+                                              '${provider.productCategoryModel?.data?[index].productTitle}',
+                                          price:
+                                              '${provider.productCategoryModel?.data?[index].productPrice}',
+                                        );
+                                      }))
+                            ]))),
+                // Padding(
+                //   padding: getPadding(top: 158),
+                //   child: CarouselSlider.builder(
+                //       options: CarouselOptions(
+                //           height: getVerticalSize(118.00),
+                //           initialPage: 0,
+                //           autoPlay: true,
+                //           viewportFraction: 1.0,
+                //           enableInfiniteScroll: false,
+                //           scrollDirection: Axis.horizontal,
+                //           onPageChanged: (index, reason) {
+                //             silderIndex = index;
+                //           }),
+                //       itemCount: 2,
+                //       itemBuilder: (context, index, realIndex) {
+                //         return Sliderrectangletwentysix1ItemWidget();
+                //       }),
+                // ),
+              ]),
+            );
+          }
+        },
       ),
     );
   }
@@ -125,7 +224,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ProductDetailScreen(id: id.toString(),),
+                  builder: (context) => ProductDetailScreen(
+                    id: id.toString(),
+                  ),
                 ),
               );
             },
@@ -141,9 +242,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       child: const SpinKitCircle(
                         color: Colors.grey,
                       )),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+              errorWidget: (context, url, error) =>
+                  Image.asset('assets/images/worker-image.jpeg'),
             ),
           ),
         ),
       );
+
+  onTapArrowleft3(BuildContext context) {
+    Navigator.pop(context);
+  }
 }

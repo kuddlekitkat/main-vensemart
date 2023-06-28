@@ -5,6 +5,7 @@ import 'package:in_app_review/in_app_review.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/LoginScreen.dart';
 import 'package:vensemart/ProductsComingSoon.dart';
+import 'package:vensemart/presentation/contact_us_screen/contact_us_screen.dart';
 import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
 import 'package:vensemart/services/screens/AboutUsScreen.dart';
 import 'package:vensemart/services/screens/ContactScreen.dart';
@@ -16,7 +17,7 @@ import 'package:vensemart/services/screens/RateUsScreen.dart';
 import 'package:vensemart/services/screens/ServicesAppoinmentScreen.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
 import 'package:vensemart/services/widgets/full_pages/ServiceHome.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import '../../../core/session_manager.dart';
 import '../../provider/provider_services.dart';
 import '../../screens/AvailableServicesListScreen.dart';
@@ -56,6 +57,7 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
 
   @override
   Widget build(BuildContext context) {
+    double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
     return Drawer(
       // Add a ListView to the drawer. This ensures the user can scroll
       // through the options in the drawer if there isn't enough vertical
@@ -96,18 +98,23 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                                   image: imageProvider, fit: BoxFit.cover),
                             ),
                           ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
+                          errorWidget: (context, url, error) => Icon(
+                            Icons.person,
+                            size: 50,
+                          ),
                         ),
                       ),
                     ),
                     Positioned(
                       top: 140,
                       left: 20,
-                      child: Text(
+                      child: AutoSizeText(
                         '${provider.userDetailsModel?.data?.name}',
+                        textScaleFactor: MediaQuery.textScaleFactorOf(context),
+                        minFontSize: 5,
                         style: TextStyle(
-                            fontSize: 22.0, fontWeight: FontWeight.bold),
+                            fontSize: 2 * unitHeightValue,
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],
@@ -117,7 +124,9 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                     child: Text(
                       'Your Profile',
                       style: TextStyle(
-                          fontSize: 15.0, fontWeight: FontWeight.normal),
+                          fontSize: 2 * unitHeightValue,
+                          fontWeight: FontWeight.normal,
+                          color: Colors.blue),
                     )),
                 SizedBox(
                   height: 20.0,
@@ -136,9 +145,12 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                                   builder: (context) => ServicesHomeScreen()),
                             );
                           },
-                          child: const ListTile(
+                          child: ListTile(
                             leading: Icon(Icons.menu),
-                            title: Text('Home'),
+                            title: AutoSizeText(
+                              'Home',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
                           ),
                         ),
                         GestureDetector(
@@ -149,9 +161,30 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                                   builder: (context) => ProfileEditScreen()),
                             );
                           },
-                          child: const ListTile(
+                          child: ListTile(
                             leading: Icon(Icons.person),
-                            title: Text('Profile'),
+                            title: AutoSizeText(
+                              'Profile',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
+                          ),
+                        ),
+
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ProductsHomeScreen(),
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Icon(Icons.compare_arrows),
+                            title: AutoSizeText(
+                              'Switch to product',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
                           ),
                         ),
 
@@ -166,38 +199,38 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                         //   },
                         //   child: const ListTile(
                         //     leading: Icon(Icons.notifications),
-                        //     title: Text('Booking History'),
+                        //     title: AutoSizeText('Booking History'),
                         //   ),
                         // ),
 
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProductsHomeScreen()),
-                            );
-                          },
-                          child: const ListTile(
-                            leading: Icon(Icons.notifications),
-                            title: Text('Switch to Working product'),
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //           builder: (context) => ProductsHomeScreen()),
+                        //     );
+                        //   },
+                        //   child: const ListTile(
+                        //     leading: Icon(Icons.notifications),
+                        //     title: AutoSizeText('Switch to Working product'),
+                        //   ),
+                        // ),
 
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => ProductComingSoonScreen(),
-                              ),
-                            );
-                          },
-                          child: const ListTile(
-                            leading: Icon(Icons.compare_arrows),
-                            title: Text('Switch to product'),
-                          ),
-                        ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     Navigator.push(
+                        //       context,
+                        //       MaterialPageRoute(
+                        //         builder: (context) => ProductComingSoonScreen(),
+                        //       ),
+                        //     );
+                        //   },
+                        //   child: const ListTile(
+                        //     leading: Icon(Icons.compare_arrows),
+                        //     title: AutoSizeText('Switch to product'),
+                        //   ),
+                        // ),
                         // GestureDetector(
                         //   onTap: () {
                         //     Navigator.push(
@@ -209,7 +242,7 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                         //   },
                         //   child: const ListTile(
                         //     leading: Icon(Icons.notifications),
-                        //     title: Text('Notifications'),
+                        //     title: AutoSizeText('Notifications'),
                         //   ),
                         // ),
                         GestureDetector(
@@ -217,13 +250,16 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ContactScreen(),
+                                builder: (context) => ContactUsScreen(),
                               ),
                             );
                           },
-                          child: const ListTile(
+                          child: ListTile(
                             leading: Icon(Icons.phone),
-                            title: Text('contact'),
+                            title: AutoSizeText(
+                              'Contact',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
                           ),
                         ),
                         GestureDetector(
@@ -237,7 +273,10 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                           },
                           child: ListTile(
                             leading: Icon(Icons.info),
-                            title: Text('About'),
+                            title: AutoSizeText(
+                              'About',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
                           ),
                         ),
 
@@ -252,7 +291,7 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                         //   },
                         //   child: const ListTile(
                         //     leading: Icon(Icons.chat),
-                        //     title: Text('Feedback'),
+                        //     title: AutoSizeText('Feedback'),
                         //   ),
                         // ),
                         GestureDetector(
@@ -265,9 +304,12 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                               ),
                             );
                           },
-                          child: const ListTile(
+                          child: ListTile(
                             leading: Icon(Icons.support_agent),
-                            title: Text('Support'),
+                            title: AutoSizeText(
+                              'Support',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
                           ),
                         ),
 
@@ -282,7 +324,7 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                         //   child: const ListTile(
                         //     leading: Icon(
                         //       Icons.rate_review,),
-                        //     title: Text('Rating'),
+                        //     title: AutoSizeText('Rating'),
                         //   ),
                         // ),
 
@@ -296,12 +338,15 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                               ),
                             );
                           },
-                          child: const ListTile(
+                          child: ListTile(
                             leading: Icon(
                               Icons.logout_outlined,
                               color: Colors.redAccent,
                             ),
-                            title: Text('Logout'),
+                            title: AutoSizeText(
+                              'Logout',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
                           ),
                         ),
                       ],

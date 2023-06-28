@@ -1,5 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
@@ -33,7 +34,6 @@ class _ServiceHomeState extends State<ServiceHome> {
   void initState() {
     _providerServices = Provider.of<ProviderServices>(context, listen: false);
     _providerServices?.userDetails();
-
 
     // getCurrentLocation().then((value) {
 
@@ -164,16 +164,19 @@ class _ServiceHomeState extends State<ServiceHome> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 12.0, vertical: 12.0),
                             child: Container(
-                              width: MediaQuery.of(context).size.width/2,
+                              width: MediaQuery.of(context).size.width / 2,
                               child: RichText(
                                 overflow: TextOverflow.ellipsis,
-                                strutStyle: StrutStyle(fontSize: 40.0),
+                                strutStyle: StrutStyle(
+                                    fontSize: 2.5 *
+                                        MediaQuery.of(context).size.height *
+                                        0.01),
                                 text: TextSpan(
                                     style: const TextStyle(
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                         overflow: TextOverflow.clip,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      overflow: TextOverflow.clip,
                                     ),
                                     text:
                                         'Hi ${provider.userDetailsModel?.data?.name}'),
@@ -185,20 +188,24 @@ class _ServiceHomeState extends State<ServiceHome> {
                         //   style: const TextStyle(
                         //       fontSize: 25.0, fontWeight: FontWeight.w600),
                         // )),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.symmetric(horizontal: 12.0),
                           child: Text('what service do',
                               style: TextStyle(
-                                fontSize: 20.0,
+                                fontSize: 2.0 *
+                                    MediaQuery.of(context).size.height *
+                                    0.01,
                                 fontWeight: FontWeight.w600,
                                 overflow: TextOverflow.ellipsis,
                               )),
                         ),
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.symmetric(horizontal: 12.0),
                           child: Text('you need today',
                               style: TextStyle(
-                                fontSize: 19.0,
+                                fontSize: 2.0 *
+                                    MediaQuery.of(context).size.height *
+                                    0.01,
                                 fontWeight: FontWeight.w600,
                                 overflow: TextOverflow.ellipsis,
                               )),
@@ -255,7 +262,9 @@ class _ServiceHomeState extends State<ServiceHome> {
                       Text(
                         'Explore our services',
                         style: TextStyle(
-                            fontSize: 15.3, fontWeight: FontWeight.normal),
+                            fontSize:
+                                1.0 * MediaQuery.of(context).size.height * 0.01,
+                            fontWeight: FontWeight.normal),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -268,7 +277,14 @@ class _ServiceHomeState extends State<ServiceHome> {
                         },
                         child: Row(
                           children: [
-                            Text('See more'),
+                            Text(
+                              'See more',
+                              style: TextStyle(
+                                  fontSize: 1.0 *
+                                      MediaQuery.of(context).size.height *
+                                      0.01,
+                                  fontWeight: FontWeight.normal),
+                            ),
                             Icon(
                               Icons.arrow_forward_ios_rounded,
                               size: 12.0,
@@ -292,7 +308,9 @@ class _ServiceHomeState extends State<ServiceHome> {
                       Text(
                         'Trending around me',
                         style: TextStyle(
-                            fontSize: 15.3, fontWeight: FontWeight.normal),
+                            fontSize:
+                               1.3 * MediaQuery.of(context).size.height * 0.01,
+                            fontWeight: FontWeight.normal),
                       ),
                       GestureDetector(
                         onTap: () {
@@ -305,7 +323,14 @@ class _ServiceHomeState extends State<ServiceHome> {
                         },
                         child: Row(
                           children: [
-                            Text('View'),
+                            Text(
+                              'View',
+                              style: TextStyle(
+                                  fontSize:1.3 *
+                                      MediaQuery.of(context).size.height *
+                                      0.01,
+                                  fontWeight: FontWeight.normal),
+                            ),
                             Icon(
                               Icons.arrow_forward_ios_rounded,
                               size: 12.0,

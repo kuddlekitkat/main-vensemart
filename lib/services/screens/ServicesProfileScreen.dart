@@ -7,8 +7,9 @@ import 'package:vensemart/services/provider/provider_services.dart';
 import 'package:vensemart/services/screens/AvailableServicesListScreen.dart';
 import 'package:vensemart/services/screens/ProfileEditScreen.dart';
 import 'package:vensemart/services/screens/ServicesAppoinmentScreen.dart';
-
+import 'package:auto_size_text/auto_size_text.dart';
 import '../../LoginScreen.dart';
+import '../../presentation/contact_us_screen/contact_us_screen.dart';
 import '../../products/screens/ProductsHomeScreen.dart';
 import 'AboutUsScreen.dart';
 import 'ContactScreen.dart';
@@ -46,6 +47,7 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
     return Scaffold(
       body: Consumer<ProviderServices>(
         builder: (_, provider, __) {
@@ -68,21 +70,23 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                         // backgroundImage:
                         //     NetworkImage("${provider.userDetailsModel?.data?.profile} ?? '' "),
                         child: CachedNetworkImage(
-                          imageUrl: provider.userDetailsModel?.data?.profile
-                                  .toString() ??
-                              '',
-                          imageBuilder: (context, imageProvider) => Container(
-                            width: 100.0,
-                            height: 100.0,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: imageProvider, fit: BoxFit.cover),
-                            ),
-                          ),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
-                        ),
+                            imageUrl: provider.userDetailsModel?.data?.profile
+                                    .toString() ??
+                                '',
+                            imageBuilder: (context, imageProvider) => Container(
+                                  width: 100.0,
+                                  height: 100.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover),
+                                  ),
+                                ),
+                            errorWidget: (context, url, error) => Icon(
+                                  Icons.person,
+                                  size: 50,
+                                )),
                       ),
                     ),
                   ],
@@ -93,8 +97,8 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                       children: [
                         Text(
                           provider.userDetailsModel?.data?.name ?? '',
-                          style: const TextStyle(
-                              fontSize: 25.0,
+                          style: TextStyle(
+                              fontSize: 2 * unitHeightValue,
                               fontWeight: FontWeight.normal,
                               color: Color.fromARGB(255, 33, 33, 243)),
                         ),
@@ -110,7 +114,8 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                           child: Text(
                             'Your Profile',
                             style: TextStyle(
-                                fontSize: 15.0, fontWeight: FontWeight.normal),
+                                fontSize: 2 * unitHeightValue,
+                                fontWeight: FontWeight.normal),
                           ),
                         ),
                       ],
@@ -132,9 +137,12 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                                   builder: (context) => ServicesHomeScreen()),
                             );
                           },
-                          child: const ListTile(
+                          child: ListTile(
                             leading: Icon(Icons.menu),
-                            title: Text('Home'),
+                            title: AutoSizeText(
+                              'Home',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
                           ),
                         ),
                         GestureDetector(
@@ -145,9 +153,15 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                                   builder: (context) => ProfileEditScreen()),
                             );
                           },
-                          child: const ListTile(
-                            leading: Icon(Icons.person),
-                            title: Text('Profile'),
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.person,
+
+                            ),
+                            title: AutoSizeText(
+                              'Profile',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
                           ),
                         ),
 
@@ -164,7 +178,7 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                         //   },
                         //   child: const ListTile(
                         //     leading: Icon(Icons.notifications),
-                        //     title: Text('Booking History'),
+                        //     title: AutoSizeText('Booking History'),
                         //   ),
                         // ),
                         GestureDetector(
@@ -172,13 +186,16 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ProductComingSoonScreen(),
+                                builder: (context) => ProductsHomeScreen(),
                               ),
                             );
                           },
-                          child: const ListTile(
+                          child: ListTile(
                             leading: Icon(Icons.compare_arrows),
-                            title: Text('Switch to product'),
+                            title: AutoSizeText(
+                              'Switch to product',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
                           ),
                         ),
                         // GestureDetector(
@@ -192,7 +209,7 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                         //   },
                         //   child: const ListTile(
                         //     leading: Icon(Icons.notifications),
-                        //     title: Text('Notifications'),
+                        //     title: AutoSizeText('Notifications'),
                         //   ),
                         // ),
                         GestureDetector(
@@ -200,13 +217,16 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => ContactScreen(),
+                                builder: (context) => ContactUsScreen(),
                               ),
                             );
                           },
-                          child: const ListTile(
+                          child: ListTile(
                             leading: Icon(Icons.phone),
-                            title: Text('contact'),
+                            title: AutoSizeText(
+                              'Contact',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
                           ),
                         ),
                         GestureDetector(
@@ -220,7 +240,9 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                           },
                           child: ListTile(
                             leading: Icon(Icons.info),
-                            title: Text('About'),
+                            title: AutoSizeText('About',
+                                style:
+                                    TextStyle(fontSize: 1.5 * unitHeightValue)),
                           ),
                         ),
 
@@ -236,7 +258,7 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                         //   },
                         //   child: const ListTile(
                         //     leading: Icon(Icons.chat),
-                        //     title: Text('Feedback'),
+                        //     title: AutoSizeText('Feedback'),
                         //   ),
                         // ),
                         // GestureDetector(
@@ -254,7 +276,7 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                         //   },
                         //   child: const ListTile(
                         //     leading: Icon(Icons.rate_review_rounded),
-                        //     title: Text('Rate our app'),
+                        //     title: AutoSizeText('Rate our app'),
                         //   ),
                         // ),
 
@@ -267,27 +289,32 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                               ),
                             );
                           },
-                          child: const ListTile(
+                          child: ListTile(
                             leading: Icon(
                               Icons.logout_outlined,
                               color: Colors.redAccent,
                             ),
-                            title: Text('Logout'),
+                            title: AutoSizeText(
+                              'Logout',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
                           ),
                         ),
 
-                        // GestureDetector(
-                        //   onTap: () {
-                        //     showAlertDialog(context);
-                        //   },
-                        //   child: const ListTile(
-                        //     leading: Icon(
-                        //       Icons.delete_forever,
-                        //       color: Colors.redAccent,
-                        //     ),
-                        //     title: Text('Delete Account'),
-                        //   ),
-                        // ),
+                        GestureDetector(
+                          onTap: () {
+                            showAlertDialog(context);
+                          },
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.delete_forever,
+                              color: Colors.redAccent,
+                            ),
+                            title: AutoSizeText('Delete Account',
+                                style:
+                                    TextStyle(fontSize: 1.5 * unitHeightValue)),
+                          ),
+                        ),
                       ],
                     ),
                   ),

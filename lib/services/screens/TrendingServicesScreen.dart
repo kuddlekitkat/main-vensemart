@@ -7,8 +7,10 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'package:vensemart/services/widgets/components/TrendingServicesCard.dart';
+import '../../theme/app_style.dart';
 import '../provider/provider_services.dart';
 import 'ServiceDeliveryDetailScreen.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 class TrendingServicesScreen extends StatefulWidget {
   static const routeName = '/available-services';
@@ -42,10 +44,10 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
     BottomPicker.date(
       title: 'Set your Date',
       dateOrder: DatePickerDateOrder.dmy,
-      pickerTextStyle: const TextStyle(
+      pickerTextStyle: TextStyle(
         color: Colors.blue,
         fontWeight: FontWeight.bold,
-        fontSize: 12,
+        fontSize: 1.5 * MediaQuery.of(context).size.height * 0.01,
       ),
       titleStyle: const TextStyle(
         fontWeight: FontWeight.bold,
@@ -89,6 +91,7 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    double unitHeightValue = MediaQuery.of(context).size.height * 0.01;
     return Scaffold(
       backgroundColor: Color.fromRGBO(234, 234, 234, 3),
       appBar: AppBar(
@@ -141,7 +144,7 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                       children: <Widget>[
                         if (provider != null)
                           ...provider.trendingserviceModel!.data!
-                              .where((element) => element.categoryName!
+                              .where((element) => element.name!
                                   .toLowerCase()
                                   .contains(_query.toLowerCase()))
                               .map((e) {
@@ -193,7 +196,8 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                         child: const SpinKitCircle(
                           color: Colors.grey,
                         )),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
+                errorWidget: (context, url, error) =>
+                    Image.asset('assets/images/worker-image.jpeg'),
               ),
             ),
             Container(
@@ -250,14 +254,18 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                               Text(
                                 "N1000 ",
                                 style: TextStyle(
-                                    fontSize: 15,
+                                    fontSize: 15.0 *
+                                        MediaQuery.of(context).size.height *
+                                        0.01,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
                               Text(
                                 name.toString(),
                                 style: TextStyle(
-                                    fontSize: 18,
+                                    fontSize: 1.5 *
+                                        MediaQuery.of(context).size.height *
+                                        0.01,
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold),
                               ),
@@ -302,7 +310,11 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                                           'Select your convenient time and date',
                                           style: TextStyle(
                                               fontWeight: FontWeight.normal,
-                                              fontSize: 20.0),
+                                              fontSize: 20.0 *
+                                                  MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.01),
                                         ),
                                         SizedBox(
                                           height: 16.0,
@@ -360,7 +372,7 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                                                   ),
                                                 ),
                                                 filled: true,
-                                                prefixIcon: Text(' '),
+                                                prefixIcon: AutoSizeText(' '),
                                                 hintText: ' DD-MM-YY',
                                                 suffixIcon: GestureDetector(
                                                     onTap: () =>
@@ -385,7 +397,8 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                                           children: [
                                             _DatePickerItem(
                                               children: <Widget>[
-                                                const Text('Time Entry'),
+                                                const AutoSizeText(
+                                                    'Time Entry'),
                                                 CupertinoButton(
                                                   // Display a CupertinoDatePicker in time picker mode.
                                                   onPressed: () =>
@@ -468,8 +481,12 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                                                     timeinput.text == ''
                                                         ? 'select time'
                                                         : timeinput.text,
-                                                    style: const TextStyle(
-                                                      fontSize: 22.0,
+                                                    style: TextStyle(
+                                                      fontSize: 22.0 *
+                                                          MediaQuery.of(context)
+                                                              .size
+                                                              .height *
+                                                          0.01,
                                                     ),
                                                   ),
                                                 ),
@@ -507,12 +524,16 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                                                   BorderRadius.circular(30.0),
                                               color: Colors.blue,
                                             ),
-                                            child: const Center(
+                                            child: Center(
                                                 child: Text(
                                               'Book now',
                                               style: TextStyle(
                                                   color: Colors.white,
-                                                  fontSize: 12),
+                                                  fontSize: 12 *
+                                                      MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.01),
                                             )),
                                           ),
                                         ),
@@ -531,10 +552,7 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
                           child: Center(
                               child: Text(
                             'Book now',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold),
+                            style: AppStyle.txtRubikRomanMedium12,
                           )),
                         ),
                       ),
@@ -551,9 +569,9 @@ class _TrendingServicesScreenState extends State<TrendingServicesScreen> {
 void _openTimePicker(BuildContext context) {
   BottomPicker.time(
     title: 'Set your next meeting time',
-    titleStyle: const TextStyle(
+    titleStyle: TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 15,
+      fontSize: 15 * MediaQuery.of(context).size.height * 0.01,
       color: Colors.orange,
     ),
     onSubmit: (index) {

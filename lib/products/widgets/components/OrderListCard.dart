@@ -1,14 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class OrderListCard extends StatelessWidget {
+import '../../../services/provider/provider_services.dart';
+
+class OrderListCard extends StatefulWidget {
   final String image;
-  const OrderListCard({required this.image});
+  final String name;
+  final String vendorName;
+  final String netAmount;
+  final String quantity;
+  const OrderListCard({required this.image,required this.name, required this.vendorName, required this.netAmount,required this.quantity});
 
+  @override
+  State<OrderListCard> createState() => _OrderListCardState();
+}
+
+ProviderServices? providerServices;
+class _OrderListCardState extends State<OrderListCard> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    providerServices = Provider.of<ProviderServices>(context, listen: false);
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        width: MediaQuery.of(context).size.width -5,
+        width: MediaQuery.of(context).size.width - 5,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12.0),
@@ -19,28 +39,25 @@ class OrderListCard extends StatelessWidget {
               color: Colors.black.withOpacity(0.4),
             ),
           ],
-
         ),
-
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10.0,),
+            SizedBox(
+              height: 10.0,
+            ),
             Container(
               margin: EdgeInsets.all(12.0),
-              height: MediaQuery.of(context).size.height /8,
+              height: MediaQuery.of(context).size.height / 8,
               width: MediaQuery.of(context).size.width - 290,
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12.0),
                 image: DecorationImage(
-                    image: AssetImage(image),
-                    fit: BoxFit.cover
-                ),
+                    image: NetworkImage('https://api.vensemart.com/storage/product_images/'+widget.image), fit: BoxFit.cover),
               ),
             ),
-
             Container(
-              height: MediaQuery.of(context).size.height/7,
+              height: MediaQuery.of(context).size.height / 7,
               width: 240,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -48,50 +65,81 @@ class OrderListCard extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 10.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 12.0, horizontal: 10.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text("iPhone 11 pro",style: TextStyle(fontSize: 18,color: Colors.black,),),
-                        Text("Seller : kings iphone",style: TextStyle(fontSize: 11,color: Colors.black),),
-                        Text("Location: Abuja ",style: TextStyle(fontSize: 15,color: Colors.black),),
-                        Text("2000 ",style: TextStyle(fontSize: 20,color: Colors.black,fontWeight: FontWeight.bold),),
+                      children: [
+                        Text(
+                          "${widget.name}",
+                          style: TextStyle(
+                            fontSize:
+                                1.5 * MediaQuery.of(context).size.height * 0.01,
+                            color: Colors.black,
+                          ),
+                        ),
+                        // Text(
+                        //   "Seller : ${widget.vendorName}",
+                        //   style: TextStyle(fontSize: 11, color: Colors.black),
+                        // ),
+                        Text(
+                          "Location: Abuja",
+                          style: TextStyle( fontSize:
+                          1.5 * MediaQuery.of(context).size.height * 0.01, color: Colors.black),
+                        ),
+
+                        Text(
+                          "Quantity : ${widget.quantity}",
+                          style: TextStyle(
+                              fontSize: 15,
+                              color: Colors.black,
+                              ),
+                        ),
+                        Text(
+                          "NGN ${widget.netAmount}",
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+
+
                       ],
                     ),
                   ),
-
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
-
                       Padding(
                         padding: const EdgeInsets.only(top: 11.0),
                         child: Container(
-                          width: MediaQuery.of(context).size.width/4.5,
-                          height: MediaQuery.of(context).size.height/24,
+                          width: MediaQuery.of(context).size.width / 4.5,
+                          height: MediaQuery.of(context).size.height / 24,
                           decoration: BoxDecoration(
                             color: Colors.blueAccent,
                             borderRadius: BorderRadius.circular(50.0),
                           ),
-
-                          child: Center(child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: const [
-                              // Icon(Icons.delete_forever,color: Colors.white,size: 19,),
-                              Text("Track Order",style: TextStyle(fontSize: 11,color: Colors.white,fontWeight: FontWeight.bold,),),
-                            ],
-                          ),
+                          child: Center(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: const [
+                                // Icon(Icons.delete_forever,color: Colors.white,size: 19,),
+                                Text(
+                                  "Track Order",
+                                  style: TextStyle(
+                                    fontSize: 11,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-
-
-
                     ],
                   ),
                 ],
@@ -99,7 +147,6 @@ class OrderListCard extends StatelessWidget {
             ),
           ],
         ),
-
       ),
     );
   }

@@ -29,7 +29,6 @@ class _ExploreServicesListState extends State<ExploreServicesList> {
     return Container(
       height: 100.0,
       width: MediaQuery.of(context).size.width,
-
       child: Consumer<ProviderServices>(builder: (_, provider, __) {
         if (provider.serviceCategoryModel == null ||
             provider.serviceCategoryModel!.data!.isEmpty) {
@@ -42,7 +41,7 @@ class _ExploreServicesListState extends State<ExploreServicesList> {
                 return Row(
                   children: [
                     listWidget(
-                      id: provider.serviceCategoryModel?.data?[index].id,
+                        id: provider.serviceCategoryModel?.data?[index].id,
                         imageUrl: provider
                             .serviceCategoryModel?.data?[index].categoryIcon,
                         text: provider
@@ -166,14 +165,10 @@ class _ExploreServicesListState extends State<ExploreServicesList> {
     );
   }
 
-  listWidget({imageUrl, text,id}) {
+  listWidget({imageUrl, text, id}) {
     return Container(
-
       padding: EdgeInsets.all(6.0),
-      decoration: BoxDecoration(
-
-          borderRadius: BorderRadius.circular(10)
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
       child: Row(
         children: [
           SizedBox(
@@ -184,7 +179,11 @@ class _ExploreServicesListState extends State<ExploreServicesList> {
               Navigator.push(
                 context,
                 new MaterialPageRoute(
-                  builder: (context) => AvailableServicesListScreen(lat: 8.toString(),long: 9.toString(),id: id.toString(),),
+                  builder: (context) => AvailableServicesListScreen(
+                    lat: 8.toString(),
+                    long: 9.toString(),
+                    id: id.toString(),
+                  ),
                 ),
               );
             },
@@ -193,31 +192,35 @@ class _ExploreServicesListState extends State<ExploreServicesList> {
                 Expanded(
                   child: Container(
                     height: 100,
-                    width:80,
-
+                    width: 80,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(40.0)),
                     child: CachedNetworkImage(
                       imageUrl: imageUrl,
                       fit: BoxFit.cover,
                       placeholder: (
-                          context,
-                          url,
-                          ) =>
+                        context,
+                        url,
+                      ) =>
                           Container(
                               margin: const EdgeInsets.all(10),
                               child: const SpinKitCircle(
                                 color: Colors.grey,
                               )),
                       errorWidget: (context, url, error) =>
-                      const Icon(Icons.error),
+                          Image.asset('assets/images/worker-image.jpeg'),
                     ),
                   ),
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                Text(text)
+                Text(
+                  text,
+                  style: TextStyle(
+                      fontSize:
+                          1.0 * MediaQuery.of(context).size.height * 0.01),
+                )
               ],
             ),
           ),

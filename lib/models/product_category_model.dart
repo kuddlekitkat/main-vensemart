@@ -46,15 +46,13 @@ class Data {
   String? createdAt;
   String? updatedAt;
   String? imagename;
-
   String? storeName;
   String? uomName;
 
   Data(
       {this.id,
       this.shopId,
-      this.categoryId,
-        this.categoryName,
+      this.categoryId, this.categoryName,
         this.categoryIcon,
       this.subCatId,
       this.productTitle,

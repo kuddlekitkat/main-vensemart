@@ -1,18 +1,22 @@
 import 'package:bottom_picker/bottom_picker.dart';
+import 'package:flutter/material.dart' ;
 import 'package:bottom_picker/resources/arrays.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/material.dart';
-
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/models/service_provider_id_model.dart';
 import 'package:vensemart/services/screens/AddBookingsScreen.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
+
+
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:vensemart/services/screens/ServiceDeliveryDetailScreen.dart';
 
+import '../../../theme/app_style.dart';
 import '../../provider/provider_services.dart';
 
 class ServiceCard extends StatefulWidget {
@@ -78,7 +82,7 @@ class _ServiceCardState extends State<ServiceCard> {
           ),
           Container(
             height: MediaQuery.of(context).size.height / 5,
-            width: MediaQuery.of(context).size.width / 5.4,
+            width: MediaQuery.of(context).size.width / 5.9,
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(10.0),
@@ -97,7 +101,8 @@ class _ServiceCardState extends State<ServiceCard> {
                       child: const SpinKitCircle(
                         color: Colors.grey,
                       )),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+              errorWidget: (context, url, error) =>
+                  Image.asset('assets/images/worker-image.jpeg'),
             ),
           ),
           Container(
@@ -120,9 +125,11 @@ class _ServiceCardState extends State<ServiceCard> {
                       height: 8,
                     ),
                     Container(
-                      child: Text('${widget.servicesProviderIdModel?.name}',
+                      child: AutoSizeText(
+                          '${widget.servicesProviderIdModel?.name}',
                           style: TextStyle(
-                            fontSize: 10,
+                            fontSize:
+                                1.5 * MediaQuery.of(context).size.height * 0.01,
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
                           ),
@@ -134,9 +141,8 @@ class _ServiceCardState extends State<ServiceCard> {
                     Container(
                       width: MediaQuery.of(context).size.width / 2.5,
                       child: Text(
-                        "${widget.servicesProviderIdModel?.categoryName}",
-                        style: TextStyle(fontSize: 12, color: Colors.grey[700]),
-                      ),
+                          "${widget.servicesProviderIdModel?.categoryName}",
+                          style: AppStyle.txtIBMPlexSansMedium14Gray1000),
                     ),
                     SizedBox(
                       height: 2,
@@ -152,8 +158,27 @@ class _ServiceCardState extends State<ServiceCard> {
                         ),
                         Text(
                           '${widget.servicesProviderIdModel?.location != null ? widget.servicesProviderIdModel?.location.length > 13 ? '${widget.servicesProviderIdModel?.location.substring(0, 11)}...' : widget.servicesProviderIdModel?.location : widget.servicesProviderIdModel?.location}',
-                          style:
-                              TextStyle(fontSize: 12, color: Colors.grey[700]),
+                          style: AppStyle.txtIBMPlexSansMedium14Gray1000,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Icon(
+                        //   Icons.location_on,
+                        //   color: Colors.red,
+                        //   size: 15,
+                        // ),
+                        Container(
+                          width: MediaQuery.of(context).size.width / 2.5,
+                          child: Text(
+                              "${'Vensemart Verified service provider' ?? 'Inverter installer'}",
+                              style: AppStyle.txtIBMPlexSansMedium14Gray1000),
                         ),
                       ],
                     ),
@@ -162,10 +187,23 @@ class _ServiceCardState extends State<ServiceCard> {
                     ),
                     Row(
                       children: [
-                        Text(
-                          "*" * 2,
-                          style: TextStyle(fontSize: 20, color: Colors.red),
+                        Icon(
+                          Icons.star,
+                          color: Color(0xffFFDF00),
                         ),
+                        Icon(
+                          Icons.star,
+                          color: Color(0xffFFDF00),
+                        ),
+                        Icon(
+                          Icons.star,
+                          color: Color(0xffFFDF00),
+                        )
+
+                        // Text(
+                        //   "*" * 2,
+                        //   style: TextStyle(fontSize: 20, color: Colors.red),
+                        // ),
                         // Text("*" ,style: TextStyle(fontSize: 20,color: Colors.black),),
                       ],
                     ),
@@ -183,7 +221,9 @@ class _ServiceCardState extends State<ServiceCard> {
                         child: Text(
                           "${widget.servicesProviderIdModel?.serviceTypePrice}",
                           style: TextStyle(
-                              fontSize: 10,
+                              fontSize: 1.5 *
+                                  MediaQuery.of(context).size.height *
+                                  0.01,
                               color: Colors.black,
                               fontWeight: FontWeight.bold),
                         ),
@@ -281,7 +321,7 @@ class _ServiceCardState extends State<ServiceCard> {
                                                 ),
                                               ),
                                               filled: true,
-                                              prefixIcon: Text(' '),
+                                              prefixIcon: AutoSizeText(' '),
                                               hintText: ' DD-MM-YY',
                                               suffixIcon: GestureDetector(
                                                   onTap: () =>
@@ -305,15 +345,21 @@ class _ServiceCardState extends State<ServiceCard> {
                                         children: [
                                           _DatePickerItem(
                                             children: <Widget>[
-                                              const Text('Time Entry h:m:s'),
+                                              const AutoSizeText(
+                                                  'Time Entry h:m:s'),
                                               CupertinoButton(
                                                 // Display a CupertinoDatePicker in time picker mode.
                                                 onPressed: () => DatePicker
                                                     .showTime12hPicker(context,
-                                                        theme: DatePickerTheme(
-                                                          containerHeight:
-                                                              210.0,
-                                                        ),
+                                                        // theme:
+                                                        // datePicker
+                                                        //     .DatePickerTheme(
+                                                        //     containerHeight:
+                                                        //     210)
+                                                        // DatePickerTheme(
+                                                        //   containerHeight:
+                                                        //       210.0,
+                                                        // ),
                                                         showTitleActions: true,
                                                         onConfirm: (time) {
                                                   print('confirm $time');
@@ -394,7 +440,7 @@ class _ServiceCardState extends State<ServiceCard> {
                                           width: MediaQuery.of(context)
                                                   .size
                                                   .width /
-                                              3.8,
+                                              4.0,
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(30.0),
@@ -417,17 +463,14 @@ class _ServiceCardState extends State<ServiceCard> {
                       },
                       child: Container(
                         height: MediaQuery.of(context).size.height / 17,
-                        width: MediaQuery.of(context).size.width / 3.5,
+                        width: MediaQuery.of(context).size.width / 3.9,
                         decoration: BoxDecoration(
                             color: Colors.blueAccent,
                             borderRadius: BorderRadius.circular(40.0)),
                         child: Center(
                             child: Text(
                           'Book now',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold),
+                          style: AppStyle.txtRubikRomanMedium12,
                         )),
                       ),
                     ),
@@ -446,10 +489,10 @@ void _openDatePicker(BuildContext context) {
   BottomPicker.date(
     title: 'Set your Date',
     dateOrder: DatePickerDateOrder.dmy,
-    pickerTextStyle: const TextStyle(
+    pickerTextStyle: TextStyle(
       color: Colors.blue,
       fontWeight: FontWeight.bold,
-      fontSize: 12,
+      fontSize: 1.5 * MediaQuery.of(context).size.height * 0.01,
     ),
     titleStyle: const TextStyle(
       fontWeight: FontWeight.bold,

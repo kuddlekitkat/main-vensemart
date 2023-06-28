@@ -10,12 +10,9 @@ import 'package:vensemart/products/widgets/AppBars/ProductsProfileAppBar.dart';
 import 'package:vensemart/products/widgets/Drawers/ProductsDrawer.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-
 import '../widgets/AppBars/ProductsCartAppBar.dart';
 import '../widgets/full_pages/ProductsHome.dart';
 import 'SubscriptionList.dart';
-
-
 
 class ProductsHomeScreen extends StatelessWidget {
   const ProductsHomeScreen({super.key});
@@ -42,13 +39,13 @@ class MyStatefulWidget extends StatefulWidget {
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     ProductsHome(),
-     ProductOrderListScreen(),
-     CartScreen(),
+    ProductOrderListScreen(),
+    CartScreen(),
     ProductsOffersScreen(),
-    ProductsProfile(),
+    ProductsProfileScreen(),
   ];
 
   static final List<Widget> _appBars = [

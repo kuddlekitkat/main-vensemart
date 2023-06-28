@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -8,10 +9,12 @@ import 'package:provider/provider.dart';
 import 'package:vensemart/ChoiceIntroScreen.dart';
 import 'package:vensemart/LoginScreen.dart';
 import 'package:vensemart/OnboardingScreen.dart';
+import 'package:vensemart/presentation/home_screen_for_product_screen/home_screen_for_product_screen.dart';
 import 'package:vensemart/products/screens/CartScreen.dart';
 import 'package:vensemart/products/screens/ProductDetailScreen.dart';
 import 'package:vensemart/products/screens/ProductsHomeScreen.dart';
 import 'package:vensemart/services/screens/AvailableServicesListScreen.dart';
+import 'package:vensemart/services/screens/ContactScreen.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
 import 'apiservices/provider/provider.dart';
 import 'core/injector.dart';
@@ -52,9 +55,15 @@ Future<void> main() async {
     print("Accepted permission: $accepted");
   });
 
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((_) {
+    runApp(const MyApp());
+  });
+
   // printKeyHash();
 
-  runApp(const MyApp());
 }
 
 // void printKeyHash() async {
@@ -80,7 +89,7 @@ class MyApp extends StatelessWidget {
         ),
         // ignore: unnecessary_null_comparison
         home: SessionManager.instance.authToken.isNotEmpty
-            ? const ProductsHomeScreen()
+            ? ChoiceIntroScreen()
             : const OnboardingScreen(),
         routes: {
           ServicesHomeScreen.routeName: (ctx) => const ServicesHomeScreen(),
