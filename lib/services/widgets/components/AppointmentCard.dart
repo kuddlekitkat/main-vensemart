@@ -4,8 +4,12 @@ import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:vensemart/models/upcoming_bookings.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:vensemart/services/screens/CancelRequestScreen.dart';
+
+import '../../screens/RateScreen.dart';
 
 class AppointmentCard extends StatelessWidget {
+
   final String image;
   final String name;
   final String occupation;
@@ -15,6 +19,19 @@ class AppointmentCard extends StatelessWidget {
       required this.name,
       required this.occupation,
       this.upcomingBooking});
+
+
+
+  // void rejectBooking(context) async {
+  //   if (true) {
+  //    providerServices?.acceptRejectBooking(map: {
+  //       "booking_id": widget.servicesProviderIdModel?.id.toString(),
+  //       "status": 5.toString()
+  //     }, context: context);
+  //     Navigator.of(context).popUntil((route) => route.isFirst);
+  //   }
+  // }
+
 
   @override
   Widget build(BuildContext context) {
@@ -102,8 +119,27 @@ class AppointmentCard extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width / 3.6,
+                  width: MediaQuery.of(context).size.width / 8,
                 ),
+
+                TextButton(
+                  style: const ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.red),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context!,
+                      MaterialPageRoute(
+                          builder: (context) => CancelRequestScreen(bookingId: '${upcomingBooking?.bookingId ?? '1'}'))
+                    );
+                  },
+                  child: Text(
+                    'Cancel Service',
+                    style: TextStyle(fontSize: 10.0, color: Colors.white),
+                  ),
+                ),
+
+
               ],
             ),
             Row(
@@ -112,7 +148,8 @@ class AppointmentCard extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 20.0, vertical: 12.0),
-                  child: upcomingBooking?.status == 2
+                  child: upcomingBooking?.status == 2 ||
+                          upcomingBooking?.status == 3
                       ? Container(
                           width: MediaQuery.of(context).size.width / 4.1,
                           height: MediaQuery.of(context).size.width / 9.5,

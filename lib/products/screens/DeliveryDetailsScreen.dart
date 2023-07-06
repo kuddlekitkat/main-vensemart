@@ -12,6 +12,7 @@ import 'package:vensemart/products/screens/ProductsSuccessScreen.dart';
 
 import '../../services/provider/provider_services.dart';
 import '../../services/screens/SetAddressScreen.dart';
+import '../../theme/app_style.dart';
 
 class DeliveryDetailsScreen extends StatefulWidget {
   const DeliveryDetailsScreen({Key? key}) : super(key: key);
@@ -264,6 +265,14 @@ class _DeliveryDetailsScreenState extends State<DeliveryDetailsScreen> {
                                         style: TextStyle(fontSize: 15)),
                                     AutoSizeText('Quantity : ${e.quantity}',
                                         style: TextStyle(fontSize: 15)),
+
+                                    AutoSizeText('Original Price : ${e.productPrice}',
+                                        style: TextStyle(fontSize: 15)),
+
+                                    AutoSizeText('Discount Price : ${e.discount}',
+                                        style: AppStyle.txtPoppinsSemiBold177),
+
+
                                     // AutoSizeText('Unit Price : ${e.productPrice}',style: TextStyle(fontSize: 10)),
 
                                     SizedBox(

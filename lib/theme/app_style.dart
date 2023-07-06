@@ -77,7 +77,7 @@ class AppStyle {
   static TextStyle txtPoppinsMedium12Bluegray700 = TextStyle(
     color: ColorConstant.blueGray700,
     fontSize: getFontSize(
-      12,
+      15,
     ),
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w500,
@@ -162,6 +162,17 @@ class AppStyle {
     ),
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w600,
+  );
+
+
+  static TextStyle txtPoppinsSemiBold177 = TextStyle(
+    color: ColorConstant.black900,
+    fontSize: getFontSize(
+      17,
+    ),
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.lineThrough
   );
 
   static TextStyle txtRobotoRegular20 = TextStyle(
@@ -293,7 +304,7 @@ class AppStyle {
   static TextStyle txtRubikRomanMedium12 = TextStyle(
     color: ColorConstant.whiteA700,
     fontSize: getFontSize(
-      12,
+      14,
     ),
     fontFamily: 'Rubik',
     fontWeight: FontWeight.w500,
@@ -646,7 +657,7 @@ class AppStyle {
   static TextStyle txtPoppinsMedium10BlueA700 = TextStyle(
     color: ColorConstant.blueA700,
     fontSize: getFontSize(
-      10,
+      16,
     ),
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w500,
@@ -693,6 +704,25 @@ class AppStyle {
     color: ColorConstant.black900Cc,
     fontSize: getFontSize(
       9,
+    ),
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w400,
+  );
+
+
+  static TextStyle txtPoppinsRegular99 = TextStyle(
+    color: ColorConstant.black900Cc,
+    fontSize: getFontSize(
+      15,
+    ),
+    fontFamily: 'Poppins',
+    fontWeight: FontWeight.w400,
+  );
+
+  static TextStyle txtPoppinsRegular999 = TextStyle(
+    color: ColorConstant.blue900,
+    fontSize: getFontSize(
+      15,
     ),
     fontFamily: 'Poppins',
     fontWeight: FontWeight.w400,

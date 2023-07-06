@@ -6,6 +6,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:vensemart/models/service_provider_id_model.dart';
+import 'package:vensemart/products/widgets/components/OrderListCard.dart';
 import 'package:vensemart/services/screens/AddBookingsScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -68,6 +69,17 @@ class _ServiceCardState extends State<ServiceCard> {
             ));
   }
 
+
+  // void rejectBooking(context) async {
+  //   if (true) {
+  //    providerServices?.acceptRejectBooking(map: {
+  //       "booking_id": widget.servicesProviderIdModel?.id.toString(),
+  //       "status": 5.toString()
+  //     }, context: context);
+  //     Navigator.of(context).popUntil((route) => route.isFirst);
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -125,6 +137,7 @@ class _ServiceCardState extends State<ServiceCard> {
                       height: 8,
                     ),
                     Container(
+                      width: MediaQuery.of(context).size.width/2.5,
                       child: AutoSizeText(
                           '${widget.servicesProviderIdModel?.name}',
                           style: TextStyle(
@@ -451,7 +464,7 @@ class _ServiceCardState extends State<ServiceCard> {
                                             'Book now',
                                             style: TextStyle(
                                                 color: Colors.white,
-                                                fontSize: 10),
+                                                fontSize: 14),
                                           )),
                                         ),
                                       ),

@@ -20,6 +20,7 @@ import '../../ChoiceIntroScreen.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import '../../OtpVerification.dart';
 import '../../apiservices/auth_repo.dart';
+import '../../models/accept_reject_booking.dart';
 import '../../models/canceled_bookings.dart';
 import '../../models/cart_model.dart';
 import '../../models/completed_bookings.dart';
@@ -48,6 +49,11 @@ class ProviderServices extends ChangeNotifier {
   RegisterModel? _registerModel;
   UserDetailsModel? get userDetailsModel => _userDetailsModel;
   UserDetailsModel? _userDetailsModel;
+
+
+  AcceptRejectBookingModel? get acceptRejectBookingModel =>
+      _acceptRejectBookingModel;
+  AcceptRejectBookingModel? _acceptRejectBookingModel;
 
   UserLocationModel? get userLocationModel => _userLocationModel;
   UserLocationModel? _userLocationModel;
@@ -242,6 +248,59 @@ class ProviderServices extends ChangeNotifier {
       debugPrint("StackTrace: $str");
     }
   }
+
+
+  void acceptRejectBooking(
+      {Map<String, String>? map, BuildContext? context}) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      Response? response = await authRepo.acceptRejectBooking(map!);
+      if (response != null && response.statusCode == 200) {
+        _isLoading = false;
+        SessionManager.instance.isLoggedIn = true;
+
+        _acceptRejectBookingModel =
+            AcceptRejectBookingModel.fromJson(response.data);
+
+        ScaffoldMessenger.of(context!).removeCurrentSnackBar();
+        ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+          content: AutoSizeText('${_acceptRejectBookingModel?.message}'),
+          duration: const Duration(seconds: 10),
+          action: SnackBarAction(
+            label: 'ACTION',
+            onPressed: () {},
+          ),
+        ));
+        // Navigator.pushReplacement(
+        //   context!,
+        //   MaterialPageRoute(
+        //     builder: (context) => const ServiceLocationScreen(),
+        //   ),
+        // );
+      }
+
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      _isLoading = false;
+      ScaffoldMessenger.of(context!).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context!).showSnackBar(SnackBar(
+        content: AutoSizeText('${_acceptRejectBookingModel?.message}'),
+        duration: const Duration(seconds: 10),
+        // action: SnackBarAction(
+        //   label: 'ACTION',
+        //   onPressed: () { },
+        // ),
+      ));
+      notifyListeners();
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
 
   void sendOTP(context) async {
     try {

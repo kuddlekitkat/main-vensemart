@@ -169,9 +169,10 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                               crossAxisSpacing:
                                                   getHorizontalSize(24.00)),
                                       physics: BouncingScrollPhysics(),
-                                      itemCount: 2,
+                                      itemCount: provider.productCategoryModel?.data?.length,
                                       itemBuilder: (context, index) {
                                         return ElectronicsItemWidget(
+
                                           id: '${provider.productCategoryModel?.data?[index].id}',
                                           imageName:
                                               '${provider.productCategoryModel?.data?[index].productImage}',

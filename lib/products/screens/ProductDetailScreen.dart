@@ -155,9 +155,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           ]),
                                       CustomImageViewDetail(
                                           imagePath: "${provider.productIdModel?.data?.productImage}",
-                                          height: getVerticalSize(10.00),
-                                          width: getHorizontalSize(46.00),
-                                          margin: getMargin(top: 254))
+                                          height: getVerticalSize(0.00),
+                                          width: getHorizontalSize(0.00),
+                                          margin: getMargin(top: 245))
                                     ])))
                       ])),
                   Padding(
@@ -170,12 +170,16 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
                                 style: AppStyle.txtPoppinsMedium16),
-                            Padding(
-                                padding: getPadding(top: 3, bottom: 5),
-                                child: Text("${provider.productIdModel?.data?.storeName}",
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: AppStyle.txtPoppinsMedium10BlueA700))
+                            // Padding(
+                            //     padding: getPadding(top: 3, bottom: 5),
+                            //     child: Text("${provider.productIdModel?.data?.storeName}",
+                            //         overflow: TextOverflow.ellipsis,
+                            //         textAlign: TextAlign.left,
+                            //         style: TextStyle(
+                            //             color: ColorConstant.blueA700,
+                            //             fontSize: getFontSize(14),
+                            //             fontFamily: 'Poppins',
+                            //             fontWeight: FontWeight.w400)))
                           ])),
                   Container(
                       width: getHorizontalSize(351.00),
@@ -184,7 +188,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           "${provider.productIdModel?.data?.productDescription}",
                           maxLines: null,
                           textAlign: TextAlign.justify,
-                          style: AppStyle.txtPoppinsRegular9)),
+                          style: AppStyle.txtPoppinsRegular99)),
                   Align(
                       alignment: Alignment.centerLeft,
                       child: Padding(
@@ -195,14 +199,14 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                     text: "Brand: ",
                                     style: TextStyle(
                                         color: ColorConstant.black900,
-                                        fontSize: getFontSize(12),
+                                        fontSize: getFontSize(14),
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w400)),
                                 TextSpan(
                                     text: "${provider.productIdModel?.data?.storeName} ",
                                     style: TextStyle(
                                         color: ColorConstant.blueA700,
-                                        fontSize: getFontSize(12),
+                                        fontSize: getFontSize(14),
                                         fontFamily: 'Poppins',
                                         fontWeight: FontWeight.w400))
                               ]),
@@ -211,10 +215,24 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       alignment: Alignment.centerLeft,
                       child: Padding(
                           padding: getPadding(left: 19, top: 11),
-                          child: Text("₦ ${provider.productIdModel?.data?.productPrice}",
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: AppStyle.txtPoppinsSemiBold17))),
+                          child: Row(
+                            children: [
+
+                              Text("₦ ${provider.productIdModel?.data?.productPrice}",
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: AppStyle.txtPoppinsSemiBold17),
+
+                              SizedBox(width: 10.0,),
+
+
+
+                              Text("₦ ${provider.productIdModel?.data?.productPrice}",
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: AppStyle.txtPoppinsSemiBold177),
+                            ],
+                          ))),
                   Padding(
                       padding: getPadding(top: 11),
                       child:
@@ -228,8 +246,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         GestureDetector(
                           onTap: () => removeCart(context),
                           child: CustomIconButton(
-                              height: 20,
-                              width: 20,
+                              height: 25,
+                              width: 25,
                               margin: getMargin(left: 23, top: 4, bottom: 4),
                               variant: IconButtonVariant.FillBluegray700,
                               shape: IconButtonShape.CircleBorder10,
@@ -246,8 +264,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         GestureDetector(
                           onTap: () => addQuantity(context),
                           child: CustomIconButton(
-                              height: 20,
-                              width: 20,
+                              height: 25,
+                              width: 25,
                               margin: getMargin(left: 12, top: 4, bottom: 4),
                               variant: IconButtonVariant.FillBluegray700,
                               shape: IconButtonShape.CircleBorder10,

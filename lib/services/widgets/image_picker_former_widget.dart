@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -89,7 +88,7 @@ class ImagePickerHandler {
     switch (action!) {
       case ProfileOptionAction.viewImage:
       case ProfileOptionAction.library:
-        return _getImage(context, ImageSource.gallery,);
+        return _getImage(context, ImageSource.gallery);
       case ProfileOptionAction.profileCamera:
         return _getImage(context, ImageSource.camera);
       case ProfileOptionAction.remove:
@@ -100,37 +99,15 @@ class ImagePickerHandler {
 
   Future<File?> _getImage(BuildContext context, ImageSource source) async {
     try {
-      final pickedFile = await ImagePicker.platform.pickImage(source: source, maxHeight:  400 , maxWidth: 400,imageQuality: 90);
+      final pickedFile = await ImagePicker.platform.pickImage(source: source);
       if (pickedFile != null) {
-        return await File(pickedFile!.path);
+        return await _cropImage(context, pickedFile);
       }
     } catch (e) {
       debugPrint('Error: $e');
     }
     return null;
   }
-
-  Future<File?> compressFile(File file) async {
-    final filePath = file.absolute.path;
-
-    // Create output file path
-    // eg:- "Volume/VM/abcd_out.jpeg"
-    final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
-    final splitted = filePath.substring(0, (lastIndex));
-    final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
-    var result = await FlutterImageCompress.compressAndGetFile(
-      file.absolute.path, outPath,
-      quality: 5,
-    );
-
-
-    return File(result!.path);
-    // return result;
-  }
-
-
-
-
 
   Future<File?> _cropImage(BuildContext context, PickedFile imageFile) async {
     CroppedFile? croppedFile = await ImageCropper().cropImage(

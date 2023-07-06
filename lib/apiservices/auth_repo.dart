@@ -35,6 +35,17 @@ class AuthRepo with ApiServices {
     return null;
   }
 
+
+  Future<Response?> acceptRejectBooking(Map<String, String> credentials) async {
+    Response? response =
+    await apiPostRequests("accept-reject-bookings", credentials);
+
+    if (response != null) {
+      return response;
+    }
+    return null;
+  }
+
   Future<Response?> deleteAccount(Map<String, String> credentials) async {
     Response? response = await apiPostRequests("delete-account", credentials);
 

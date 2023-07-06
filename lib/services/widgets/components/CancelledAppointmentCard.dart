@@ -111,7 +111,7 @@ class CancelledAppointmentCard extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(
                       horizontal: 15.0, vertical: 12.0),
                   child: Container(
-                    width: MediaQuery.of(context).size.width / 3.8,
+                    width: MediaQuery.of(context).size.width / 3.9,
                     height: MediaQuery.of(context).size.width / 10,
                     decoration: BoxDecoration(
                         color: Color.fromRGBO(234, 234, 234, 3),
@@ -141,7 +141,7 @@ class CancelledAppointmentCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8.0, vertical: 12.0),
                       child: Container(
-                        width: MediaQuery.of(context).size.width / 3.8,
+                        width: MediaQuery.of(context).size.width / 3.9,
                         height: MediaQuery.of(context).size.width / 9.5,
                         decoration: BoxDecoration(
                             color: Colors.blue,
@@ -162,7 +162,7 @@ class CancelledAppointmentCard extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8.0, vertical: 12.0),
                       child: Container(
-                        width: MediaQuery.of(context).size.width / 3.8,
+                        width: MediaQuery.of(context).size.width / 3.9,
                         height: MediaQuery.of(context).size.width / 9.5,
                         decoration: BoxDecoration(
                             color: Colors.blue,
