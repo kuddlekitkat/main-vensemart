@@ -14,6 +14,7 @@ import 'package:vensemart/services/screens/CustomerSupportScreen.dart';
 import 'package:vensemart/services/screens/NotificationScreen.dart';
 import 'package:vensemart/services/screens/ProfileEditScreen.dart';
 import 'package:vensemart/services/screens/RateUsScreen.dart';
+import 'package:vensemart/services/screens/ReferralsScreen.dart';
 import 'package:vensemart/services/screens/ServicesAppoinmentScreen.dart';
 import 'package:vensemart/services/screens/ServicesHomeScreen.dart';
 import 'package:vensemart/services/widgets/full_pages/ServiceHome.dart';
@@ -38,6 +39,7 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
   void initState() {
     providerServices = Provider.of<ProviderServices>(context, listen: false);
     providerServices?.userDetails();
+
     super.initState();
   }
 
@@ -183,6 +185,24 @@ class _ServicesDrawerState extends State<ServicesDrawer> {
                             leading: Icon(Icons.compare_arrows),
                             title: AutoSizeText(
                               'Switch to product',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
+                          ),
+                        ),
+
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ReferralsScreen(),
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Icon(Icons.code),
+                            title: AutoSizeText(
+                              'Referrals',
                               style: TextStyle(fontSize: 1.5 * unitHeightValue),
                             ),
                           ),

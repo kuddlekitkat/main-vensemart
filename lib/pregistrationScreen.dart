@@ -387,9 +387,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     });
                                   },
                                 ),
-                                 Text(
+                                const Text(
                                   'By checking the box, agree to our ',
-                                  style: TextStyle(fontSize: screenWidth * 0.034),
+                                  style: TextStyle(fontSize: 15),
                                 ),
                                 GestureDetector(
                                   onTap: () {
@@ -405,7 +405,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     style: TextStyle(
                                       color: Colors.blueAccent,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: screenWidth * 0.034,
+                                      fontSize: screenWidth * 0.031,
                                     ),
                                   ),
                                 ),

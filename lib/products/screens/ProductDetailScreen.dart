@@ -123,11 +123,15 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       height: getVerticalSize(343.00),
                       width: size.width,
                       child: Stack(alignment: Alignment.bottomCenter, children: [
-                        CustomImageViewDetail(
-                            imagePath:  "${provider.productIdModel?.data?.productImage ?? ImageConstant.imgRectangle23}",
-                            height: getVerticalSize(343.00),
-                            width: getHorizontalSize(390.00),
-                            alignment: Alignment.center),
+                        SafeArea(
+                          child: Image.network("${provider.productIdModel?.data?.productImage ?? ImageConstant.imgRectangle23}",
+                          fit: BoxFit.cover,),
+                        ),
+                        // CustomImageViewDetail(
+                        //     imagePath:  "${provider.productIdModel?.data?.productImage ?? ImageConstant.imgRectangle23}",
+                        //     height: getVerticalSize(500.00),
+                        //     width: getHorizontalSize(390.00),
+                        //     alignment: Alignment.center),
                         Align(
                             alignment: Alignment.bottomCenter,
                             child: Padding(
@@ -157,8 +161,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                                           imagePath: "${provider.productIdModel?.data?.productImage}",
                                           height: getVerticalSize(0.00),
                                           width: getHorizontalSize(0.00),
-                                          margin: getMargin(top: 245))
-                                    ])))
+                                          margin: getMargin(top: 255),),
+                                    ]),),)
                       ])),
                   Padding(
                       padding: getPadding(left: 19, top: 21, right: 20),

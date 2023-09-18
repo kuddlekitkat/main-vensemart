@@ -16,6 +16,7 @@ import 'ContactScreen.dart';
 // import 'FeedbackScreen.dart';
 import 'NotificationScreen.dart';
 import 'RateUsScreen.dart';
+import 'ReferralsScreen.dart';
 import 'ServicesHomeScreen.dart';
 
 class ServicesProfileScreen extends StatefulWidget {
@@ -194,6 +195,24 @@ class _ServicesProfileScreenState extends State<ServicesProfileScreen> {
                             leading: Icon(Icons.compare_arrows),
                             title: AutoSizeText(
                               'Switch to product',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
+                          ),
+                        ),
+
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ReferralsScreen(),
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Icon(Icons.code),
+                            title: AutoSizeText(
+                              'Referrals',
                               style: TextStyle(fontSize: 1.5 * unitHeightValue),
                             ),
                           ),

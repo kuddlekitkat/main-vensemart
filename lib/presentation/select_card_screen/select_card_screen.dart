@@ -10,6 +10,7 @@ import 'package:vensemart/widgets/custom_radio_button.dart';
 // ignore_for_file: must_be_immutable
 class SelectCardScreen extends StatelessWidget {
   String radioGroup = "";
+  var controller = PageController(initialPage: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -32,15 +33,18 @@ class SelectCardScreen extends StatelessWidget {
                       height: getVerticalSize(6.00),
                       margin:
                           getMargin(left: 24, top: 25, right: 24, bottom: 25),
-                      child: SmoothIndicator(
-                          offset: 0,
-                          count: 3,
-                          axisDirection: Axis.horizontal,
-                          effect: ScrollingDotsEffect(
-                              spacing: 2,
-                              activeDotColor: ColorConstant.gray5001,
-                              dotHeight: getVerticalSize(6.00),
-                              dotWidth: getHorizontalSize(6.00))))
+                      child:    SmoothPageIndicator(
+                        controller: controller,
+                        count: 3, // Replace with the number of dots you want to show
+                        axisDirection: Axis.horizontal,
+                        effect: ScrollingDotsEffect(
+                          spacing: 2, // Adjust the spacing between dots as per your requirement
+                          activeDotColor: ColorConstant.gray5001, // Replace with your desired color
+                          dotHeight: getVerticalSize(6.0), // Replace with the desired height of the dots
+                          dotWidth: getHorizontalSize(6.0), // Replace with the desired width of the dots
+                        ),
+                      ),
+                  )
                 ]),
             body: Container(
                 width: size.width,

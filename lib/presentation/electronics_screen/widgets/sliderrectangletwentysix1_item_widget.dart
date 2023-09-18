@@ -5,6 +5,8 @@ import 'package:vensemart/core/app_export.dart';
 // ignore: must_be_immutable
 class Sliderrectangletwentysix1ItemWidget extends StatelessWidget {
   Sliderrectangletwentysix1ItemWidget();
+  var controller = PageController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -127,22 +129,19 @@ class Sliderrectangletwentysix1ItemWidget extends StatelessWidget {
                         top: 18,
                         right: 17,
                       ),
-                      child: SmoothIndicator(
-                        offset: 0,
-                        count: 3,
+                      child:    SmoothPageIndicator(
+                        controller: controller,
+                        count: 3, // Replace with the number of dots you want to show
                         axisDirection: Axis.horizontal,
                         effect: ScrollingDotsEffect(
-                          spacing: 5,
-                          activeDotColor: ColorConstant.blueA700,
-                          dotColor: ColorConstant.whiteA7007f,
-                          dotHeight: getVerticalSize(
-                            11.00,
-                          ),
-                          dotWidth: getHorizontalSize(
-                            11.00,
-                          ),
+                          spacing: 5, // Adjust the spacing between dots as per your requirement
+                          activeDotColor: ColorConstant.blueA700, // Replace with your desired color
+                          dotColor: ColorConstant.whiteA7007f, // Replace with your desired color
+                          dotHeight: getVerticalSize(11.0), // Replace with the desired height of the dots
+                          dotWidth: getHorizontalSize(11.0), // Replace with the desired width of the dots
                         ),
                       ),
+
                     ),
                   ),
                 ],

@@ -28,7 +28,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController phnoeNumberController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController referralController = TextEditingController();
 
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
   String? deviceToken;
@@ -59,27 +58,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     initOneSignal(context);
 
     super.initState();
-
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text('Referral Code'),
-            content: const Text('Enter referral code to get rewards if you were referred.'),
-            actions: <Widget>[
-              ElevatedButton(
-                child: const Text('OK'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ],
-          );
-        },
-      );
-    });
   }
 
   Future<void> initOneSignal(BuildContext context) async {
@@ -130,7 +108,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         "password": passwordController.text.trim(),
         "state": "FCT",
         "town": "Abuja",
-        "referral_code" : referralController.text.trim()
+        "referral_cod" : "RF_dsBU"
       }, context: context);
     }
   }
@@ -181,7 +159,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height / 1.8,
+                height: MediaQuery.of(context).size.height / 1.5,
                 width: double.infinity,
                 decoration: const BoxDecoration(
                   color: Colors.white,
@@ -191,12 +169,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 child: SizedBox(
-                  height: MediaQuery.of(context).size.height / 1.7,
+                  height: MediaQuery.of(context).size.height / 1.1,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(
-                        height: screenHeight / 12.5,
+                        height: MediaQuery.of(context).size.height / 13.5,
                         child: Container(
                           margin: const EdgeInsets.all(12.0),
                           child: TextFormField(
@@ -223,7 +201,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
 
                       SizedBox(
-                        height: screenHeight / 12.5,
+                        height: MediaQuery.of(context).size.height / 13.5,
                         child: Container(
                           margin: const EdgeInsets.all(12.0),
                           child: TextFormField(
@@ -250,56 +228,93 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
 
                       SizedBox(
-                        height: screenHeight / 12.5,
+                        height: MediaQuery.of(context).size.height / 11.5,
                         child: Container(
                           margin: const EdgeInsets.all(12.0),
                           child: TextFormField(
                             validator: Validators.validatePhone(),
                             controller: phnoeNumberController,
                             decoration: InputDecoration(
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10.0),
-                                ),
-                                borderSide: BorderSide(
-                                  width: 0,
-                                  style: BorderStyle.none,
-                                ),
-                              ),
-                              filled: true,
-                              hintText: '08107463265',
-                              prefixIcon: Container(
-                                height: 20,
-                                width: 25,
-                                margin: EdgeInsets.only(left: 5),
-                                decoration: const BoxDecoration(
-                                  color: Color.fromRGBO(234, 234, 234, 3),
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10.0),
+                                border: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none,
                                   ),
                                 ),
-                                child: Center(
-                                  child: Container(
-                                    height: 20,
-                                    width: 20,
-                                    decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage('assets/images/flag.png'),
-                                      ),
+                                filled: true,
+                                hintText: '08107463265',
+                                prefixIcon: Container(
+                                  height: 20,
+                                  width: 25,
+                                  margin: EdgeInsets.only(left: 5),
+                                  decoration: const BoxDecoration(
+                                      color: Color.fromRGBO(234, 234, 234, 3),
+                                      borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(10.0))),
+                                  child: Center(
+                                    child: Container(
+                                      height: 20,
+                                      width: 20,
+                                      decoration: const BoxDecoration(
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/images/flag.png'))),
                                     ),
                                   ),
                                 ),
-                              ),
-                              hintStyle: TextStyle(color: Colors.grey[600]),
-                              fillColor: const Color.fromRGBO(250, 250, 254, 1),
-                              contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
-                            ),
+                                hintStyle: TextStyle(color: Colors.grey[600]),
+                                fillColor:
+                                const Color.fromRGBO(250, 250, 254, 1)),
                           ),
                         ),
                       ),
 
                       SizedBox(
-                        height: screenHeight / 12.5,
+                        height: MediaQuery.of(context).size.height / 13.5,
+                        child: Container(
+                          margin: const EdgeInsets.all(12.0),
+                          child: TextFormField(
+                            obscureText: !_passwordVisible,
+                            controller: passwordController,
+                            validator: Validators.validatePlainPassword(),
+                            decoration: InputDecoration(
+                                border: const OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                  borderSide: BorderSide(
+                                    width: 0,
+                                    style: BorderStyle.none,
+                                  ),
+                                ),
+                                filled: true,
+                                hintText: 'password',
+                                prefixIcon: const Icon(Icons.lock),
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      _passwordVisible = !_passwordVisible;
+                                    });
+                                  },
+                                  icon: Icon(
+                                      _passwordVisible
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color:
+                                      Theme.of(context).primaryColorDark),
+                                ),
+                                hintStyle: TextStyle(color: Colors.grey[600]),
+                                fillColor:
+                                const Color.fromRGBO(250, 250, 254, 1)),
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 11.5,
                         child: Container(
                           margin: const EdgeInsets.all(12.0),
                           child: TextFormField(
@@ -339,83 +354,48 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: screenHeight / 12.5, // adjust the factor as needed
-                        child: Container(
-                          margin: EdgeInsets.all(screenWidth * 0.03), // adjust the factor as needed
-                          child: TextFormField(
-                            controller: referralController, // change the controller
-                            // validator: Validators.validateReferralCode(), // change the validator
-                            decoration: InputDecoration(
-                              border: const OutlineInputBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10.0),
-                                ),
-                                borderSide: BorderSide(
-                                  width: 0,
-                                  style: BorderStyle.none,
-                                ),
-                              ),
-                              filled: true,
-                              hintText: 'Referral Code (Optional)', // change the hint text
-                              prefixIcon: const Icon(Icons.code), // change the icon
-                              hintStyle: TextStyle(fontSize: screenHeight * 0.02,  color: Colors.grey[600]), // adjust the factor as needed
-                              fillColor: const Color.fromRGBO(250, 250, 254, 1),
+                        height: MediaQuery.of(context).size.height / 28.5,
+                        child: Row(
+                          children: [
+                            const SizedBox(
+                              width: 8,
                             ),
-                          ),
+                            Checkbox(
+                              checkColor: Colors.white,
+                              fillColor:
+                              MaterialStateProperty.resolveWith(getColor),
+                              value: isChecked,
+                              onChanged: (bool? value) {
+                                setState(() {
+                                  isChecked = value!;
+                                  print(isChecked);
+                                });
+                              },
+                            ),
+                            const Text(
+                              'By checking the box,agree to our ',
+                              style: TextStyle(fontSize: 10),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context!,
+                                  MaterialPageRoute(
+                                    builder: (context) => TermsScreen(),
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                'terms and conditions',
+                                style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 10),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-
-
-                      LayoutBuilder(
-                        builder: (BuildContext context, BoxConstraints constraints) {
-                          double screenWidth = constraints.maxWidth;
-                          return SizedBox(
-                            height: MediaQuery.of(context).size.height / 28.5,
-                            child: Row(
-                              children: [
-                                const SizedBox(
-                                  width: 8,
-                                ),
-                                Checkbox(
-                                  checkColor: Colors.white,
-                                  fillColor: MaterialStateProperty.resolveWith(getColor),
-                                  value: isChecked,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      isChecked = value!;
-                                      print(isChecked);
-                                    });
-                                  },
-                                ),
-                                 Text(
-                                  'By checking the box, agree to our ',
-                                  style: TextStyle(fontSize: screenWidth * 0.034),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context!,
-                                      MaterialPageRoute(
-                                        builder: (context) => TermsScreen(),
-                                      ),
-                                    );
-                                  },
-                                  child: Text(
-                                    'terms and conditions',
-                                    style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: screenWidth * 0.034,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-
-
                       SizedBox(
                         height: 4,
                       ),
@@ -456,10 +436,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          AutoSizeText('Already have an account?',
+                          const AutoSizeText('Already have an account?',
                               style: TextStyle(
-                                fontWeight: FontWeight.normal,
-                                fontSize: screenWidth * 0.045,)),
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: 10.0)),
                           GestureDetector(
                             onTap: () {
                               Navigator.push(
@@ -469,11 +449,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               );
                             },
-                            child:  Text(
+                            child: const Text(
                               ' sign in',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontSize: screenWidth * 0.045,
+                                  fontSize: 20.0,
                                   color: Color(0xff1456f1)),
                             ),
                           )

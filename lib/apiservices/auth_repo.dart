@@ -189,6 +189,28 @@ class AuthRepo with ApiServices {
     return null;
   }
 
+
+  Future<Response?> referrals() async {
+    Response? response = await apiGetRequests("referrals");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
+
+  Future<Response?> referredUsersWithBookings() async {
+    Response? response = await apiGetRequests("referredUsersWithBookings");
+
+    if (response != null) {
+      return response;
+    }
+
+    return null;
+  }
+
   Future<Response?> cartlist() async {
     Response? response = await apiGetRequests("cart_list");
 

@@ -12,6 +12,7 @@ import '../../../services/screens/AboutUsScreen.dart';
 import '../../../services/screens/ContactScreen.dart';
 import '../../../services/screens/CustomerSupportScreen.dart';
 import '../../../services/screens/ProfileEditScreen.dart';
+import '../../../services/screens/ReferralsScreen.dart';
 import '../../../services/widgets/full_pages/ServiceHome.dart';
 import '../../screens/ProductsHomeScreen.dart';
 
@@ -225,6 +226,24 @@ class _ProductsDrawerState extends State<ProductsDrawer> {
                             leading: Icon(Icons.compare_arrows),
                             title: AutoSizeText(
                               'Switch to services',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
+                          ),
+                        ),
+
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ReferralsScreen(),
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Icon(Icons.code),
+                            title: AutoSizeText(
+                              'Referrals',
                               style: TextStyle(fontSize: 1.5 * unitHeightValue),
                             ),
                           ),

@@ -76,6 +76,8 @@ dependencies:
   pretty_dio_logger: ^1.1.1
   provider: ^6.0.4
   shared_preferences: ^2.0.15
+  google_fonts: ^4.0.4
+  share_plus: ^7.1.0
 
 dev_dependencies:
   flutter_lints: ^2.0.0

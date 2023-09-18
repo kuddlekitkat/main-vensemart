@@ -26,6 +26,8 @@ import '../../models/cart_model.dart';
 import '../../models/completed_bookings.dart';
 import '../../models/faqs_model.dart';
 import '../../models/featured_shop_model.dart';
+import '../../models/get_all_referrals_model.dart';
+import '../../models/get_all_referred_users_with_bookings_model.dart';
 import '../../models/get_all_services_model.dart';
 import '../../models/get_all_trending_services_model.dart';
 import '../../models/location_model.dart';
@@ -61,8 +63,15 @@ class ProviderServices extends ChangeNotifier {
   ServicesModel? get servicesModel => _servicesModel;
   ServicesModel? _servicesModel;
 
+  ReferralsModel? get referralsModel => _referralsModel;
+  ReferralsModel? _referralsModel;
+
   CartModel? get cartModel => _cartModel;
   CartModel? _cartModel;
+
+
+  ReferredUsersBookingModel? get referredUsersBookingModel => _referredUsersBookingModel;
+  ReferredUsersBookingModel? _referredUsersBookingModel;
 
   OrderModel? get orderModel => _orderModel;
   OrderModel? _orderModel;
@@ -885,6 +894,26 @@ class ProviderServices extends ChangeNotifier {
     }
   }
 
+
+  void referrals() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.referrals();
+      if (response != null && response.statusCode == 200) {
+        _referralsModel = ReferralsModel.fromJson(response.data);
+        _isLoading = false;
+      }
+
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
   void cartlist() async {
     try {
       _isLoading = true;
@@ -892,6 +921,27 @@ class ProviderServices extends ChangeNotifier {
       if (response != null && response.statusCode == 200) {
         _cartModel = CartModel.fromJson(response.data);
         print('.....carter ${_cartModel!.toJson()}');
+        _isLoading = false;
+      }
+
+      if (response != null && response.statusCode != 200) {
+        _isLoading = false;
+      }
+      notifyListeners();
+    } catch (e, str) {
+      debugPrint("Error: $e");
+      debugPrint("StackTrace: $str");
+    }
+  }
+
+
+  void refUserslist() async {
+    try {
+      _isLoading = true;
+      Response? response = await authRepo.referredUsersWithBookings();
+      if (response != null && response.statusCode == 200) {
+        _referredUsersBookingModel = ReferredUsersBookingModel?.fromJson(response.data);
+        print('.....carter ${_referredUsersBookingModel!.toJson()}');
         _isLoading = false;
       }
 

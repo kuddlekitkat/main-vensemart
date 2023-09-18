@@ -12,6 +12,7 @@ import '../../LoginScreen.dart';
 import '../../products/screens/ProductsHomeScreen.dart';
 import '../../services/screens/AboutUsScreen.dart';
 import '../../services/screens/ContactScreen.dart';
+import '../../services/screens/ReferralsScreen.dart';
 import '../../services/screens/ServicesHomeScreen.dart';
 
 // import 'FeedbackScreen.dart';
@@ -157,6 +158,23 @@ class _ProductsProfileScreenState extends State<ProductsProfileScreen> {
                             leading: Icon(Icons.person),
                             title: AutoSizeText(
                               'Profile',
+                              style: TextStyle(fontSize: 1.5 * unitHeightValue),
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ReferralsScreen(),
+                              ),
+                            );
+                          },
+                          child: ListTile(
+                            leading: Icon(Icons.code),
+                            title: AutoSizeText(
+                              'Referrals',
                               style: TextStyle(fontSize: 1.5 * unitHeightValue),
                             ),
                           ),

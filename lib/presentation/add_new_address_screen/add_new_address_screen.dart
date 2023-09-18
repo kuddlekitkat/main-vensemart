@@ -23,6 +23,8 @@ class AddNewAddressScreen extends StatelessWidget {
   TextEditingController groupFiftyOneController = TextEditingController();
 
   TextEditingController groupFiftyThreeController = TextEditingController();
+  var controller = PageController();
+
 
   GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -45,18 +47,22 @@ class AddNewAddressScreen extends StatelessWidget {
                 title: AppbarSubtitle2(text: "Add new Address"),
                 actions: [
                   Container(
+
                       height: getVerticalSize(6.00),
                       margin:
                           getMargin(left: 24, top: 25, right: 24, bottom: 25),
-                      child: SmoothIndicator(
-                          offset: 0,
-                          count: 3,
-                          axisDirection: Axis.horizontal,
-                          effect: ScrollingDotsEffect(
-                              spacing: 2,
-                              activeDotColor: ColorConstant.gray5001,
-                              dotHeight: getVerticalSize(6.00),
-                              dotWidth: getHorizontalSize(6.00))))
+                      child:    SmoothPageIndicator(
+                        controller: controller,
+                        count: 3, // Replace with the number of dots you want to show
+                        axisDirection: Axis.horizontal,
+                        effect: ScrollingDotsEffect(
+                          spacing: 2, // Adjust the spacing between dots as per your requirement
+                          activeDotColor: Colors.grey, // Replace with your desired color
+                          dotHeight: getVerticalSize(6.0), // Replace with the desired height of the dots
+                          dotWidth: getHorizontalSize(6.0), // Replace with the desired width of the dots
+                        ),
+                      )
+                  )
                 ]),
             body: Form(
                 key: _formKey,
