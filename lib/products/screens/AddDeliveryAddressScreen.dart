@@ -220,9 +220,9 @@ class _AddDeliveryAddressScreenState extends State<AddDeliveryAddressScreen> {
                                   selectedValue = value as String;
                                 });
                               },
-                              buttonHeight: 70,
-                              buttonWidth: 280,
-                              itemHeight: 50,
+                              // buttonHeight: 70,
+                              // buttonWidth: 280,
+                              // itemHeight: 50,
                             ),
                           ),
                         ),

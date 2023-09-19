@@ -35,12 +35,11 @@ class SelectCardScreen extends StatelessWidget {
                       child: SmoothIndicator(
                           offset: 0,
                           count: 3,
-                          axisDirection: Axis.horizontal,
                           effect: ScrollingDotsEffect(
                               spacing: 2,
                               activeDotColor: ColorConstant.gray5001,
                               dotHeight: getVerticalSize(6.00),
-                              dotWidth: getHorizontalSize(6.00))))
+                              dotWidth: getHorizontalSize(6.00)), size: Size(width, height),))
                 ]),
             body: Container(
                 width: size.width,

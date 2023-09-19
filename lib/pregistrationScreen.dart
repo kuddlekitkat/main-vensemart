@@ -86,21 +86,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
     /// Set App Id.
     await OneSignal.shared.setAppId("580dc8b3-a23b-4ef4-9ec9-fa1fd78c83bb");
 
-    /// Get the OneSignal userId and update it into Firebase.
-    /// So that it can be used to send notifications to users later.
-
+    /// Get the Onesignal userId and update that into the firebase.
+    /// So, that it can be used to send Notifications to users later.̥
     final status = await OneSignal.shared.getDeviceState();
     final String? osUserID = status?.userId;
     deviceToken = osUserID;
-    // We will update this once the user logs in and goes to the dashboard.
+    // We will update this once he logged in and goes to dashboard.
     ////updateUserProfile(osUserID);
-    // Store it into shared prefs, so that it can be used later.
-    // The promptUserForPushNotificationPermission function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission.
+    // Store it into shared prefs, So that later we can use it.
+    // The promptForPushNotificationsWithUserResponse function will show the iOS push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
     await OneSignal.shared.promptUserForPushNotificationPermission(
       fallbackToSettings: true,
     );
   }
-
 
   Future<String?> _getId() async {
     var deviceInfo = DeviceInfoPlugin();
@@ -389,9 +387,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     });
                                   },
                                 ),
-                                 Text(
+                                const Text(
                                   'By checking the box, agree to our ',
-                                  style: TextStyle(fontSize: screenWidth * 0.034),
+                                  style: TextStyle(fontSize: 15),
                                 ),
                                 GestureDetector(
                                   onTap: () {
@@ -407,7 +405,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     style: TextStyle(
                                       color: Colors.blueAccent,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: screenWidth * 0.034,
+                                      fontSize: screenWidth * 0.031,
                                     ),
                                   ),
                                 ),

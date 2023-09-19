@@ -130,7 +130,6 @@ class Sliderrectangletwentysix1ItemWidget extends StatelessWidget {
                       child: SmoothIndicator(
                         offset: 0,
                         count: 3,
-                        axisDirection: Axis.horizontal,
                         effect: ScrollingDotsEffect(
                           spacing: 5,
                           activeDotColor: ColorConstant.blueA700,
@@ -141,7 +140,7 @@ class Sliderrectangletwentysix1ItemWidget extends StatelessWidget {
                           dotWidth: getHorizontalSize(
                             11.00,
                           ),
-                        ),
+                        ), size: Size(width, height),
                       ),
                     ),
                   ),

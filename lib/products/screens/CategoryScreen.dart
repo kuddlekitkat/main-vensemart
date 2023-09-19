@@ -110,98 +110,101 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         color: Colors.blue,
                       ));
           } else {
-            return Container(
-              height: getVerticalSize(844.00),
-              width: size.width,
-              decoration: AppDecoration.fillGray50,
-              child: Stack(alignment: Alignment.topRight, children: [
-                Align(
-                    alignment: Alignment.topCenter,
-                    child: Container(
-                        width: size.width,
-                        padding: getPadding(top: 25, bottom: 25),
-                        decoration: AppDecoration.fillGray50,
-                        child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              CustomAppBar(
-                                height: getVerticalSize(34.00),
-                                leadingWidth: 54,
-                                leading: AppbarIconbutton(
-                                    svgPath: ImageConstant.imgArrowleft,
-                                    margin: getMargin(left: 20),
-                                    onTap: () => onTapArrowleft3(context)),
-                                centerTitle: true,
-                                title: Text("Products",
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: AppStyle.txtSoraSemiBold15),
-                              ),
-                              CustomSearchView(
-                                  width: 350,
-                                  focusNode: FocusNode(),
-                                  controller: searchController,
-                                  hintText: "Search ",
-                                  margin: getMargin(top: 33),
-                                  prefix: Container(
-                                      margin: getMargin(
-                                          left: 20,
-                                          top: 17,
-                                          right: 10,
-                                          bottom: 16),
-                                      child: CustomImageView(
-                                          svgPath: ImageConstant.imgSearch)),
-                                  prefixConstraints: BoxConstraints(
-                                      maxHeight: getVerticalSize(20.00))),
-                              Padding(
-                                  padding: getPadding(
-                                      left: 20, right: 22, bottom: 84),
-                                  child: GridView.builder(
-                                      shrinkWrap: true,
-                                      gridDelegate:
-                                          SliverGridDelegateWithFixedCrossAxisCount(
-                                              mainAxisExtent:
-                                                  getVerticalSize(134.00),
-                                              crossAxisCount: 3,
-                                              mainAxisSpacing:
-                                                  getHorizontalSize(24.00),
-                                              crossAxisSpacing:
-                                                  getHorizontalSize(24.00)),
-                                      physics: BouncingScrollPhysics(),
-                                      itemCount: provider.productCategoryModel?.data?.length,
-                                      itemBuilder: (context, index) {
-                                        return ElectronicsItemWidget(
+            return SingleChildScrollView(
 
-                                          id: '${provider.productCategoryModel?.data?[index].id}',
-                                          imageName:
-                                              '${provider.productCategoryModel?.data?[index].productImage}',
-                                          title:
-                                              '${provider.productCategoryModel?.data?[index].productTitle}',
-                                          price:
-                                              '${provider.productCategoryModel?.data?[index].productPrice}',
-                                        );
-                                      }))
-                            ]))),
-                // Padding(
-                //   padding: getPadding(top: 158),
-                //   child: CarouselSlider.builder(
-                //       options: CarouselOptions(
-                //           height: getVerticalSize(118.00),
-                //           initialPage: 0,
-                //           autoPlay: true,
-                //           viewportFraction: 1.0,
-                //           enableInfiniteScroll: false,
-                //           scrollDirection: Axis.horizontal,
-                //           onPageChanged: (index, reason) {
-                //             silderIndex = index;
-                //           }),
-                //       itemCount: 2,
-                //       itemBuilder: (context, index, realIndex) {
-                //         return Sliderrectangletwentysix1ItemWidget();
-                //       }),
-                // ),
-              ]),
+              child: Container(
+                height: getVerticalSize(1000.00),
+                width: size.width,
+                decoration: AppDecoration.fillGray50,
+                child: Stack(alignment: Alignment.topRight, children: [
+                  Align(
+                      alignment: Alignment.topCenter,
+                      child: Container(
+                          width: size.width,
+                          padding: getPadding(top: 25, bottom: 25),
+                          decoration: AppDecoration.fillGray50,
+                          child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                CustomAppBar(
+                                  height: getVerticalSize(34.00),
+                                  leadingWidth: 54,
+                                  leading: AppbarIconbutton(
+                                      svgPath: ImageConstant.imgArrowleft,
+                                      margin: getMargin(left: 20),
+                                      onTap: () => onTapArrowleft3(context)),
+                                  centerTitle: true,
+                                  title: Text("Products",
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.left,
+                                      style: AppStyle.txtSoraSemiBold15),
+                                ),
+                                CustomSearchView(
+                                    width: 350,
+                                    focusNode: FocusNode(),
+                                    controller: searchController,
+                                    hintText: "Search ",
+                                    margin: getMargin(top: 33),
+                                    prefix: Container(
+                                        margin: getMargin(
+                                            left: 20,
+                                            top: 17,
+                                            right: 10,
+                                            bottom: 16),
+                                        child: CustomImageView(
+                                            svgPath: ImageConstant.imgSearch)),
+                                    prefixConstraints: BoxConstraints(
+                                        maxHeight: getVerticalSize(20.00))),
+                                Padding(
+                                    padding: getPadding(
+                                        left: 20, right: 22, bottom: 84),
+                                    child: GridView.builder(
+                                        shrinkWrap: true,
+                                        gridDelegate:
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                                mainAxisExtent:
+                                                    getVerticalSize(134.00),
+                                                crossAxisCount: 3,
+                                                mainAxisSpacing:
+                                                    getHorizontalSize(24.00),
+                                                crossAxisSpacing:
+                                                    getHorizontalSize(24.00)),
+                                        physics: BouncingScrollPhysics(),
+                                        itemCount: provider.productCategoryModel?.data?.length,
+                                        itemBuilder: (context, index) {
+                                          return ElectronicsItemWidget(
+
+                                            id: '${provider.productCategoryModel?.data?[index].id}',
+                                            imageName:
+                                                '${provider.productCategoryModel?.data?[index].productImage}',
+                                            title:
+                                                '${provider.productCategoryModel?.data?[index].productTitle}',
+                                            price:
+                                                '${provider.productCategoryModel?.data?[index].productPrice}',
+                                          );
+                                        }))
+                              ]))),
+                  // Padding(
+                  //   padding: getPadding(top: 158),
+                  //   child: CarouselSlider.builder(
+                  //       options: CarouselOptions(
+                  //           height: getVerticalSize(118.00),
+                  //           initialPage: 0,
+                  //           autoPlay: true,
+                  //           viewportFraction: 1.0,
+                  //           enableInfiniteScroll: false,
+                  //           scrollDirection: Axis.horizontal,
+                  //           onPageChanged: (index, reason) {
+                  //             silderIndex = index;
+                  //           }),
+                  //       itemCount: 2,
+                  //       itemBuilder: (context, index, realIndex) {
+                  //         return Sliderrectangletwentysix1ItemWidget();
+                  //       }),
+                  // ),
+                ]),
+              ),
             );
           }
         },

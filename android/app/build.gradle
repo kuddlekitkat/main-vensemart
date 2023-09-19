@@ -60,9 +60,9 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         //changed it
-        minSdkVersion 21
-        targetSdkVersion 31
-        versionCode 15 // Change to a higher number
+        minSdkVersion 23
+        targetSdkVersion 33
+        versionCode 22 // Change to a higher number
         versionName "1.0.4" // Change to a higher number
         
     }

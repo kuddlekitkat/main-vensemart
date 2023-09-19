@@ -29,7 +29,7 @@
 		<key>CFBundleSignature</key>
 		<string>????</string>
 		<key>CFBundleVersion</key>
-		<string>1.0.4</string>
+		<string>1.0.0</string>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
 		<key>UILaunchStoryboardName</key>
@@ -63,5 +63,20 @@
 		<string>To choose user profile image</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>Used to capture audio for image picker plugin</string>
+		<key>FlutterDeepLinkingEnabled</key>
+             <true/>
+             <key>CFBundleURLTypes</key>
+             <array>
+                 <dict>
+                     <key>CFBundleTypeRole</key>
+                     <string>Editor</string>
+                     <key>CFBundleURLName</key>
+                     <string>api.vensemart.com/api</string>
+                     <key>CFBundleURLSchemes</key>
+                     <array>
+                         <string>appscheme</string>
+                     </array>
+                 </dict>
+             </array>
 	</dict>
 </plist>

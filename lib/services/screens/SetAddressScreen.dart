@@ -243,9 +243,9 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   selectedValue = value as String;
                                 });
                               },
-                              buttonHeight: 70,
-                              buttonWidth: 280,
-                              itemHeight: 50,
+                              // buttonHeight: 70,
+                              // buttonWidth: 280,
+                              // itemHeight: 50,
                             ),
                           ),
                         ),

@@ -34,6 +34,7 @@ class _ServiceHomeState extends State<ServiceHome> {
   void initState() {
     _providerServices = Provider.of<ProviderServices>(context, listen: false);
     _providerServices?.userDetails();
+    providerServices?.referrals();
 
     // getCurrentLocation().then((value) {
 
